@@ -12,6 +12,7 @@
 		E88F0FF8194BB85A00D243DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88F0FF7194BB85A00D243DE /* AppDelegate.swift */; };
 		E88F0FFA194BB85A00D243DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E88F0FF9194BB85A00D243DE /* Images.xcassets */; };
 		E88F0FFD194BB85A00D243DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E88F0FFB194BB85A00D243DE /* Main.storyboard */; };
+		E8EB0581194C1CF10048889A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EB0580194C1CF10048889A /* MultipeerClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		E88F0FF7194BB85A00D243DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E88F0FF9194BB85A00D243DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E88F0FFC194BB85A00D243DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E8EB0580194C1CF10048889A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				E813E493194BC5D30000A7BF /* deckrocket.scpt */,
 				E88F0FF7194BB85A00D243DE /* AppDelegate.swift */,
+				E8EB0580194C1CF10048889A /* MultipeerClient.swift */,
 				E88F0FF9194BB85A00D243DE /* Images.xcassets */,
 				E88F0FFB194BB85A00D243DE /* Main.storyboard */,
 				E88F0FF1194BB85A00D243DE /* Supporting Files */,
@@ -142,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8EB0581194C1CF10048889A /* MultipeerClient.swift in Sources */,
 				E88F0FF8194BB85A00D243DE /* AppDelegate.swift in Sources */,
 				E88F0FF4194BB85A00D243DE /* main.swift in Sources */,
 			);
