@@ -14,23 +14,6 @@
 		E88F0FFD194BB85A00D243DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E88F0FFB194BB85A00D243DE /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		E88F1003194BB85B00D243DE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E88F0FE6194BB85A00D243DE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E88F0FED194BB85A00D243DE;
-			remoteInfo = DeckRocket;
-		};
-		E8EB10F4194C05E100E81268 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E88F0FE6194BB85A00D243DE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E88F0FED194BB85A00D243DE;
-			remoteInfo = DeckRocket;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		E813E493194BC5D30000A7BF /* deckrocket.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = deckrocket.scpt; sourceTree = "<group>"; };
 		E88F0FEE194BB85A00D243DE /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,18 +22,10 @@
 		E88F0FF7194BB85A00D243DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E88F0FF9194BB85A00D243DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E88F0FFC194BB85A00D243DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E88F1002194BB85B00D243DE /* DeckRocketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeckRocketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E88F0FEB194BB85A00D243DE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E88F0FFF194BB85B00D243DE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,7 +47,6 @@
 			isa = PBXGroup;
 			children = (
 				E88F0FEE194BB85A00D243DE /* DeckRocket.app */,
-				E88F1002194BB85B00D243DE /* DeckRocketTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,25 +92,6 @@
 			productReference = E88F0FEE194BB85A00D243DE /* DeckRocket.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E88F1001194BB85B00D243DE /* DeckRocketTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E88F100F194BB85B00D243DE /* Build configuration list for PBXNativeTarget "DeckRocketTests" */;
-			buildPhases = (
-				E88F0FFE194BB85B00D243DE /* Sources */,
-				E88F0FFF194BB85B00D243DE /* Frameworks */,
-				E88F1000194BB85B00D243DE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E88F1004194BB85B00D243DE /* PBXTargetDependency */,
-				E8EB10F5194C05E100E81268 /* PBXTargetDependency */,
-			);
-			name = DeckRocketTests;
-			productName = DeckRocketTests;
-			productReference = E88F1002194BB85B00D243DE /* DeckRocketTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -148,10 +103,6 @@
 				TargetAttributes = {
 					E88F0FED194BB85A00D243DE = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					E88F1001194BB85B00D243DE = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = E88F0FED194BB85A00D243DE;
 					};
 				};
 			};
@@ -169,7 +120,6 @@
 			projectRoot = "";
 			targets = (
 				E88F0FED194BB85A00D243DE /* DeckRocket */,
-				E88F1001194BB85B00D243DE /* DeckRocketTests */,
 			);
 		};
 /* End PBXProject section */
@@ -185,13 +135,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E88F1000194BB85B00D243DE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -204,27 +147,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E88F0FFE194BB85B00D243DE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E88F1004194BB85B00D243DE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E88F0FED194BB85A00D243DE /* DeckRocket */;
-			targetProxy = E88F1003194BB85B00D243DE /* PBXContainerItemProxy */;
-		};
-		E8EB10F5194C05E100E81268 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E88F0FED194BB85A00D243DE /* DeckRocket */;
-			targetProxy = E8EB10F4194C05E100E81268 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E88F0FFB194BB85A00D243DE /* Main.storyboard */ = {
@@ -337,44 +260,6 @@
 			};
 			name = Release;
 		};
-		E88F1010194BB85B00D243DE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DeckRocket.app/Contents/MacOS/DeckRocket";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DeckRocketTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				METAL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Debug;
-		};
-		E88F1011194BB85B00D243DE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DeckRocket.app/Contents/MacOS/DeckRocket";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DeckRocketTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -392,15 +277,6 @@
 			buildConfigurations = (
 				E88F100D194BB85B00D243DE /* Debug */,
 				E88F100E194BB85B00D243DE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E88F100F194BB85B00D243DE /* Build configuration list for PBXNativeTarget "DeckRocketTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E88F1010194BB85B00D243DE /* Debug */,
-				E88F1011194BB85B00D243DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

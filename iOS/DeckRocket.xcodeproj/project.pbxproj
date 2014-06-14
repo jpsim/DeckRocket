@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		E813E463194BC1CE0000A7BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E813E462194BC1CE0000A7BF /* AppDelegate.swift */; };
 		E813E465194BC1CE0000A7BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E813E464194BC1CE0000A7BF /* Images.xcassets */; };
-		E813E471194BC1CE0000A7BF /* DeckRocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E813E470194BC1CE0000A7BF /* DeckRocketTests.swift */; };
 		E813E47B194BC2FE0000A7BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E813E47A194BC2FE0000A7BF /* ViewController.swift */; };
 		E813E47D194BC38A0000A7BF /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E813E47C194BC38A0000A7BF /* Cell.swift */; };
 		E813E48A194BC4A80000A7BF /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = E813E47F194BC4A80000A7BF /* LICENSE.txt */; };
@@ -18,34 +17,14 @@
 		E813E48D194BC4A80000A7BF /* PDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E485194BC4A80000A7BF /* PDFView.m */; };
 		E813E48E194BC4A80000A7BF /* UIImage+PDF.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E487194BC4A80000A7BF /* UIImage+PDF.m */; };
 		E813E48F194BC4A80000A7BF /* UIView+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E489194BC4A80000A7BF /* UIView+Image.m */; };
-		E813E492194BC51F0000A7BF /* talk.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E813E491194BC51F0000A7BF /* talk.pdf */; };
+		E813E492194BC51F0000A7BF /* presentation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E813E491194BC51F0000A7BF /* presentation.pdf */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E813E46B194BC1CE0000A7BF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E813E455194BC1CE0000A7BF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E813E45C194BC1CE0000A7BF;
-			remoteInfo = DeckRocket;
-		};
-		E8EB10F0194C05CC00E81268 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E813E455194BC1CE0000A7BF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E813E45C194BC1CE0000A7BF;
-			remoteInfo = DeckRocket;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		E813E45D194BC1CE0000A7BF /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E813E461194BC1CE0000A7BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E813E462194BC1CE0000A7BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E813E464194BC1CE0000A7BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E813E46A194BC1CE0000A7BF /* DeckRocketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeckRocketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E813E46F194BC1CE0000A7BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E813E470194BC1CE0000A7BF /* DeckRocketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRocketTests.swift; sourceTree = "<group>"; };
 		E813E47A194BC2FE0000A7BF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E813E47C194BC38A0000A7BF /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		E813E47F194BC4A80000A7BF /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -60,18 +39,11 @@
 		E813E488194BC4A80000A7BF /* UIView+Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Image.h"; sourceTree = "<group>"; };
 		E813E489194BC4A80000A7BF /* UIView+Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Image.m"; sourceTree = "<group>"; };
 		E813E490194BC4BC0000A7BF /* DeckRocket-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DeckRocket-Bridging-Header.h"; sourceTree = "<group>"; };
-		E813E491194BC51F0000A7BF /* talk.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = talk.pdf; sourceTree = "<group>"; };
+		E813E491194BC51F0000A7BF /* presentation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = presentation.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E813E45A194BC1CE0000A7BF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E813E467194BC1CE0000A7BF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -84,9 +56,8 @@
 		E813E454194BC1CE0000A7BF = {
 			isa = PBXGroup;
 			children = (
-				E813E491194BC51F0000A7BF /* talk.pdf */,
+				E813E491194BC51F0000A7BF /* presentation.pdf */,
 				E813E45F194BC1CE0000A7BF /* DeckRocket */,
-				E813E46D194BC1CE0000A7BF /* DeckRocketTests */,
 				E813E45E194BC1CE0000A7BF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				E813E45D194BC1CE0000A7BF /* DeckRocket.app */,
-				E813E46A194BC1CE0000A7BF /* DeckRocketTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,23 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				E813E461194BC1CE0000A7BF /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E813E46D194BC1CE0000A7BF /* DeckRocketTests */ = {
-			isa = PBXGroup;
-			children = (
-				E813E470194BC1CE0000A7BF /* DeckRocketTests.swift */,
-				E813E46E194BC1CE0000A7BF /* Supporting Files */,
-			);
-			path = DeckRocketTests;
-			sourceTree = "<group>";
-		};
-		E813E46E194BC1CE0000A7BF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E813E46F194BC1CE0000A7BF /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -177,25 +130,6 @@
 			productReference = E813E45D194BC1CE0000A7BF /* DeckRocket.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E813E469194BC1CE0000A7BF /* DeckRocketTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E813E477194BC1CE0000A7BF /* Build configuration list for PBXNativeTarget "DeckRocketTests" */;
-			buildPhases = (
-				E813E466194BC1CE0000A7BF /* Sources */,
-				E813E467194BC1CE0000A7BF /* Frameworks */,
-				E813E468194BC1CE0000A7BF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E813E46C194BC1CE0000A7BF /* PBXTargetDependency */,
-				E8EB10F1194C05CC00E81268 /* PBXTargetDependency */,
-			);
-			name = DeckRocketTests;
-			productName = DeckRocketTests;
-			productReference = E813E46A194BC1CE0000A7BF /* DeckRocketTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -207,10 +141,6 @@
 				TargetAttributes = {
 					E813E45C194BC1CE0000A7BF = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					E813E469194BC1CE0000A7BF = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = E813E45C194BC1CE0000A7BF;
 					};
 				};
 			};
@@ -227,7 +157,6 @@
 			projectRoot = "";
 			targets = (
 				E813E45C194BC1CE0000A7BF /* DeckRocket */,
-				E813E469194BC1CE0000A7BF /* DeckRocketTests */,
 			);
 		};
 /* End PBXProject section */
@@ -239,14 +168,7 @@
 			files = (
 				E813E48A194BC4A80000A7BF /* LICENSE.txt in Resources */,
 				E813E465194BC1CE0000A7BF /* Images.xcassets in Resources */,
-				E813E492194BC51F0000A7BF /* talk.pdf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E813E468194BC1CE0000A7BF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				E813E492194BC51F0000A7BF /* presentation.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,28 +190,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E813E466194BC1CE0000A7BF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E813E471194BC1CE0000A7BF /* DeckRocketTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E813E46C194BC1CE0000A7BF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E813E45C194BC1CE0000A7BF /* DeckRocket */;
-			targetProxy = E813E46B194BC1CE0000A7BF /* PBXContainerItemProxy */;
-		};
-		E8EB10F1194C05CC00E81268 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E813E45C194BC1CE0000A7BF /* DeckRocket */;
-			targetProxy = E8EB10F0194C05CC00E81268 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E813E472194BC1CE0000A7BF /* Debug */ = {
@@ -397,42 +298,6 @@
 			};
 			name = Release;
 		};
-		E813E478194BC1CE0000A7BF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DeckRocket.app/DeckRocket";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DeckRocketTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				METAL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Debug;
-		};
-		E813E479194BC1CE0000A7BF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DeckRocket.app/DeckRocket";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DeckRocketTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -450,15 +315,6 @@
 			buildConfigurations = (
 				E813E475194BC1CE0000A7BF /* Debug */,
 				E813E476194BC1CE0000A7BF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E813E477194BC1CE0000A7BF /* Build configuration list for PBXNativeTarget "DeckRocketTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E813E478194BC1CE0000A7BF /* Debug */,
-				E813E479194BC1CE0000A7BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

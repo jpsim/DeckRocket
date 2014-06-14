@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E88F1001194BB85B00D243DE"
-               BuildableName = "DeckRocketTests.xctest"
-               BlueprintName = "DeckRocketTests"
-               ReferencedContainer = "container:DeckRocket.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
