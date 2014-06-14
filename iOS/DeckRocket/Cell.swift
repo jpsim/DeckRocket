@@ -13,8 +13,11 @@ class Cell: UICollectionViewCell {
     
     init(frame: CGRect) {
         super.init(frame: frame)
-        imageView.frame = CGRect(origin: CGPoint(), size: frame.size)
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
         contentView.addSubview(imageView)
+    }
+    
+    override func layoutSubviews() {
+        imageView.frame = self.bounds
     }
 }

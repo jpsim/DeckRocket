@@ -18,6 +18,9 @@
 		E813E48E194BC4A80000A7BF /* UIImage+PDF.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E487194BC4A80000A7BF /* UIImage+PDF.m */; };
 		E813E48F194BC4A80000A7BF /* UIView+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E489194BC4A80000A7BF /* UIView+Image.m */; };
 		E813E492194BC51F0000A7BF /* presentation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E813E491194BC51F0000A7BF /* presentation.pdf */; };
+		E8836E52194CBE4F00288020 /* PDFImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8836E51194CBE4F00288020 /* PDFImages.swift */; };
+		E8EB0583194C2E670048889A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EB0582194C2E670048889A /* MultipeerClient.swift */; };
+		E8EB0585194CA65D0048889A /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EB0584194CA65D0048889A /* CollectionViewLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		E813E489194BC4A80000A7BF /* UIView+Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Image.m"; sourceTree = "<group>"; };
 		E813E490194BC4BC0000A7BF /* DeckRocket-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DeckRocket-Bridging-Header.h"; sourceTree = "<group>"; };
 		E813E491194BC51F0000A7BF /* presentation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = presentation.pdf; sourceTree = "<group>"; };
+		E8836E51194CBE4F00288020 /* PDFImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFImages.swift; sourceTree = "<group>"; };
+		E8EB0582194C2E670048889A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
+		E8EB0584194CA65D0048889A /* CollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +83,10 @@
 				E813E47E194BC4A80000A7BF /* UIImage+PDF */,
 				E813E462194BC1CE0000A7BF /* AppDelegate.swift */,
 				E813E47A194BC2FE0000A7BF /* ViewController.swift */,
+				E8EB0582194C2E670048889A /* MultipeerClient.swift */,
 				E813E47C194BC38A0000A7BF /* Cell.swift */,
+				E8EB0584194CA65D0048889A /* CollectionViewLayout.swift */,
+				E8836E51194CBE4F00288020 /* PDFImages.swift */,
 				E813E464194BC1CE0000A7BF /* Images.xcassets */,
 				E813E460194BC1CE0000A7BF /* Supporting Files */,
 			);
@@ -181,10 +190,13 @@
 			files = (
 				E813E48F194BC4A80000A7BF /* UIView+Image.m in Sources */,
 				E813E47B194BC2FE0000A7BF /* ViewController.swift in Sources */,
+				E8EB0583194C2E670048889A /* MultipeerClient.swift in Sources */,
 				E813E48D194BC4A80000A7BF /* PDFView.m in Sources */,
+				E8EB0585194CA65D0048889A /* CollectionViewLayout.swift in Sources */,
 				E813E463194BC1CE0000A7BF /* AppDelegate.swift in Sources */,
 				E813E48C194BC4A80000A7BF /* NSString+MD5.m in Sources */,
 				E813E48E194BC4A80000A7BF /* UIImage+PDF.m in Sources */,
+				E8836E52194CBE4F00288020 /* PDFImages.swift in Sources */,
 				E813E47D194BC38A0000A7BF /* Cell.swift in Sources */,
 				E813E48B194BC4A80000A7BF /* NSData+MD5.m in Sources */,
 			);

@@ -9,34 +9,41 @@
 import UIKit
 import MultipeerConnectivity
 
-class ViewController: UICollectionViewController, MCNearbyServiceBrowserDelegate, MCSessionDelegate, UIScrollViewDelegate {
+class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     // Properties
-    let localPeerID = MCPeerID(displayName: UIDevice.currentDevice().name)
-    var browser: MCNearbyServiceBrowser?
-    var session: MCSession?
-    
+    let multipeerClient = MultipeerClient()
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
     let connectingLabel = UILabel()
     
-    var slideImages = UIImage[]()
+    let slideImages = UIImage.imagesFromPDFName("presentation.pdf")
     
     // View Lifecycle
     
     init() {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 568, height: 320)
-        layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        super.init(collectionViewLayout: layout)
+        super.init(collectionViewLayout: CollectionViewLayout())
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupMultipeer()
-        slideImages = imagesFromPDFName("presentation.pdf")
+        multipeerClient.onStateChange = {(state: MCSessionState, peerID: MCPeerID) -> () in
+            dispatch_async(dispatch_get_main_queue(), {
+                UIView.animateWithDuration(0.5, animations: {
+                    switch state {
+                    case .NotConnected:
+                        self.effectView.alpha = 1
+                        self.connectingLabel.text = "Not Connected"
+                        self.multipeerClient.browser!.invitePeer(peerID, toSession: self.multipeerClient.session, withContext: nil, timeout: 30)
+                    case .Connected:
+                        self.effectView.alpha = 0
+                    case .Connecting:
+                        self.effectView.alpha = 1
+                        self.connectingLabel.text = "Connecting..."
+                    }
+                })
+            })
+        }
     }
     
     // UI
@@ -46,16 +53,24 @@ class ViewController: UICollectionViewController, MCNearbyServiceBrowserDelegate
         collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
         
-        // Effect View
-        effectView.frame = view.bounds
+        setupEffectView()
+        setupLabel()
+    }
+    
+    func setupEffectView() {
+        effectView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        effectView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "refreshConnection"))
         view.addSubview(effectView)
         
-        setupLabel()
+        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[effectView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["effectView": effectView])
+        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["effectView": effectView])
+        view.addConstraints(horizontal)
+        view.addConstraints(vertical)
     }
     
     func setupLabel() {
         connectingLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        connectingLabel.text = "Disconnected"
+        connectingLabel.text = "Not Connected"
         connectingLabel.textColor = UIColor.whiteColor()
         effectView.addSubview(connectingLabel)
         
@@ -77,17 +92,11 @@ class ViewController: UICollectionViewController, MCNearbyServiceBrowserDelegate
         effectView.addConstraints([centerX, centerY])
     }
     
-    // PDF Support
+    // Refresh Connection
     
-    func imagesFromPDFName(pdfName: String) -> UIImage[] {
-        let path = NSBundle.mainBundle().pathForResource(pdfName, ofType: nil)
-        let pdf = CGPDFDocumentCreateWithURL(NSURL(fileURLWithPath: path))
-        let numberOfPages = Int(CGPDFDocumentGetNumberOfPages(pdf))
-        var images: UIImage[] = []
-        for pageNumber in 1...numberOfPages {
-            images += UIImage(PDFNamed: pdfName, fitSize: view.bounds.size, atPage: pageNumber)
-        }
-        return images
+    func refreshConnection() {
+        multipeerClient.browser!.stopBrowsingForPeers()
+        multipeerClient.browser!.startBrowsingForPeers()
     }
     
     // Collection View
@@ -104,76 +113,31 @@ class ViewController: UICollectionViewController, MCNearbyServiceBrowserDelegate
     
     // UIScrollViewDelegate
     
+    func currentSlide() -> UInt {
+        return UInt(roundf(collectionView.contentOffset.x / collectionView.frame.size.width))
+    }
+    
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView!) {
-        let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-        sendString("\(page)")
+        multipeerClient.sendString("\(currentSlide())")
     }
     
-    // Multipeer
+    // Rotation
     
-    func setupMultipeer() {
-        browser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: "deckrocket")
-        browser!.delegate = self
-        browser!.startBrowsingForPeers()
-    }
-    
-    func send(data: NSData) {
-        session!.sendData(data, toPeers: session!.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: nil)
-    }
-    
-    func sendString(string: String) {
-        send(string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
-    }
-    
-    // MCNearbyServiceBrowserDelegate
-    
-    func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: NSDictionary!) {
-        if !session {
-            session = MCSession(peer: localPeerID)
-            session!.delegate = self
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        // Update Layout
+        let layout = collectionView.collectionViewLayout as CollectionViewLayout
+        layout.invalidateLayout()
+        layout.itemSize = CGSize(width: view.bounds.size.height, height: view.bounds.size.width)
+        
+        // Update Offset
+        let targetOffset = CGFloat(self.currentSlide()) * layout.itemSize.width
+        
+        // We do this half-way through the animation
+        let delay = (duration / 2) * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_current_queue()) {
+            self.collectionView.contentOffset.x = targetOffset
         }
-        browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 30)
-    }
-    
-    func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
-        
-    }
-    
-    // MCSessionDelegate
-    
-    func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
-        dispatch_async(dispatch_get_main_queue(), {
-            UIView.animateWithDuration(0.5, animations: {
-                switch state {
-                    case .NotConnected:
-                        if session.connectedPeers.count == 0 {
-                            self.effectView.alpha = 1
-                            self.connectingLabel.text = "Disconnected"
-                            self.browser!.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 30)
-                        }
-                    case .Connected:
-                        self.effectView.alpha = 0
-                    case .Connecting:
-                        self.effectView.alpha = 1
-                        self.connectingLabel.text = "Connecting..."
-                }
-            })
-        })
-    }
-    
-    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        
-    }
-    
-    func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
-        
-    }
-    
-    func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
-        
-    }
-    
-    func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        
     }
 }
