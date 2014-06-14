@@ -9,12 +9,15 @@
 import Foundation
 import MultipeerConnectivity
 
+typealias stateChange = ((state: MCSessionState) -> ())?
+
 class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
     // Properties
     let localPeerID = MCPeerID(displayName: NSHost.currentHost().localizedName)
     var advertiser: MCNearbyServiceAdvertiser?
     var session: MCSession?
+    var onStateChange: stateChange?
     
     // Lifecycle
     
@@ -36,7 +39,9 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     // MCSessionDelegate
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
-        
+        if let block = onStateChange! {
+            block(state: state)
+        }
     }
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {

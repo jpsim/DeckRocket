@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import MultipeerConnectivity
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     
@@ -18,17 +19,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         setupMenu()
+        multipeerClient.onStateChange = {(state: MCSessionState) -> () in
+            var stateString = ""
+            switch state {
+                case .NotConnected:
+                    stateString = "Not Connected"
+                case .Connecting:
+                    stateString = "Connecting"
+                case .Connected:
+                    stateString = "Connected"
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                self.statusItem.menu.itemAtIndex(0).title = stateString
+            })
+        }
     }
     
     func setupMenu() {
         statusItem.title = "🚀"
         statusItem.highlightMode = true
         let menu = NSMenu()
+        menu.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
+        let item = menu.itemAtIndex(0)
+        item.enabled = false
         menu.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
         statusItem.menu = menu
     }
     
     func quit() {
-        NSApp.terminate(nil)
+        NSApp.terminate(self)
     }
 }
