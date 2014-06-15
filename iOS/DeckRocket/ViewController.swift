@@ -16,7 +16,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
     let connectingLabel = UILabel()
     
-    let slideImages = UIImage.imagesFromPDFName("presentation.pdf")
+    var slideImages = UIImage[]()
     
     // View Lifecycle
     
@@ -26,27 +26,37 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        updateSlideImages()
+        
         setupUI()
         multipeerClient.onStateChange = {(state: MCSessionState, peerID: MCPeerID) -> () in
-            dispatch_async(dispatch_get_main_queue(), {
-                UIView.animateWithDuration(0.5, animations: {
-                    switch state {
-                    case .NotConnected:
+            dispatch_async(dispatch_get_main_queue(), {switch state {
+                case .NotConnected:
+                    if self.multipeerClient.session!.connectedPeers.count == 0 {
                         self.effectView.alpha = 1
                         self.connectingLabel.text = "Not Connected"
                         self.multipeerClient.browser!.invitePeer(peerID, toSession: self.multipeerClient.session, withContext: nil, timeout: 30)
-                    case .Connected:
-                        self.effectView.alpha = 0
-                    case .Connecting:
-                        self.effectView.alpha = 1
-                        self.connectingLabel.text = "Connecting..."
                     }
-                })
+                case .Connected:
+                    self.effectView.alpha = 0
+                case .Connecting:
+                    self.effectView.alpha = 1
+                    self.connectingLabel.text = "Connecting..."
+                }
             })
         }
     }
     
     // UI
+    
+    func updateSlideImages() {
+        if let pdfPath = NSUserDefaults.standardUserDefaults().objectForKey("pdfPath") as? NSString {
+            slideImages = UIImage.imagesFromPDFPath(pdfPath)
+        } else {
+            slideImages = UIImage.imagesFromPDFName("presentation.pdf")
+        }
+    }
     
     func setupUI() {
         // Collection View
@@ -114,7 +124,11 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // UIScrollViewDelegate
     
     func currentSlide() -> UInt {
-        return UInt(roundf(collectionView.contentOffset.x / collectionView.frame.size.width))
+        return UInt(round(CDouble(collectionView.contentOffset.x / collectionView.frame.size.width)))
+    }
+    
+    func currentSlide2() {
+        collectionView.contentOffset.x / collectionView.frame.size.width
     }
     
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView!) {

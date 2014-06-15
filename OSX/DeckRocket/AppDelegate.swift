@@ -13,12 +13,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // Properties
     let multipeerClient = MultipeerClient()
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(CGFloat(NSVariableStatusItemLength))
+    let menuView = MenuView()
     
     // App
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        setupMenu()
         multipeerClient.onStateChange = {(state: MCSessionState) -> () in
             var stateString = ""
             switch state {
@@ -30,21 +29,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     stateString = "Connected"
             }
             dispatch_async(dispatch_get_main_queue(), {
-                self.statusItem.menu.itemAtIndex(0).title = stateString
+                self.menuView.menu.itemAtIndex(0).title = stateString
             })
         }
     }
     
-    func setupMenu() {
-        statusItem.title = "🚀"
-        statusItem.highlightMode = true
-        let menu = NSMenu()
-        menu.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
-        let item = menu.itemAtIndex(0)
-        item.enabled = false
-        menu.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
-        statusItem.menu = menu
-    }
+    // Menu Items
     
     func quit() {
         NSApp.terminate(self)

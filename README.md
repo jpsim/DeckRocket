@@ -4,7 +4,7 @@
 
 ## DeckRocket turns your iPhone into a remote for [Deckset](http://decksetapp.com) presentations
 
-![](deckrocket.gif)
+![](demo.gif)
 
 ## Requirements
 
@@ -12,14 +12,12 @@ DeckRocket is built in Swift and relies on Multipeer Connectivity on both OSX an
 
 ## Usage
 
-*Note: I'm working on making this WAY easier*
+![](dragdrop.gif)
 
 1. Make sure you have the requirements listed above and that Deckset is running (with your presentation as the current document).
-2. Open and run `OSX/DeckRocket.xcodeproj`. You should see a :rocket: icon in your menu bar.
-3. Export your Deckset presentation as a PDF and name it "presentation.pdf".
-4. Open `iOS/DeckRocket.xcodeproj`.
-5. Drag the your presentation's PDF into the Xcode's project navigator.
-6. Run the app on your iOS 8 device.
+2. Open and run both `OSX/DeckRocket.xcodeproj` and `iOS/DeckRocket.xcodeproj`. You should see a :rocket: icon in your menu bar.
+3. Export your Deckset presentation as a PDF.
+4. Drag the your PDF onto the :rocket: icon in your Mac's menu bar. The file should start transferring to your iOS device instantly.
 
 A connection should be established between the OSX and iOS apps after 5-10 seconds. You'll then be able to swipe through your slides and see Deckset navigate to them semi-instantly.
 

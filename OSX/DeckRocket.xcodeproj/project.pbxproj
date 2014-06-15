@@ -8,21 +8,38 @@
 
 /* Begin PBXBuildFile section */
 		E813E494194BC5D30000A7BF /* deckrocket.scpt in Resources */ = {isa = PBXBuildFile; fileRef = E813E493194BC5D30000A7BF /* deckrocket.scpt */; };
+		E8836E54194CDB8000288020 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8836E53194CDB8000288020 /* MenuView.swift */; };
 		E88F0FF4194BB85A00D243DE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88F0FF3194BB85A00D243DE /* main.swift */; };
 		E88F0FF8194BB85A00D243DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88F0FF7194BB85A00D243DE /* AppDelegate.swift */; };
 		E88F0FFA194BB85A00D243DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E88F0FF9194BB85A00D243DE /* Images.xcassets */; };
 		E88F0FFD194BB85A00D243DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E88F0FFB194BB85A00D243DE /* Main.storyboard */; };
+		E8CECB1D194CE87900F00C25 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CECB1C194CE87900F00C25 /* HUDView.swift */; };
+		E8CECB27194CE8E500F00C25 /* DJActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CECB20194CE8E500F00C25 /* DJActivityIndicator.m */; };
+		E8CECB28194CE8E500F00C25 /* DJBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CECB22194CE8E500F00C25 /* DJBezierPath.m */; };
+		E8CECB29194CE8E500F00C25 /* DJProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CECB24194CE8E500F00C25 /* DJProgressHUD.m */; };
+		E8CECB2A194CE8E500F00C25 /* DJProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CECB26194CE8E500F00C25 /* DJProgressIndicator.m */; };
 		E8EB0581194C1CF10048889A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EB0580194C1CF10048889A /* MultipeerClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E813E493194BC5D30000A7BF /* deckrocket.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = deckrocket.scpt; sourceTree = "<group>"; };
+		E8836E53194CDB8000288020 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E88F0FEE194BB85A00D243DE /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E88F0FF2194BB85A00D243DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E88F0FF3194BB85A00D243DE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		E88F0FF7194BB85A00D243DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E88F0FF9194BB85A00D243DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E88F0FFC194BB85A00D243DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E8CECB1C194CE87900F00C25 /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
+		E8CECB1F194CE8E500F00C25 /* DJActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJActivityIndicator.h; sourceTree = "<group>"; };
+		E8CECB20194CE8E500F00C25 /* DJActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJActivityIndicator.m; sourceTree = "<group>"; };
+		E8CECB21194CE8E500F00C25 /* DJBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBezierPath.h; sourceTree = "<group>"; };
+		E8CECB22194CE8E500F00C25 /* DJBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJBezierPath.m; sourceTree = "<group>"; };
+		E8CECB23194CE8E500F00C25 /* DJProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressHUD.h; sourceTree = "<group>"; };
+		E8CECB24194CE8E500F00C25 /* DJProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressHUD.m; sourceTree = "<group>"; };
+		E8CECB25194CE8E500F00C25 /* DJProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressIndicator.h; sourceTree = "<group>"; };
+		E8CECB26194CE8E500F00C25 /* DJProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressIndicator.m; sourceTree = "<group>"; };
+		E8CECB2B194CE90600F00C25 /* DeckRocket-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeckRocket-Bridging-Header.h"; sourceTree = "<group>"; };
 		E8EB0580194C1CF10048889A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,12 +73,16 @@
 		E88F0FF0194BB85A00D243DE /* DeckRocket */ = {
 			isa = PBXGroup;
 			children = (
+				E8CECB1E194CE8E500F00C25 /* DJProgressHUD */,
 				E813E493194BC5D30000A7BF /* deckrocket.scpt */,
 				E88F0FF7194BB85A00D243DE /* AppDelegate.swift */,
 				E8EB0580194C1CF10048889A /* MultipeerClient.swift */,
+				E8836E53194CDB8000288020 /* MenuView.swift */,
+				E8CECB1C194CE87900F00C25 /* HUDView.swift */,
 				E88F0FF9194BB85A00D243DE /* Images.xcassets */,
 				E88F0FFB194BB85A00D243DE /* Main.storyboard */,
 				E88F0FF1194BB85A00D243DE /* Supporting Files */,
+				E8CECB2B194CE90600F00C25 /* DeckRocket-Bridging-Header.h */,
 			);
 			path = DeckRocket;
 			sourceTree = "<group>";
@@ -73,6 +94,21 @@
 				E88F0FF3194BB85A00D243DE /* main.swift */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E8CECB1E194CE8E500F00C25 /* DJProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				E8CECB1F194CE8E500F00C25 /* DJActivityIndicator.h */,
+				E8CECB20194CE8E500F00C25 /* DJActivityIndicator.m */,
+				E8CECB21194CE8E500F00C25 /* DJBezierPath.h */,
+				E8CECB22194CE8E500F00C25 /* DJBezierPath.m */,
+				E8CECB23194CE8E500F00C25 /* DJProgressHUD.h */,
+				E8CECB24194CE8E500F00C25 /* DJProgressHUD.m */,
+				E8CECB25194CE8E500F00C25 /* DJProgressIndicator.h */,
+				E8CECB26194CE8E500F00C25 /* DJProgressIndicator.m */,
+			);
+			path = DJProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,8 +181,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8CECB27194CE8E500F00C25 /* DJActivityIndicator.m in Sources */,
+				E8CECB28194CE8E500F00C25 /* DJBezierPath.m in Sources */,
 				E8EB0581194C1CF10048889A /* MultipeerClient.swift in Sources */,
+				E8836E54194CDB8000288020 /* MenuView.swift in Sources */,
 				E88F0FF8194BB85A00D243DE /* AppDelegate.swift in Sources */,
+				E8CECB1D194CE87900F00C25 /* HUDView.swift in Sources */,
+				E8CECB2A194CE8E500F00C25 /* DJProgressIndicator.m in Sources */,
+				E8CECB29194CE8E500F00C25 /* DJProgressHUD.m in Sources */,
 				E88F0FF4194BB85A00D243DE /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,6 +292,7 @@
 				INFOPLIST_FILE = DeckRocket/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DeckRocket/DeckRocket-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -261,6 +304,7 @@
 				INFOPLIST_FILE = DeckRocket/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DeckRocket/DeckRocket-Bridging-Header.h";
 			};
 			name = Release;
 		};

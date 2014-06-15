@@ -69,6 +69,32 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     }
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        
+        if error == nil {
+            let rootVC = UIApplication.sharedApplication().delegate.window!.rootViewController as ViewController
+            
+            let alert = UIAlertController(title: "New Presentation", message: "Would you like to load \"\(resourceName)\"?", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Load", style: UIAlertActionStyle.Default) { action in
+                var error: NSError? = nil
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+                let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
+                
+                if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+                    NSFileManager.defaultManager().removeItemAtPath(filePath, error: nil)
+                }
+                
+                let url = NSURL(fileURLWithPath: filePath)
+                
+                NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: url, error: &error)
+                if error == nil {
+                    NSUserDefaults.standardUserDefaults().setObject(filePath as String, forKey: "pdfPath")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    rootVC.updateSlideImages()
+                    rootVC.collectionView.reloadData()
+                }
+            })
+            
+            rootVC.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 import MultipeerConnectivity
 
 typealias stateChange = ((state: MCSessionState) -> ())?
+let ProgressContext = KVOContext()
 
 class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
@@ -18,6 +19,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     var advertiser: MCNearbyServiceAdvertiser?
     var session: MCSession?
     var onStateChange: stateChange?
+    var pdfProgress: NSProgress?
     
     // Lifecycle
     
@@ -26,6 +28,31 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
         advertiser = MCNearbyServiceAdvertiser(peer: localPeerID, discoveryInfo: nil, serviceType: "deckrocket")
         advertiser!.delegate = self
         advertiser!.startAdvertisingPeer()
+    }
+    
+    // Send PDF
+    
+    func sendPDF(pdfPath: String) {
+        // Multipeer
+        let url = NSURL(fileURLWithPath: pdfPath)
+        
+        if session == nil || session!.connectedPeers.count == 0 {
+            HUDView.show("Error!\niPhone not connected")
+            return
+        }
+        
+        let peer = session!.connectedPeers[0] as MCPeerID
+        pdfProgress = session!.sendResourceAtURL(url, withName: pdfPath.lastPathComponent, toPeer: peer) { error in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.pdfProgress!.removeObserver(self, forKeyPath: "fractionCompleted", kvoContext: ProgressContext)
+                if error != nil {
+                    HUDView.show("Error!\n\(error.localizedDescription)")
+                } else {
+                    HUDView.show("Success!")
+                }
+            }
+        }
+        pdfProgress!.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.New, kvoContext: ProgressContext)
     }
     
     // MCNearbyServiceAdvertiserDelegate
@@ -61,5 +88,17 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
         
+    }
+    
+    // KVO
+    
+    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: NSDictionary!, context: CMutableVoidPointer) {
+        if KVOContext.fromVoidContext(context) === ProgressContext {
+            dispatch_async(dispatch_get_main_queue()) {
+                HUDView.showProgress(change[NSKeyValueChangeNewKey] as CGFloat, string: "Sending PDF to iPhone")
+            }
+        } else {
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        }
     }
 }
