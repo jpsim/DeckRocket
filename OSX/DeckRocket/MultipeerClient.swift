@@ -30,11 +30,10 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
         advertiser!.startAdvertisingPeer()
     }
     
-    // Send PDF
+    // Send File
     
-    func sendPDF(pdfPath: String) {
-        // Multipeer
-        let url = NSURL(fileURLWithPath: pdfPath)
+    func sendFile(filePath: String) {
+        let url = NSURL(fileURLWithPath: filePath)
         
         if session == nil || session!.connectedPeers.count == 0 {
             HUDView.show("Error!\niPhone not connected")
@@ -42,7 +41,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
         }
         
         let peer = session!.connectedPeers[0] as MCPeerID
-        pdfProgress = session!.sendResourceAtURL(url, withName: pdfPath.lastPathComponent, toPeer: peer) { error in
+        pdfProgress = session!.sendResourceAtURL(url, withName: filePath.lastPathComponent, toPeer: peer) { error in
             dispatch_async(dispatch_get_main_queue()) {
                 self.pdfProgress!.removeObserver(self, forKeyPath: "fractionCompleted", kvoContext: ProgressContext)
                 if error != nil {
@@ -95,7 +94,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: NSDictionary!, context: CMutableVoidPointer) {
         if KVOContext.fromVoidContext(context) === ProgressContext {
             dispatch_async(dispatch_get_main_queue()) {
-                HUDView.showProgress(change[NSKeyValueChangeNewKey] as CGFloat, string: "Sending PDF to iPhone")
+                HUDView.showProgress(change[NSKeyValueChangeNewKey] as CGFloat, string: "Sending File to iPhone")
             }
         } else {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)

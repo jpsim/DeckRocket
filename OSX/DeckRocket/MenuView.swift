@@ -61,9 +61,27 @@ class MenuView: NSView, NSMenuDelegate {
         let pboard = sender.draggingPasteboard()
         if (pboard.types as NSArray).containsObject(NSFilenamesPboardType) {
             let files = pboard.propertyListForType(NSFilenamesPboardType) as String[]
-            let appDelegate = NSApp.delegate as AppDelegate
-            appDelegate.multipeerClient.sendPDF(files[0])
+            let file = files[0]
+            if validateFile(file) {
+                let appDelegate = NSApp.delegate as AppDelegate
+                appDelegate.multipeerClient.sendFile(file)
+            } else {
+                HUDView.show("Error!\nOnly PDF and Markdown files can be sent")
+            }
         }
         return true
+    }
+    
+    func validateFile(filePath: NSString) -> Bool {
+        let fileExtension = (filePath.pathExtension as NSString).lowercaseString as String
+        
+        var allowedExtensions = [
+            // Markdown
+            "markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text",
+            // PDF
+            "pdf"
+        ]
+        
+        return (allowedExtensions as NSArray).containsObject(fileExtension)
     }
 }
