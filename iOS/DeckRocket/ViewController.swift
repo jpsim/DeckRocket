@@ -128,10 +128,6 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         return UInt(round(CDouble(collectionView.contentOffset.x / collectionView.frame.size.width)))
     }
     
-    func currentSlide2() {
-        collectionView.contentOffset.x / collectionView.frame.size.width
-    }
-    
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView!) {
         multipeerClient.sendString("\(currentSlide())")
     }
