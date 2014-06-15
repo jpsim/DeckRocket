@@ -56,6 +56,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         } else {
             slideImages = UIImage.imagesFromPDFName("presentation.pdf")
         }
+        collectionView.contentOffset.x = 0
     }
     
     func setupUI() {
