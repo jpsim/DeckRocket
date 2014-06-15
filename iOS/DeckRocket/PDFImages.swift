@@ -11,11 +11,6 @@ import UIKit
 import CoreGraphics
 
 extension UIImage {
-    class func imagesFromPDFName(pdfName: String) -> UIImage[] {
-        let path = NSBundle.mainBundle().pathForResource(pdfName, ofType: nil)
-        return self.imagesFromPDFPath(path)
-    }
-    
     class func imagesFromPDFPath(pdfPath: String) -> UIImage[] {
         let pdfURL = NSURL(fileURLWithPath: pdfPath)
         let pdf = CGPDFDocumentCreateWithURL(pdfURL)

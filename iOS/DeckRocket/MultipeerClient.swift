@@ -14,10 +14,14 @@ typealias stateChange = ((state: MCSessionState, peerID: MCPeerID) -> ())?
 class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
     
     // Properties
+    
     let localPeerID = MCPeerID(displayName: UIDevice.currentDevice().name)
     var browser: MCNearbyServiceBrowser?
     var session: MCSession?
+    var state = MCSessionState.NotConnected
     var onStateChange: stateChange?
+    
+    // Init
     
     init() {
         super.init()
@@ -25,6 +29,8 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
         browser!.delegate = self
         browser!.startBrowsingForPeers()
     }
+    
+    // Send
     
     func send(data: NSData) {
         session!.sendData(data, toPeers: session!.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: nil)
@@ -51,6 +57,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     // MCSessionDelegate
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
+        self.state = state
         if let block = onStateChange! {
             block(state: state, peerID: peerID)
         }
@@ -70,31 +77,52 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
         if error == nil {
-            let rootVC = UIApplication.sharedApplication().delegate.window!.rootViewController as ViewController
-            
-            let alert = UIAlertController(title: "New Presentation", message: "Would you like to load \"\(resourceName)\"?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Load", style: UIAlertActionStyle.Default) { action in
-                var error: NSError? = nil
-                let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-                let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
-                
-                if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-                    NSFileManager.defaultManager().removeItemAtPath(filePath, error: nil)
-                }
-                
-                let url = NSURL(fileURLWithPath: filePath)
-                
-                NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: url, error: &error)
-                if error == nil {
-                    NSUserDefaults.standardUserDefaults().setObject(filePath as String, forKey: "pdfPath")
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    rootVC.updateSlideImages()
-                    rootVC.collectionView.reloadData()
-                }
-            })
-            
-            rootVC.presentViewController(alert, animated: true, completion: nil)
+            let fileType = FileType(fileExtension: resourceName.pathExtension)
+            switch fileType {
+                case .PDF:
+                    handlePDF(resourceName, atURL: localURL)
+                case .Markdown:
+                    handleMarkdown(resourceName, atURL: localURL)
+                case .Unknown:
+                    println("file type unknown")
+            }
         }
+    }
+    
+    // Handle Resources
+    
+    func handlePDF(resourceName: String!, atURL localURL: NSURL!) {
+        promptToLoadResource("New Presentation File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "pdfPath")
+    }
+    
+    func handleMarkdown(resourceName: String!, atURL localURL: NSURL!) {
+        promptToLoadResource("New Markdown File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "mdPath")
+    }
+    
+    func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
+        let rootVC = UIApplication.sharedApplication().delegate.window!.rootViewController as ViewController
+        
+        let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Load", style: UIAlertActionStyle.Default) { action in
+            var error: NSError? = nil
+            let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+            let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
+            
+            if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+                NSFileManager.defaultManager().removeItemAtPath(filePath, error: nil)
+            }
+            
+            let url = NSURL(fileURLWithPath: filePath)
+            
+            NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: url, error: &error)
+            if error == nil {
+                NSUserDefaults.standardUserDefaults().setObject(filePath as String, forKey: userDefaultsKey)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                rootVC.updatePresentation()
+            }
+        })
+        
+        rootVC.presentViewController(alert, animated: true, completion: nil)
     }
 }

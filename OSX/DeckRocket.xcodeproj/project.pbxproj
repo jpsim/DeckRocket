@@ -73,6 +73,7 @@
 		E88F0FF0194BB85A00D243DE /* DeckRocket */ = {
 			isa = PBXGroup;
 			children = (
+				E8CECB2B194CE90600F00C25 /* DeckRocket-Bridging-Header.h */,
 				E8CECB1E194CE8E500F00C25 /* DJProgressHUD */,
 				E813E493194BC5D30000A7BF /* deckrocket.scpt */,
 				E88F0FF7194BB85A00D243DE /* AppDelegate.swift */,
@@ -82,7 +83,6 @@
 				E88F0FF9194BB85A00D243DE /* Images.xcassets */,
 				E88F0FFB194BB85A00D243DE /* Main.storyboard */,
 				E88F0FF1194BB85A00D243DE /* Supporting Files */,
-				E8CECB2B194CE90600F00C25 /* DeckRocket-Bridging-Header.h */,
 			);
 			path = DeckRocket;
 			sourceTree = "<group>";

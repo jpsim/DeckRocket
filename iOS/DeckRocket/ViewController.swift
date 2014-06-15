@@ -12,11 +12,12 @@ import MultipeerConnectivity
 class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     // Properties
+    
+    var presentation: Presentation?
     let multipeerClient = MultipeerClient()
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
-    let connectingLabel = UILabel()
-    
-    var slideImages = UIImage[]()
+    let notesView = UITextView()
+    let infoLabel = UILabel()
     
     // View Lifecycle
     
@@ -27,45 +28,71 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateSlideImages()
-        
         setupUI()
+        setupConnectivityObserver()
+        updatePresentation()
+    }
+    
+    // Connectivity Updates
+    
+    func setupConnectivityObserver() {
         multipeerClient.onStateChange = {(state: MCSessionState, peerID: MCPeerID) -> () in
-            dispatch_async(dispatch_get_main_queue(), {switch state {
-                case .NotConnected:
-                    if self.multipeerClient.session!.connectedPeers.count == 0 {
+            dispatch_async(dispatch_get_main_queue(), {
+                switch state {
+                    case .NotConnected:
+                        if self.multipeerClient.session == nil {
+                            self.effectView.alpha = 1
+                            self.infoLabel.text = "Not Connected"
+                        } else if self.multipeerClient.session!.connectedPeers.count == 0 {
+                            self.effectView.alpha = 1
+                            self.infoLabel.text = "Not Connected"
+                            self.multipeerClient.browser!.invitePeer(peerID, toSession: self.multipeerClient.session, withContext: nil, timeout: 30)
+                        }
+                    case .Connected:
+                        if self.presentation == nil {
+                            self.effectView.alpha = 1
+                            self.infoLabel.text = "No Presentation Loaded"
+                        } else {
+                            self.effectView.alpha = 0
+                            self.infoLabel.text = ""
+                        }
+                    case .Connecting:
                         self.effectView.alpha = 1
-                        self.connectingLabel.text = "Not Connected"
-                        self.multipeerClient.browser!.invitePeer(peerID, toSession: self.multipeerClient.session, withContext: nil, timeout: 30)
-                    }
-                case .Connected:
-                    self.effectView.alpha = 0
-                case .Connecting:
-                    self.effectView.alpha = 1
-                    self.connectingLabel.text = "Connecting..."
+                        self.infoLabel.text = "Connecting..."
                 }
             })
         }
     }
     
-    // UI
+    // Presentation Updates
     
-    func updateSlideImages() {
+    func updatePresentation() {
         if let pdfPath = NSUserDefaults.standardUserDefaults().objectForKey("pdfPath") as? NSString {
-            slideImages = UIImage.imagesFromPDFPath(pdfPath)
-        } else {
-            slideImages = UIImage.imagesFromPDFName("presentation.pdf")
+            var markdown: String?
+            if let mdPath = NSUserDefaults.standardUserDefaults().objectForKey("mdPath") as? NSString {
+                markdown = NSString.stringWithContentsOfFile(mdPath) as? String
+            }
+            presentation = Presentation(pdfPath: pdfPath, markdown: markdown?)
+            collectionView.contentOffset.x = 0
+            collectionView.reloadData()
         }
-        collectionView.contentOffset.x = 0
+        // Force state change block
+        multipeerClient.onStateChange!!(state: multipeerClient.state, peerID: MCPeerID())
     }
     
+    // UI
+    
     func setupUI() {
-        // Collection View
+        setupCollectionView()
+        setupEffectView()
+        setupNotesView()
+        setupInfoLabel()
+    }
+    
+    func setupCollectionView() {
         collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
-        
-        setupEffectView()
-        setupLabel()
+        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
     }
     
     func setupEffectView() {
@@ -79,21 +106,36 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         view.addConstraints(vertical)
     }
     
-    func setupLabel() {
-        connectingLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        connectingLabel.text = "Not Connected"
-        connectingLabel.textColor = UIColor.whiteColor()
-        effectView.addSubview(connectingLabel)
+    func setupNotesView() {
+        notesView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        notesView.font = UIFont.systemFontOfSize(30)
+        notesView.backgroundColor = UIColor.clearColor()
+        notesView.textColor = UIColor.whiteColor()
+        notesView.editable = false
+        notesView.alpha = 0
+        effectView.addSubview(notesView)
+        
+        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
+        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
+        effectView.addConstraints(horizontal)
+        effectView.addConstraints(vertical)
+    }
+    
+    func setupInfoLabel() {
+        infoLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        infoLabel.text = "Not Connected"
+        infoLabel.textColor = UIColor.whiteColor()
+        effectView.addSubview(infoLabel)
         
         // Constraints
-        let centerX = NSLayoutConstraint(item: connectingLabel,
+        let centerX = NSLayoutConstraint(item: infoLabel,
             attribute: NSLayoutAttribute.CenterX,
             relatedBy: NSLayoutRelation.Equal,
             toItem: effectView,
             attribute: NSLayoutAttribute.CenterX,
             multiplier: 1,
             constant: 0)
-        let centerY = NSLayoutConstraint(item: connectingLabel,
+        let centerY = NSLayoutConstraint(item: infoLabel,
             attribute: NSLayoutAttribute.CenterY,
             relatedBy: NSLayoutRelation.Equal,
             toItem: effectView,
@@ -103,22 +145,47 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         effectView.addConstraints([centerX, centerY])
     }
     
-    // Refresh Connection
+    // Gestures
     
     func refreshConnection() {
         multipeerClient.browser!.stopBrowsingForPeers()
         multipeerClient.browser!.startBrowsingForPeers()
     }
     
+    func longPress(sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+            case .Began:
+                showNotes(true)
+            default:
+                // Don't do anything if the effect view is now being used to show a connectivity message
+                if multipeerClient.session!.connectedPeers.count > 0 {
+                    showNotes(false)
+                }
+        }
+    }
+    
+    func showNotes(show: Bool) {
+        notesView.text = presentation!.slides[Int(currentSlide())].notes
+        notesView.alpha = 1
+        UIView.animateWithDuration(0.25, animations: {
+            self.effectView.alpha = CGFloat(show)
+        }) { finished in
+            self.notesView.alpha = CGFloat(show)
+        }
+    }
+    
     // Collection View
     
     override func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
-        return slideImages.count
+        if let presentation = self.presentation {
+            return presentation.slides.count
+        }
+        return 0
     }
     
     override func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as Cell
-        cell.imageView.setImage(slideImages[indexPath.item])
+        cell.imageView.setImage(presentation!.slides[indexPath.item].image)
         return cell as UICollectionViewCell
     }
     
