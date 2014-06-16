@@ -17,6 +17,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     let multipeerClient = MultipeerClient()
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
     let notesView = UITextView()
+    let nextSlideView = UIImageView()
     let infoLabel = UILabel()
     
     // View Lifecycle
@@ -38,6 +39,8 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     func setupConnectivityObserver() {
         multipeerClient.onStateChange = {(state: MCSessionState, peerID: MCPeerID) -> () in
             dispatch_async(dispatch_get_main_queue(), {
+                self.notesView.alpha = 0
+                self.nextSlideView.alpha = 0
                 switch state {
                     case .NotConnected:
                         if self.multipeerClient.session == nil {
@@ -85,8 +88,9 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     func setupUI() {
         setupCollectionView()
         setupEffectView()
-        setupNotesView()
         setupInfoLabel()
+        setupNotesView()
+        setupNextSlideView()
     }
     
     func setupCollectionView() {
@@ -104,21 +108,6 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["effectView": effectView])
         view.addConstraints(horizontal)
         view.addConstraints(vertical)
-    }
-    
-    func setupNotesView() {
-        notesView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        notesView.font = UIFont.systemFontOfSize(30)
-        notesView.backgroundColor = UIColor.clearColor()
-        notesView.textColor = UIColor.whiteColor()
-        notesView.editable = false
-        notesView.alpha = 0
-        effectView.addSubview(notesView)
-        
-        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
-        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
-        effectView.addConstraints(horizontal)
-        effectView.addConstraints(vertical)
     }
     
     func setupInfoLabel() {
@@ -145,6 +134,65 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         effectView.addConstraints([centerX, centerY])
     }
     
+    func setupNotesView() {
+        notesView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        notesView.font = UIFont.systemFontOfSize(30)
+        notesView.backgroundColor = UIColor.clearColor()
+        notesView.textColor = UIColor.whiteColor()
+        notesView.editable = false
+        notesView.alpha = 0
+        effectView.addSubview(notesView)
+        
+        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
+        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
+        effectView.addConstraints(horizontal)
+        effectView.addConstraints(vertical)
+    }
+    
+    func setupNextSlideView() {
+        nextSlideView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        nextSlideView.contentMode = UIViewContentMode.ScaleAspectFit
+        effectView.addSubview(nextSlideView)
+        
+        // Constraints
+        let ratio = NSLayoutConstraint(item: nextSlideView,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: nextSlideView,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 16.0/9,
+            constant: 0)
+        let height = NSLayoutConstraint(item: nextSlideView,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.LessThanOrEqual,
+            toItem: effectView,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 0.5,
+            constant: 0)
+        let left = NSLayoutConstraint(item: nextSlideView,
+            attribute: NSLayoutAttribute.Left,
+            relatedBy: NSLayoutRelation.GreaterThanOrEqual,
+            toItem: effectView,
+            attribute: NSLayoutAttribute.Left,
+            multiplier: 1,
+            constant: 10)
+        let right = NSLayoutConstraint(item: nextSlideView,
+            attribute: NSLayoutAttribute.Right,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: effectView,
+            attribute: NSLayoutAttribute.Right,
+            multiplier: 1,
+            constant: -10)
+        let bottom = NSLayoutConstraint(item: nextSlideView,
+            attribute: NSLayoutAttribute.Bottom,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: effectView,
+            attribute: NSLayoutAttribute.Bottom,
+            multiplier: 1,
+            constant: -10)
+        effectView.addConstraints([ratio, height, left, right, bottom])
+    }
+    
     // Gestures
     
     func refreshConnection() {
@@ -165,12 +213,21 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     }
     
     func showNotes(show: Bool) {
-        notesView.text = presentation!.slides[Int(currentSlide())].notes
+        let currentSlideIndex = Int(currentSlide())
+        notesView.text = presentation!.slides[currentSlideIndex].notes
         notesView.alpha = 1
+        nextSlideView.alpha = 1
+        
+        if currentSlideIndex < presentation!.slides.count - 1 {
+            nextSlideView.setImage(presentation!.slides[currentSlideIndex+1].image)
+        } else {
+            nextSlideView.setImage(nil)
+        }
         UIView.animateWithDuration(0.25, animations: {
             self.effectView.alpha = CGFloat(show)
         }) { finished in
             self.notesView.alpha = CGFloat(show)
+            self.nextSlideView.alpha = CGFloat(show)
         }
     }
     
