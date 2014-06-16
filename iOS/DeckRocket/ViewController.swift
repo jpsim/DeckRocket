@@ -219,9 +219,9 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         nextSlideView.alpha = 1
         
         if currentSlideIndex < presentation!.slides.count - 1 {
-            nextSlideView.setImage(presentation!.slides[currentSlideIndex+1].image)
+            nextSlideView.image = presentation!.slides[currentSlideIndex+1].image
         } else {
-            nextSlideView.setImage(nil)
+            nextSlideView.image = nil
         }
         UIView.animateWithDuration(0.25, animations: {
             self.effectView.alpha = CGFloat(show)
@@ -242,7 +242,8 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     override func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as Cell
-        cell.imageView.setImage(presentation!.slides[indexPath.item].image)
+        let slide = presentation!.slides[indexPath.item]
+        cell.imageView.image = slide.image
         return cell as UICollectionViewCell
     }
     

@@ -11,12 +11,6 @@
 		E813E465194BC1CE0000A7BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E813E464194BC1CE0000A7BF /* Images.xcassets */; };
 		E813E47B194BC2FE0000A7BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E813E47A194BC2FE0000A7BF /* ViewController.swift */; };
 		E813E47D194BC38A0000A7BF /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E813E47C194BC38A0000A7BF /* Cell.swift */; };
-		E813E48A194BC4A80000A7BF /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = E813E47F194BC4A80000A7BF /* LICENSE.txt */; };
-		E813E48B194BC4A80000A7BF /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E481194BC4A80000A7BF /* NSData+MD5.m */; };
-		E813E48C194BC4A80000A7BF /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E483194BC4A80000A7BF /* NSString+MD5.m */; };
-		E813E48D194BC4A80000A7BF /* PDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E485194BC4A80000A7BF /* PDFView.m */; };
-		E813E48E194BC4A80000A7BF /* UIImage+PDF.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E487194BC4A80000A7BF /* UIImage+PDF.m */; };
-		E813E48F194BC4A80000A7BF /* UIView+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = E813E489194BC4A80000A7BF /* UIView+Image.m */; };
 		E8836E52194CBE4F00288020 /* PDFImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8836E51194CBE4F00288020 /* PDFImages.swift */; };
 		E8CE4647194E142C00203C3E /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CE4646194E142C00203C3E /* FileType.swift */; };
 		E8CE4649194E1FF800203C3E /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CE4648194E1FF800203C3E /* Presentation.swift */; };
@@ -32,17 +26,6 @@
 		E813E464194BC1CE0000A7BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E813E47A194BC2FE0000A7BF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E813E47C194BC38A0000A7BF /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
-		E813E47F194BC4A80000A7BF /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		E813E480194BC4A80000A7BF /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MD5.h"; sourceTree = "<group>"; };
-		E813E481194BC4A80000A7BF /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MD5.m"; sourceTree = "<group>"; };
-		E813E482194BC4A80000A7BF /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		E813E483194BC4A80000A7BF /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
-		E813E484194BC4A80000A7BF /* PDFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFView.h; sourceTree = "<group>"; };
-		E813E485194BC4A80000A7BF /* PDFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFView.m; sourceTree = "<group>"; };
-		E813E486194BC4A80000A7BF /* UIImage+PDF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+PDF.h"; sourceTree = "<group>"; };
-		E813E487194BC4A80000A7BF /* UIImage+PDF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+PDF.m"; sourceTree = "<group>"; };
-		E813E488194BC4A80000A7BF /* UIView+Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Image.h"; sourceTree = "<group>"; };
-		E813E489194BC4A80000A7BF /* UIView+Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Image.m"; sourceTree = "<group>"; };
 		E813E490194BC4BC0000A7BF /* DeckRocket-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DeckRocket-Bridging-Header.h"; sourceTree = "<group>"; };
 		E8836E51194CBE4F00288020 /* PDFImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFImages.swift; sourceTree = "<group>"; };
 		E8CE4646194E142C00203C3E /* FileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
@@ -87,7 +70,6 @@
 				E8CE464C194E4CAD00203C3E /* Model */,
 				E8CE464E194E4CC000203C3E /* View Controllers */,
 				E8CE464D194E4CB900203C3E /* Views */,
-				E8CE4651194E4CF500203C3E /* Vendor */,
 				E813E464194BC1CE0000A7BF /* Images.xcassets */,
 				E813E460194BC1CE0000A7BF /* Supporting Files */,
 			);
@@ -101,24 +83,6 @@
 				E813E461194BC1CE0000A7BF /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E813E47E194BC4A80000A7BF /* UIImage+PDF */ = {
-			isa = PBXGroup;
-			children = (
-				E813E47F194BC4A80000A7BF /* LICENSE.txt */,
-				E813E480194BC4A80000A7BF /* NSData+MD5.h */,
-				E813E481194BC4A80000A7BF /* NSData+MD5.m */,
-				E813E482194BC4A80000A7BF /* NSString+MD5.h */,
-				E813E483194BC4A80000A7BF /* NSString+MD5.m */,
-				E813E484194BC4A80000A7BF /* PDFView.h */,
-				E813E485194BC4A80000A7BF /* PDFView.m */,
-				E813E486194BC4A80000A7BF /* UIImage+PDF.h */,
-				E813E487194BC4A80000A7BF /* UIImage+PDF.m */,
-				E813E488194BC4A80000A7BF /* UIView+Image.h */,
-				E813E489194BC4A80000A7BF /* UIView+Image.m */,
-			);
-			path = "UIImage+PDF";
 			sourceTree = "<group>";
 		};
 		E8CE464C194E4CAD00203C3E /* Model */ = {
@@ -163,14 +127,6 @@
 				E813E462194BC1CE0000A7BF /* AppDelegate.swift */,
 			);
 			name = Delegates;
-			sourceTree = "<group>";
-		};
-		E8CE4651194E4CF500203C3E /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				E813E47E194BC4A80000A7BF /* UIImage+PDF */,
-			);
-			name = Vendor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,7 +185,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E813E48A194BC4A80000A7BF /* LICENSE.txt in Resources */,
 				E813E465194BC1CE0000A7BF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,20 +196,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E813E48F194BC4A80000A7BF /* UIView+Image.m in Sources */,
 				E813E47B194BC2FE0000A7BF /* ViewController.swift in Sources */,
 				E8EB0583194C2E670048889A /* MultipeerClient.swift in Sources */,
-				E813E48D194BC4A80000A7BF /* PDFView.m in Sources */,
 				E8EB0585194CA65D0048889A /* CollectionViewLayout.swift in Sources */,
 				E813E463194BC1CE0000A7BF /* AppDelegate.swift in Sources */,
 				E8CE4649194E1FF800203C3E /* Presentation.swift in Sources */,
-				E813E48C194BC4A80000A7BF /* NSString+MD5.m in Sources */,
 				E8CE4647194E142C00203C3E /* FileType.swift in Sources */,
-				E813E48E194BC4A80000A7BF /* UIImage+PDF.m in Sources */,
 				E8836E52194CBE4F00288020 /* PDFImages.swift in Sources */,
 				E8CE464B194E2F7300203C3E /* Slide.swift in Sources */,
 				E813E47D194BC38A0000A7BF /* Cell.swift in Sources */,
-				E813E48B194BC4A80000A7BF /* NSData+MD5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,7 +299,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "DeckRocket/DeckRocket-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -362,7 +312,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "DeckRocket/DeckRocket-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
