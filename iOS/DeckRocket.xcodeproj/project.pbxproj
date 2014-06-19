@@ -26,7 +26,6 @@
 		E813E464194BC1CE0000A7BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E813E47A194BC2FE0000A7BF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E813E47C194BC38A0000A7BF /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
-		E813E490194BC4BC0000A7BF /* DeckRocket-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DeckRocket-Bridging-Header.h"; sourceTree = "<group>"; };
 		E8836E51194CBE4F00288020 /* PDFImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFImages.swift; sourceTree = "<group>"; };
 		E8CE4646194E142C00203C3E /* FileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		E8CE4648194E1FF800203C3E /* Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
@@ -79,7 +78,6 @@
 		E813E460194BC1CE0000A7BF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E813E490194BC4BC0000A7BF /* DeckRocket-Bridging-Header.h */,
 				E813E461194BC1CE0000A7BF /* Info.plist */,
 			);
 			name = "Supporting Files";
