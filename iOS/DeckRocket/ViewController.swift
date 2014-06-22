@@ -95,8 +95,9 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     func setupCollectionView() {
         collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.pagingEnabled = true
         collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
+        collectionView.pagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     func setupEffectView() {
@@ -139,7 +140,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         notesView.font = UIFont.systemFontOfSize(30)
         notesView.backgroundColor = UIColor.clearColor()
         notesView.textColor = UIColor.whiteColor()
-        notesView.editable = false
+        notesView.userInteractionEnabled = false
         notesView.alpha = 0
         effectView.addSubview(notesView)
         
@@ -204,6 +205,8 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         switch sender.state {
             case .Began:
                 showNotes(true)
+            case .Changed:
+                break
             default:
                 // Don't do anything if the effect view is now being used to show a connectivity message
                 if multipeerClient.session!.connectedPeers.count > 0 {
