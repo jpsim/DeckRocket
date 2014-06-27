@@ -15,7 +15,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     var presentation: Presentation?
     let multipeerClient = MultipeerClient()
-    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
+    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     let notesView = UITextView()
     let nextSlideView = UIImageView()
     let infoLabel = UILabel()
@@ -119,17 +119,17 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         
         // Constraints
         let centerX = NSLayoutConstraint(item: infoLabel,
-            attribute: NSLayoutAttribute.CenterX,
-            relatedBy: NSLayoutRelation.Equal,
+            attribute: .CenterX,
+            relatedBy: .Equal,
             toItem: effectView,
-            attribute: NSLayoutAttribute.CenterX,
+            attribute: .CenterX,
             multiplier: 1,
             constant: 0)
         let centerY = NSLayoutConstraint(item: infoLabel,
-            attribute: NSLayoutAttribute.CenterY,
-            relatedBy: NSLayoutRelation.Equal,
+            attribute: .CenterY,
+            relatedBy: .Equal,
             toItem: effectView,
-            attribute: NSLayoutAttribute.CenterY,
+            attribute: .CenterY,
             multiplier: 1,
             constant: 0)
         effectView.addConstraints([centerX, centerY])
@@ -157,38 +157,38 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         
         // Constraints
         let ratio = NSLayoutConstraint(item: nextSlideView,
-            attribute: NSLayoutAttribute.Width,
-            relatedBy: NSLayoutRelation.Equal,
+            attribute: .Width,
+            relatedBy: .Equal,
             toItem: nextSlideView,
-            attribute: NSLayoutAttribute.Height,
+            attribute: .Height,
             multiplier: 16.0/9,
             constant: 0)
         let height = NSLayoutConstraint(item: nextSlideView,
-            attribute: NSLayoutAttribute.Height,
-            relatedBy: NSLayoutRelation.LessThanOrEqual,
+            attribute: .Height,
+            relatedBy: .LessThanOrEqual,
             toItem: effectView,
-            attribute: NSLayoutAttribute.Height,
+            attribute: .Height,
             multiplier: 0.5,
             constant: 0)
         let left = NSLayoutConstraint(item: nextSlideView,
-            attribute: NSLayoutAttribute.Left,
-            relatedBy: NSLayoutRelation.GreaterThanOrEqual,
+            attribute: .Left,
+            relatedBy: .GreaterThanOrEqual,
             toItem: effectView,
-            attribute: NSLayoutAttribute.Left,
+            attribute: .Left,
             multiplier: 1,
             constant: 10)
         let right = NSLayoutConstraint(item: nextSlideView,
-            attribute: NSLayoutAttribute.Right,
-            relatedBy: NSLayoutRelation.Equal,
+            attribute: .Right,
+            relatedBy: .Equal,
             toItem: effectView,
-            attribute: NSLayoutAttribute.Right,
+            attribute: .Right,
             multiplier: 1,
             constant: -10)
         let bottom = NSLayoutConstraint(item: nextSlideView,
-            attribute: NSLayoutAttribute.Bottom,
-            relatedBy: NSLayoutRelation.Equal,
+            attribute: .Bottom,
+            relatedBy: .Equal,
             toItem: effectView,
-            attribute: NSLayoutAttribute.Bottom,
+            attribute: .Bottom,
             multiplier: 1,
             constant: -10)
         effectView.addConstraints([ratio, height, left, right, bottom])

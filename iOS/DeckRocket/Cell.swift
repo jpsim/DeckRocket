@@ -13,7 +13,7 @@ class Cell: UICollectionViewCell {
     
     init(frame: CGRect) {
         super.init(frame: frame)
-        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        imageView.contentMode = .ScaleAspectFit
         contentView.addSubview(imageView)
     }
     

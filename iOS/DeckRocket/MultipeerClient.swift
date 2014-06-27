@@ -33,7 +33,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     // Send
     
     func send(data: NSData) {
-        session!.sendData(data, toPeers: session!.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: nil)
+        session!.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable, error: nil)
     }
     
     func sendString(string: String) {
@@ -102,9 +102,9 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
         let rootVC = UIApplication.sharedApplication().delegate.window!.rootViewController as ViewController
         
-        let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Load", style: UIAlertActionStyle.Default) { action in
+        let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Load", style: .Default) { action in
             var error: NSError? = nil
             let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
             let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
