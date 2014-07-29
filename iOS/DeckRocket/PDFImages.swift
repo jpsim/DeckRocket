@@ -11,11 +11,11 @@ import UIKit
 import CoreGraphics
 
 extension UIImage {
-    class func imagesFromPDFPath(pdfPath: String) -> UIImage[] {
+    class func imagesFromPDFPath(pdfPath: String) -> [UIImage] {
         let pdfURL = NSURL(fileURLWithPath: pdfPath)
         let pdf = CGPDFDocumentCreateWithURL(pdfURL)
         let numberOfPages = CGPDFDocumentGetNumberOfPages(pdf)
-        var images: UIImage[] = []
+        var images = [UIImage]()
         
         let screenSize = UIApplication.sharedApplication().delegate.window!.bounds.size
         let largestDimension = max(Float(screenSize.width), Float(screenSize.height))
@@ -65,13 +65,8 @@ extension UIImage {
     class func imageWithPDFURL(url: NSURL, page: UInt, fitSize size: CGSize) -> UIImage {
         let rect = pdfRectForURL(url, page: page)
         let scaleFactor = CGFloat(max(rect.size.width/size.width, rect.size.height/size.height))
-        #if arch(x86_64) || arch(arm64)
-            var newWidth = ceil(rect.size.width/scaleFactor)
-            var newHeight = ceil(rect.size.height/scaleFactor)
-            #else
-            var newWidth = ceilf(rect.size.width/scaleFactor)
-            var newHeight = ceilf(rect.size.height/scaleFactor)
-        #endif
+        var newWidth = ceil(rect.size.width/scaleFactor)
+        var newHeight = ceil(rect.size.height/scaleFactor)
         let newSize = CGSize(width: newWidth, height: newHeight);
         return UIImage.imageWithPDFURL(url, page: page, size: newSize)
     }

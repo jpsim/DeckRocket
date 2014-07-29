@@ -10,7 +10,9 @@ import Cocoa
 
 class MenuView: NSView, NSMenuDelegate {
     var highlight = false
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(CGFloat(NSVariableStatusItemLength))
+    // NSVariableStatusItemLength == -1
+    // Not using symbol because it doesn't link properly in 10.10
+    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     
     init() {
         super.init(frame: NSRect(x: 0, y: 0, width: 24, height: 24))
@@ -60,7 +62,7 @@ class MenuView: NSView, NSMenuDelegate {
     override func performDragOperation(sender: NSDraggingInfo!) -> Bool {
         let pboard = sender.draggingPasteboard()
         if (pboard.types as NSArray).containsObject(NSFilenamesPboardType) {
-            let files = pboard.propertyListForType(NSFilenamesPboardType) as String[]
+            let files = pboard.propertyListForType(NSFilenamesPboardType) as [String]
             let file = files[0]
             if validateFile(file) {
                 let appDelegate = NSApp.delegate as AppDelegate

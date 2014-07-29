@@ -29,7 +29,7 @@ class HUDView: NSView {
         DJProgressHUD.showProgress(1, withStatus: string, fromView: hudWindow.contentView as NSView)
         let delay = 2 * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_current_queue()) {
+        dispatch_after(time, dispatch_get_main_queue()) {
             HUDView.dismiss()
         }
     }

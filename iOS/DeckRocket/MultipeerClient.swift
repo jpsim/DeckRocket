@@ -36,13 +36,13 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
         session!.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable, error: nil)
     }
     
-    func sendString(string: String) {
-        send(string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+    func sendString(string: NSString) {
+        send(string.dataUsingEncoding(NSUTF8StringEncoding))
     }
     
     // MCNearbyServiceBrowserDelegate
     
-    func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: NSDictionary!) {
+    func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
         if !session {
             session = MCSession(peer: localPeerID)
             session!.delegate = self
@@ -53,7 +53,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
         
     }
-    
+
     // MCSessionDelegate
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
@@ -77,14 +77,16 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
         if error == nil {
-            let fileType = FileType(fileExtension: resourceName.pathExtension)
-            switch fileType {
+            dispatch_async(dispatch_get_main_queue()) {
+                let fileType = FileType(fileExtension: resourceName.pathExtension)
+                switch fileType {
                 case .PDF:
-                    handlePDF(resourceName, atURL: localURL)
+                    self.handlePDF(resourceName, atURL: localURL)
                 case .Markdown:
-                    handleMarkdown(resourceName, atURL: localURL)
+                    self.handleMarkdown(resourceName, atURL: localURL)
                 case .Unknown:
                     println("file type unknown")
+                }
             }
         }
     }
@@ -117,12 +119,12 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
             
             NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: url, error: &error)
             if error == nil {
-                NSUserDefaults.standardUserDefaults().setObject(filePath as String, forKey: userDefaultsKey)
+                NSUserDefaults.standardUserDefaults().setObject(filePath, forKey: userDefaultsKey)
                 NSUserDefaults.standardUserDefaults().synchronize()
                 rootVC.updatePresentation()
             }
         })
-        
+
         rootVC.presentViewController(alert, animated: true, completion: nil)
     }
 }

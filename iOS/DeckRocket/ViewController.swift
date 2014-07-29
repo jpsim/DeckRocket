@@ -52,12 +52,12 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
                             self.multipeerClient.browser!.invitePeer(peerID, toSession: self.multipeerClient.session, withContext: nil, timeout: 30)
                         }
                     case .Connected:
-                        if self.presentation == nil {
-                            self.effectView.alpha = 1
-                            self.infoLabel.text = "No Presentation Loaded"
-                        } else {
+                        if let presentation = self.presentation {
                             self.effectView.alpha = 0
                             self.infoLabel.text = ""
+                        } else {
+                            self.effectView.alpha = 1
+                            self.infoLabel.text = "No Presentation Loaded"
                         }
                     case .Connecting:
                         self.effectView.alpha = 1
@@ -73,7 +73,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         if let pdfPath = NSUserDefaults.standardUserDefaults().objectForKey("pdfPath") as? NSString {
             var markdown: String?
             if let mdPath = NSUserDefaults.standardUserDefaults().objectForKey("mdPath") as? NSString {
-                markdown = NSString.stringWithContentsOfFile(mdPath) as? String
+                markdown = NSString.stringWithContentsOfFile(mdPath, encoding: NSUTF8StringEncoding, error: nil)
             }
             presentation = Presentation(pdfPath: pdfPath, markdown: markdown?)
             collectionView.contentOffset.x = 0
@@ -275,7 +275,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         // We do this half-way through the animation
         let delay = (duration / 2) * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_current_queue()) {
+        dispatch_after(time, dispatch_get_main_queue()) {
             self.collectionView.contentOffset.x = targetOffset
         }
     }

@@ -10,7 +10,8 @@ import Foundation
 import MultipeerConnectivity
 
 typealias stateChange = ((state: MCSessionState) -> ())?
-let ProgressContext = KVOContext()
+typealias KVOContext = UInt8
+var ProgressContext = KVOContext()
 
 class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
@@ -43,7 +44,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
         let peer = session!.connectedPeers[0] as MCPeerID
         pdfProgress = session!.sendResourceAtURL(url, withName: filePath.lastPathComponent, toPeer: peer) { error in
             dispatch_async(dispatch_get_main_queue()) {
-                self.pdfProgress!.removeObserver(self, forKeyPath: "fractionCompleted", kvoContext: ProgressContext)
+                self.pdfProgress!.removeObserver(self, forKeyPath: "fractionCompleted", context: &ProgressContext)
                 if error != nil {
                     HUDView.show("Error!\n\(error.localizedDescription)")
                 } else {
@@ -51,7 +52,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
                 }
             }
         }
-        pdfProgress!.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.New, kvoContext: ProgressContext)
+        pdfProgress!.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: &ProgressContext)
     }
     
     // MCNearbyServiceAdvertiserDelegate
@@ -90,11 +91,12 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     }
     
     // KVO
-    
-    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: NSDictionary!, context: CMutableVoidPointer) {
-        if KVOContext.fromVoidContext(context) === ProgressContext {
+
+    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafePointer<()>) {
+        if context == &ProgressContext {
             dispatch_async(dispatch_get_main_queue()) {
-                HUDView.showProgress(change[NSKeyValueChangeNewKey] as CGFloat, string: "Sending File to iPhone")
+                let progress: AnyObject? = change[NSKeyValueChangeNewKey]
+                HUDView.showProgress(progress as CGFloat, string: "Sending File to iPhone")
             }
         } else {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)

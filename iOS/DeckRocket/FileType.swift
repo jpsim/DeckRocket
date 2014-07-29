@@ -11,25 +11,25 @@ import Foundation
 enum FileType {
     case PDF, Markdown, Unknown
     
-    init(fileExtension: NSString) {
-        var ext = fileExtension.lowercaseString as String
-        if (FileType.extensionsForType(PDF) as NSArray).containsObject(ext) {
+    init(fileExtension: String) {
+        var ext = fileExtension.lowercaseString
+        if contains(FileType.extensionsForType(PDF), ext) {
             self = PDF
-        } else if (FileType.extensionsForType(Markdown) as NSArray).containsObject(ext) {
+        } else if contains(FileType.extensionsForType(Markdown), ext) {
             self = Markdown
         } else {
             self = Unknown
         }
     }
     
-    static func extensionsForType(fileType: FileType) -> String[] {
+    static func extensionsForType(fileType: FileType) -> [String] {
         switch fileType {
         case PDF:
             return ["pdf"]
         case Markdown:
             return ["markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text"]
         case Unknown:
-            return String[]()
+            return [String]()
         }
     }
 }

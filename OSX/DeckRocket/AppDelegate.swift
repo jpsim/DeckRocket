@@ -28,15 +28,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 case .Connected:
                     stateString = "Connected"
             }
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue()) {
                 self.menuView.menu.itemAtIndex(0).title = stateString
-            })
+            }
         }
     }
     
     // Menu Items
     
     func quit() {
-        NSApp.terminate(self)
+        NSApplication.sharedApplication().terminate(self)
     }
 }
