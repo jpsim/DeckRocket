@@ -24,7 +24,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     
     // Lifecycle
     
-    init() {
+    override init() {
         super.init()
         advertiser = MCNearbyServiceAdvertiser(peer: localPeerID, discoveryInfo: nil, serviceType: "deckrocket")
         advertiser!.delegate = self
@@ -92,7 +92,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     
     // KVO
 
-    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafePointer<()>) {
+    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
         if context == &ProgressContext {
             dispatch_async(dispatch_get_main_queue()) {
                 let progress: AnyObject? = change[NSKeyValueChangeNewKey]

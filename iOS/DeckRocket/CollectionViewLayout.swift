@@ -9,11 +9,16 @@
 import UIKit
 
 class CollectionViewLayout: UICollectionViewFlowLayout {
-    init() {
+
+    override init() {
         super.init()
-        itemSize = UIApplication.sharedApplication().delegate.window!.bounds.size
+        itemSize = UIApplication.sharedApplication().delegate.window!!.bounds.size
         scrollDirection = .Horizontal
         minimumInteritemSpacing = 0
         minimumLineSpacing = 0
+    }
+
+    required convenience init(coder aDecoder: NSCoder!) {
+        self.init()
     }
 }

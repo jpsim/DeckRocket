@@ -22,8 +22,12 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     // View Lifecycle
     
-    init() {
+    override init() {
         super.init(collectionViewLayout: CollectionViewLayout())
+    }
+
+    convenience required init(coder aDecoder: NSCoder!) {
+        self.init()
     }
     
     override func viewDidLoad() {

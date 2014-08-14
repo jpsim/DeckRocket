@@ -23,7 +23,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     
     // Init
     
-    init() {
+    override init() {
         super.init()
         browser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: "deckrocket")
         browser!.delegate = self
@@ -43,7 +43,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     // MCNearbyServiceBrowserDelegate
     
     func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
-        if !session {
+        if session == nil {
             session = MCSession(peer: localPeerID)
             session!.delegate = self
         }
@@ -102,7 +102,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     }
     
     func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
-        let rootVC = UIApplication.sharedApplication().delegate.window!.rootViewController as ViewController
+        let rootVC = UIApplication.sharedApplication().delegate.window??.rootViewController as ViewController
         
         let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))

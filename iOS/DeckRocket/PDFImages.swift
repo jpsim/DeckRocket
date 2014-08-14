@@ -17,12 +17,12 @@ extension UIImage {
         let numberOfPages = CGPDFDocumentGetNumberOfPages(pdf)
         var images = [UIImage]()
         
-        let screenSize = UIApplication.sharedApplication().delegate.window!.bounds.size
+        let screenSize = UIApplication.sharedApplication().delegate.window!!.bounds.size
         let largestDimension = max(Float(screenSize.width), Float(screenSize.height))
         let largestSize = CGSize(width: CGFloat(largestDimension), height: CGFloat(largestDimension))
         
         for pageNumber in 1...numberOfPages {
-            images += UIImage.imageWithPDFURL(pdfURL, page: pageNumber, fitSize: largestSize)
+            images.append(UIImage.imageWithPDFURL(pdfURL, page: pageNumber, fitSize: largestSize))
         }
         return images
     }

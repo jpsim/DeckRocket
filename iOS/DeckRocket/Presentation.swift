@@ -28,7 +28,7 @@ class Presentation {
             if pages.count > index {
                 page = pages[index]
             }
-            slides += Slide(image: image, markdown: page?)
+            slides.append(Slide(image: image, markdown: page?))
         }
     }
     
@@ -46,7 +46,7 @@ class Presentation {
             }
             var substring = (markdown as NSString).substringWithRange(NSRange(location: start, length: end-start))
             substring = (substring as NSString).stringByReplacingOccurrencesOfString("---\n", withString: "")
-            pages += substring
+            pages.append(substring)
         }
         
         return pages
@@ -64,13 +64,13 @@ class Presentation {
         let range = NSRange(location: 0, length: (markdown as NSString).length)
         if let matches = pagesExpression.matchesInString(markdown, options: NSMatchingOptions(0), range: range) {
             for match in matches as [NSTextCheckingResult] {
-                pageDelimiters += match.range.location
+                pageDelimiters.append(match.range.location)
             }
         }
         
         // EOF is an implicit page delimiter
-        pageDelimiters += range.length
-        
+        pageDelimiters.append(range.length)
+
         return pageDelimiters
     }
 }

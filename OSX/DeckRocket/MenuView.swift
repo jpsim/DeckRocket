@@ -10,15 +10,20 @@ import Cocoa
 
 class MenuView: NSView, NSMenuDelegate {
     var highlight = false
+
     // NSVariableStatusItemLength == -1
     // Not using symbol because it doesn't link properly in 10.10
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     
-    init() {
+    override init() {
         super.init(frame: NSRect(x: 0, y: 0, width: 24, height: 24))
         registerForDraggedTypes([NSFilenamesPboardType])
         statusItem.view = self
         setupMenu()
+    }
+
+    required convenience init(coder: NSCoder) {
+        self.init()
     }
     
     // Menu
@@ -65,7 +70,7 @@ class MenuView: NSView, NSMenuDelegate {
             let files = pboard.propertyListForType(NSFilenamesPboardType) as [String]
             let file = files[0]
             if validateFile(file) {
-                let appDelegate = NSApp.delegate as AppDelegate
+                let appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
                 appDelegate.multipeerClient.sendFile(file)
             } else {
                 HUDView.show("Error!\nOnly PDF and Markdown files can be sent")

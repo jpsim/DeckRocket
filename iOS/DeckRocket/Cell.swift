@@ -11,10 +11,14 @@ import UIKit
 class Cell: UICollectionViewCell {
     let imageView = UIImageView()
     
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         imageView.contentMode = .ScaleAspectFit
         contentView.addSubview(imageView)
+    }
+
+    required convenience init(coder aDecoder: NSCoder!) {
+        self.init(frame: CGRectZero)
     }
     
     override func layoutSubviews() {
