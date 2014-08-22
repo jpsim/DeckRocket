@@ -57,8 +57,7 @@ class Slide {
             error: nil)
         
         let fullRange = NSRange(location: 0, length: (markdown! as NSString).length)
-        let notesMatch = notesExpression.firstMatchInString(markdown!, options: NSMatchingOptions(0), range: fullRange)
-        if notesMatch {
+        if let notesMatch = notesExpression?.firstMatchInString(markdown!, options: NSMatchingOptions(0), range: fullRange) {
             return notesMatch.range.location
         }
         return fullRange.length

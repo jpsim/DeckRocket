@@ -62,7 +62,7 @@ class Presentation {
         var pageDelimiters = [Int]()
         
         let range = NSRange(location: 0, length: (markdown as NSString).length)
-        if let matches = pagesExpression.matchesInString(markdown, options: NSMatchingOptions(0), range: range) {
+        if let matches = pagesExpression?.matchesInString(markdown, options: NSMatchingOptions(0), range: range) {
             for match in matches as [NSTextCheckingResult] {
                 pageDelimiters.append(match.range.location)
             }

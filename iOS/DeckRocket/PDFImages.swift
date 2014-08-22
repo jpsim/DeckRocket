@@ -16,6 +16,10 @@ extension UIImage {
         let pdf = CGPDFDocumentCreateWithURL(pdfURL)
         let numberOfPages = CGPDFDocumentGetNumberOfPages(pdf)
         var images = [UIImage]()
+
+        if numberOfPages == 0 {
+            return images
+        }
         
         let screenSize = UIApplication.sharedApplication().delegate.window!!.bounds.size
         let largestDimension = max(Float(screenSize.width), Float(screenSize.height))

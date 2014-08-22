@@ -17,7 +17,7 @@ class Cell: UICollectionViewCell {
         contentView.addSubview(imageView)
     }
 
-    required convenience init(coder aDecoder: NSCoder!) {
+    required convenience init(coder aDecoder: NSCoder) {
         self.init(frame: CGRectZero)
     }
     

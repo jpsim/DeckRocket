@@ -37,7 +37,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     }
     
     func sendString(string: NSString) {
-        send(string.dataUsingEncoding(NSUTF8StringEncoding))
+        send(string.dataUsingEncoding(NSUTF8StringEncoding)!)
     }
     
     // MCNearbyServiceBrowserDelegate

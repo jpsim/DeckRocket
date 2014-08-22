@@ -26,7 +26,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         super.init(collectionViewLayout: CollectionViewLayout())
     }
 
-    convenience required init(coder aDecoder: NSCoder!) {
+    convenience required init(coder aDecoder: NSCoder) {
         self.init()
     }
     
