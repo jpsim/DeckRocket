@@ -10,13 +10,13 @@ import Cocoa
 import MultipeerConnectivity
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
+
     // Properties
     let multipeerClient = MultipeerClient()
     let menuView = MenuView()
-    
+
     // App
-    
+
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         multipeerClient.onStateChange = {(state: MCSessionState) -> () in
             var stateString = ""
@@ -33,9 +33,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-    
+
     // Menu Items
-    
+
     func quit() {
         NSApplication.sharedApplication().terminate(self)
     }

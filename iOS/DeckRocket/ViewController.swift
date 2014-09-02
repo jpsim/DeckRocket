@@ -80,8 +80,8 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
                 markdown = NSString.stringWithContentsOfFile(mdPath, encoding: NSUTF8StringEncoding, error: nil)
             }
             presentation = Presentation(pdfPath: pdfPath, markdown: markdown?)
-            collectionView.contentOffset.x = 0
-            collectionView.reloadData()
+            collectionView!.contentOffset.x = 0
+            collectionView!.reloadData()
         }
         // Force state change block
         multipeerClient.onStateChange!!(state: multipeerClient.state, peerID: MCPeerID())
@@ -98,10 +98,10 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     }
     
     func setupCollectionView() {
-        collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
-        collectionView.pagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView!.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
+        collectionView!.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
+        collectionView!.pagingEnabled = true
+        collectionView!.showsHorizontalScrollIndicator = false
     }
     
     func setupEffectView() {
@@ -240,27 +240,27 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     
     // Collection View
     
-    override func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let presentation = self.presentation {
             return presentation.slides.count
         }
         return 0
     }
     
-    override func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as Cell
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as Cell
         let slide = presentation!.slides[indexPath.item]
         cell.imageView.image = slide.image
-        return cell as UICollectionViewCell
+        return cell
     }
     
     // UIScrollViewDelegate
     
     func currentSlide() -> UInt {
-        return UInt(round(CDouble(collectionView.contentOffset.x / collectionView.frame.size.width)))
+        return UInt(round(collectionView!.contentOffset.x / collectionView!.frame.size.width))
     }
     
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView!) {
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         multipeerClient.sendString("\(currentSlide())")
     }
     
@@ -269,7 +269,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         
         // Update Layout
-        let layout = collectionView.collectionViewLayout as CollectionViewLayout
+        let layout = collectionView!.collectionViewLayout as CollectionViewLayout
         layout.invalidateLayout()
         layout.itemSize = CGSize(width: view.bounds.size.height, height: view.bounds.size.width)
         
@@ -277,10 +277,10 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         let targetOffset = CGFloat(self.currentSlide()) * layout.itemSize.width
         
         // We do this half-way through the animation
-        let delay = (duration / 2) * Double(NSEC_PER_SEC)
+        let delay = (duration / 2) * NSTimeInterval(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
-            self.collectionView.contentOffset.x = targetOffset
+            self.collectionView!.contentOffset.x = targetOffset
         }
     }
 }

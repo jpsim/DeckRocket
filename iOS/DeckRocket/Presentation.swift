@@ -14,7 +14,7 @@ class Presentation {
     var slides = [Slide]()
     
     init(pdfPath: String, markdown: String?) {
-        var slideImages = UIImage.imagesFromPDFPath(pdfPath)
+        let slideImages = UIImage.imagesFromPDFPath(pdfPath)
         
         var pages = [String]()
         
@@ -31,43 +31,43 @@ class Presentation {
             slides.append(Slide(image: image, markdown: page?))
         }
     }
-    
+
     // Markdown Parsing
-    
+
     func pages() -> [String] {
         let locations = pageLocations()
-        
+
         var pages = [String]()
-        
+
         for (index, end) in enumerate(locations) {
             var start = 0
             if index > 0 {
                 start = locations[index - 1]
             }
             var substring = (markdown as NSString).substringWithRange(NSRange(location: start, length: end-start))
-            substring = (substring as NSString).stringByReplacingOccurrencesOfString("---\n", withString: "")
+            substring = substring.stringByReplacingOccurrencesOfString("---\n", withString: "")
             pages.append(substring)
         }
-        
+
         return pages
     }
-    
+
     func pageLocations() -> [Int] {
         // Pattern must match http://www.decksetapp.com/support/#i-separated-my-content-by-----but-deckset-shows-it-on-one-slide-whats-wrong
         let pattern = "^\\-\\-\\-" // ^\-\-\-
         let pagesExpression = NSRegularExpression.regularExpressionWithPattern(pattern,
             options: NSRegularExpressionOptions.AnchorsMatchLines,
             error: nil)
-        
+
         var pageDelimiters = [Int]()
-        
+
         let range = NSRange(location: 0, length: (markdown as NSString).length)
         if let matches = pagesExpression?.matchesInString(markdown, options: NSMatchingOptions(0), range: range) {
             for match in matches as [NSTextCheckingResult] {
                 pageDelimiters.append(match.range.location)
             }
         }
-        
+
         // EOF is an implicit page delimiter
         pageDelimiters.append(range.length)
 

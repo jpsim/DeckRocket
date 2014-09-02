@@ -21,9 +21,9 @@ extension UIImage {
             return images
         }
         
-        let screenSize = UIApplication.sharedApplication().delegate.window!!.bounds.size
-        let largestDimension = max(Float(screenSize.width), Float(screenSize.height))
-        let largestSize = CGSize(width: CGFloat(largestDimension), height: CGFloat(largestDimension))
+        let screenSize = UIApplication.sharedApplication().delegate!.window!!.bounds.size
+        let largestDimension = max(screenSize.width, screenSize.height)
+        let largestSize = CGSize(width: largestDimension, height: largestDimension)
         
         for pageNumber in 1...numberOfPages {
             images.append(UIImage.imageWithPDFURL(pdfURL, page: pageNumber, fitSize: largestSize))
@@ -68,10 +68,10 @@ extension UIImage {
     
     class func imageWithPDFURL(url: NSURL, page: UInt, fitSize size: CGSize) -> UIImage {
         let rect = pdfRectForURL(url, page: page)
-        let scaleFactor = CGFloat(max(rect.size.width/size.width, rect.size.height/size.height))
-        var newWidth = ceil(rect.size.width/scaleFactor)
-        var newHeight = ceil(rect.size.height/scaleFactor)
-        let newSize = CGSize(width: newWidth, height: newHeight);
+        let scaleFactor = max(rect.size.width/size.width, rect.size.height/size.height)
+        let newWidth = ceil(rect.size.width/scaleFactor)
+        let newHeight = ceil(rect.size.height/scaleFactor)
+        let newSize = CGSize(width: newWidth, height: newHeight)
         return UIImage.imageWithPDFURL(url, page: page, size: newSize)
     }
 }

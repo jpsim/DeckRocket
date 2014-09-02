@@ -21,7 +21,7 @@ enum FileType {
             self = Unknown
         }
     }
-    
+
     static func extensionsForType(fileType: FileType) -> [String] {
         switch fileType {
         case PDF:

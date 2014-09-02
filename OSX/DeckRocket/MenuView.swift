@@ -14,7 +14,7 @@ class MenuView: NSView, NSMenuDelegate {
     // NSVariableStatusItemLength == -1
     // Not using symbol because it doesn't link properly in 10.10
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
-    
+
     override init() {
         super.init(frame: NSRect(x: 0, y: 0, width: 24, height: 24))
         registerForDraggedTypes([NSFilenamesPboardType])
@@ -41,32 +41,32 @@ class MenuView: NSView, NSMenuDelegate {
         super.mouseDown(theEvent)
         statusItem.popUpStatusItemMenu(menu)
     }
-    
+
     func menuWillOpen(menu: NSMenu!) {
         highlight = true
         needsDisplay = true
     }
-    
+
     func menuDidClose(menu: NSMenu!) {
         highlight = false
         needsDisplay = true
     }
-    
+
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
         statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
         "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(13)])
     }
-    
+
     // Dragging
-    
+
     override func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
         return NSDragOperation.Copy
     }
-    
+
     override func performDragOperation(sender: NSDraggingInfo!) -> Bool {
         let pboard = sender.draggingPasteboard()
-        if (pboard.types as NSArray).containsObject(NSFilenamesPboardType) {
+        if contains(pboard.types as [NSString], NSFilenamesPboardType) {
             let files = pboard.propertyListForType(NSFilenamesPboardType) as [String]
             let file = files[0]
             if validateFile(file) {
@@ -78,17 +78,15 @@ class MenuView: NSView, NSMenuDelegate {
         }
         return true
     }
-    
+
     func validateFile(filePath: NSString) -> Bool {
-        let fileExtension = (filePath.pathExtension as NSString).lowercaseString as String
-        
         var allowedExtensions = [
             // Markdown
             "markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text",
             // PDF
             "pdf"
         ]
-        
-        return (allowedExtensions as NSArray).containsObject(fileExtension)
+
+        return contains(allowedExtensions, filePath.pathExtension.lowercaseString)
     }
 }

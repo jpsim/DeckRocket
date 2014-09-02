@@ -17,7 +17,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     
     // Properties
     let localPeerID = MCPeerID(displayName: NSHost.currentHost().localizedName)
-    var advertiser: MCNearbyServiceAdvertiser?
+    let advertiser: MCNearbyServiceAdvertiser?
     var session: MCSession?
     var onStateChange: stateChange?
     var pdfProgress: NSProgress?
@@ -58,7 +58,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     // MCNearbyServiceAdvertiserDelegate
     
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!)  {
-        session = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.None)
+        session = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .None)
         session!.delegate = self
         invitationHandler(true, session!)
     }
@@ -73,7 +73,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         let task = NSTask()
-        task.launchPath = NSBundle.mainBundle().pathForResource("deckrocket", ofType: "scpt")
+        task.launchPath = NSBundle.mainBundle().pathForResource("deckrocket", ofType: "scpt")!
         task.arguments = [NSString(data: data, encoding: NSUTF8StringEncoding)]
         task.launch()
     }
@@ -95,8 +95,8 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
         if context == &ProgressContext {
             dispatch_async(dispatch_get_main_queue()) {
-                let progress: AnyObject? = change[NSKeyValueChangeNewKey]
-                HUDView.showProgress(progress as CGFloat, string: "Sending File to iPhone")
+                let progress = change[NSKeyValueChangeNewKey]! as CGFloat
+                HUDView.showProgress(progress, string: "Sending File to iPhone")
             }
         } else {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)

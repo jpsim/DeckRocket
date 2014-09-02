@@ -102,7 +102,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     }
     
     func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
-        let rootVC = UIApplication.sharedApplication().delegate.window??.rootViewController as ViewController
+        let rootVC = UIApplication.sharedApplication().delegate!.window!!.rootViewController as ViewController
         
         let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))

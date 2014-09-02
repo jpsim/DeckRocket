@@ -12,7 +12,7 @@ class CollectionViewLayout: UICollectionViewFlowLayout {
 
     override init() {
         super.init()
-        itemSize = UIApplication.sharedApplication().delegate.window!!.bounds.size
+        itemSize = UIApplication.sharedApplication().delegate!.window!!.bounds.size
         scrollDirection = .Horizontal
         minimumInteritemSpacing = 0
         minimumLineSpacing = 0

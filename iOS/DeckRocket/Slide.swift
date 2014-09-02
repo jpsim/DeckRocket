@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class Slide {
-    var image: UIImage
-    var markdown: String?
-    var body: String?
-    var notes: String?
-    
+    let image: UIImage
+    let markdown: String?
+    let body: String?
+    let notes: String?
+
     init(image: UIImage, markdown: String?) {
         self.image = image
         if markdown != nil {
@@ -23,15 +23,15 @@ class Slide {
             notes = notesFromMarkdown()
         }
     }
-    
+
     // String Parsing
-    
+
     func bodyFromMarkdown() -> String {
         // Skip the trailing \n
         let bodyRange = NSRange(location: 0, length: notesStart() - 1)
         return (markdown! as NSString).substringWithRange(bodyRange)
     }
-    
+
     func notesFromMarkdown() -> String? {
         let nsMarkdown = markdown! as NSString
         
