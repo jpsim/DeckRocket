@@ -10,7 +10,7 @@ import Foundation
 
 enum FileType {
     case PDF, Markdown, Unknown
-    
+
     init(fileExtension: String) {
         var ext = fileExtension.lowercaseString
         if contains(FileType.extensionsForType(PDF), ext) {

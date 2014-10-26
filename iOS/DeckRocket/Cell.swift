@@ -10,7 +10,7 @@ import UIKit
 
 class Cell: UICollectionViewCell {
     let imageView = UIImageView()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         imageView.contentMode = .ScaleAspectFit
@@ -20,7 +20,7 @@ class Cell: UICollectionViewCell {
     required convenience init(coder aDecoder: NSCoder) {
         self.init(frame: CGRectZero)
     }
-    
+
     override func layoutSubviews() {
         imageView.frame = self.bounds
     }

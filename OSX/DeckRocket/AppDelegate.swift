@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     stateString = "Connected"
             }
             dispatch_async(dispatch_get_main_queue()) {
-                self.menuView.menu.itemAtIndex(0).title = stateString
+                self.menuView.menu!.itemAtIndex(0)!.title = stateString
             }
         }
     }

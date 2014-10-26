@@ -34,28 +34,28 @@ class Slide {
 
     func notesFromMarkdown() -> String? {
         let nsMarkdown = markdown! as NSString
-        
+
         var start = notesStart()
         if start == nsMarkdown.length {
             // No notes
             return nil
         }
-        
+
         // Skip the leading ^
         start++
         let length = nsMarkdown.length - start
-        
+
         let notesRange = NSRange(location: start, length: length)
         return nsMarkdown.substringWithRange(notesRange)
     }
-    
+
     func notesStart() -> Int {
         // Pattern must match http://www.decksetapp.com/support/#how-do-i-add-presenter-notes
         let pattern = "^\\^" // ^\^
-        let notesExpression = NSRegularExpression.regularExpressionWithPattern(pattern,
+        let notesExpression = NSRegularExpression(pattern: pattern,
             options: NSRegularExpressionOptions.AnchorsMatchLines,
             error: nil)
-        
+
         let fullRange = NSRange(location: 0, length: (markdown! as NSString).length)
         if let notesMatch = notesExpression?.firstMatchInString(markdown!, options: NSMatchingOptions(0), range: fullRange) {
             return notesMatch.range.location

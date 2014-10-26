@@ -12,17 +12,17 @@ import UIKit
 class Presentation {
     var markdown = ""
     var slides = [Slide]()
-    
+
     init(pdfPath: String, markdown: String?) {
         let slideImages = UIImage.imagesFromPDFPath(pdfPath)
-        
+
         var pages = [String]()
-        
+
         if markdown != nil {
             self.markdown = markdown!
             pages = self.pages()
         }
-        
+
         for (index, image) in enumerate(slideImages) {
             var page: String?
             if pages.count > index {
@@ -55,7 +55,7 @@ class Presentation {
     func pageLocations() -> [Int] {
         // Pattern must match http://www.decksetapp.com/support/#i-separated-my-content-by-----but-deckset-shows-it-on-one-slide-whats-wrong
         let pattern = "^\\-\\-\\-" // ^\-\-\-
-        let pagesExpression = NSRegularExpression.regularExpressionWithPattern(pattern,
+        let pagesExpression = NSRegularExpression(pattern: pattern,
             options: NSRegularExpressionOptions.AnchorsMatchLines,
             error: nil)
 

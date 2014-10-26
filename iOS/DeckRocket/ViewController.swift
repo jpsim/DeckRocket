@@ -10,18 +10,18 @@ import UIKit
 import MultipeerConnectivity
 
 class ViewController: UICollectionViewController, UIScrollViewDelegate {
-    
+
     // Properties
-    
+
     var presentation: Presentation?
     let multipeerClient = MultipeerClient()
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     let notesView = UITextView()
     let nextSlideView = UIImageView()
     let infoLabel = UILabel()
-    
+
     // View Lifecycle
-    
+
     override init() {
         super.init(collectionViewLayout: CollectionViewLayout())
     }
@@ -29,17 +29,17 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     convenience required init(coder aDecoder: NSCoder) {
         self.init()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUI()
         setupConnectivityObserver()
         updatePresentation()
     }
-    
+
     // Connectivity Updates
-    
+
     func setupConnectivityObserver() {
         multipeerClient.onStateChange = {(state: MCSessionState, peerID: MCPeerID) -> () in
             dispatch_async(dispatch_get_main_queue(), {
@@ -70,25 +70,25 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
             })
         }
     }
-    
+
     // Presentation Updates
-    
+
     func updatePresentation() {
         if let pdfPath = NSUserDefaults.standardUserDefaults().objectForKey("pdfPath") as? NSString {
             var markdown: String?
             if let mdPath = NSUserDefaults.standardUserDefaults().objectForKey("mdPath") as? NSString {
-                markdown = NSString.stringWithContentsOfFile(mdPath, encoding: NSUTF8StringEncoding, error: nil)
+                markdown = String(contentsOfFile: mdPath, encoding: NSUTF8StringEncoding)
             }
             presentation = Presentation(pdfPath: pdfPath, markdown: markdown?)
-            collectionView!.contentOffset.x = 0
-            collectionView!.reloadData()
+            collectionView.contentOffset.x = 0
+            collectionView.reloadData()
         }
         // Force state change block
         multipeerClient.onStateChange!!(state: multipeerClient.state, peerID: MCPeerID())
     }
-    
+
     // UI
-    
+
     func setupUI() {
         setupCollectionView()
         setupEffectView()
@@ -96,31 +96,31 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         setupNotesView()
         setupNextSlideView()
     }
-    
+
     func setupCollectionView() {
-        collectionView!.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
-        collectionView!.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
-        collectionView!.pagingEnabled = true
-        collectionView!.showsHorizontalScrollIndicator = false
+        collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
+        collectionView.pagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
     }
-    
+
     func setupEffectView() {
         effectView.setTranslatesAutoresizingMaskIntoConstraints(false)
         effectView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "refreshConnection"))
         view.addSubview(effectView)
-        
+
         let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[effectView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["effectView": effectView])
         let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["effectView": effectView])
         view.addConstraints(horizontal)
         view.addConstraints(vertical)
     }
-    
+
     func setupInfoLabel() {
         infoLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         infoLabel.text = "Not Connected"
         infoLabel.textColor = UIColor.whiteColor()
         effectView.addSubview(infoLabel)
-        
+
         // Constraints
         let centerX = NSLayoutConstraint(item: infoLabel,
             attribute: .CenterX,
@@ -138,7 +138,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
             constant: 0)
         effectView.addConstraints([centerX, centerY])
     }
-    
+
     func setupNotesView() {
         notesView.setTranslatesAutoresizingMaskIntoConstraints(false)
         notesView.font = UIFont.systemFontOfSize(30)
@@ -147,18 +147,18 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         notesView.userInteractionEnabled = false
         notesView.alpha = 0
         effectView.addSubview(notesView)
-        
+
         let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
         let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[notesView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["notesView": notesView])
         effectView.addConstraints(horizontal)
         effectView.addConstraints(vertical)
     }
-    
+
     func setupNextSlideView() {
         nextSlideView.setTranslatesAutoresizingMaskIntoConstraints(false)
         nextSlideView.contentMode = UIViewContentMode.ScaleAspectFit
         effectView.addSubview(nextSlideView)
-        
+
         // Constraints
         let ratio = NSLayoutConstraint(item: nextSlideView,
             attribute: .Width,
@@ -197,14 +197,14 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
             constant: -10)
         effectView.addConstraints([ratio, height, left, right, bottom])
     }
-    
+
     // Gestures
-    
+
     func refreshConnection() {
         multipeerClient.browser!.stopBrowsingForPeers()
         multipeerClient.browser!.startBrowsingForPeers()
     }
-    
+
     func longPress(sender: UILongPressGestureRecognizer) {
         switch sender.state {
             case .Began:
@@ -218,13 +218,13 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
                 }
         }
     }
-    
+
     func showNotes(show: Bool) {
         let currentSlideIndex = Int(currentSlide())
         notesView.text = presentation!.slides[currentSlideIndex].notes
         notesView.alpha = 1
         nextSlideView.alpha = 1
-        
+
         if currentSlideIndex < presentation!.slides.count - 1 {
             nextSlideView.image = presentation!.slides[currentSlideIndex+1].image
         } else {
@@ -237,50 +237,50 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
             self.nextSlideView.alpha = CGFloat(show)
         }
     }
-    
+
     // Collection View
-    
+
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let presentation = self.presentation {
             return presentation.slides.count
         }
         return 0
     }
-    
+
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as Cell
         let slide = presentation!.slides[indexPath.item]
         cell.imageView.image = slide.image
         return cell
     }
-    
+
     // UIScrollViewDelegate
-    
+
     func currentSlide() -> UInt {
-        return UInt(round(collectionView!.contentOffset.x / collectionView!.frame.size.width))
+        return UInt(round(collectionView.contentOffset.x / collectionView.frame.size.width))
     }
-    
+
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         multipeerClient.sendString("\(currentSlide())")
     }
-    
+
     // Rotation
-    
+
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        
+
         // Update Layout
-        let layout = collectionView!.collectionViewLayout as CollectionViewLayout
+        let layout = collectionView.collectionViewLayout as CollectionViewLayout
         layout.invalidateLayout()
         layout.itemSize = CGSize(width: view.bounds.size.height, height: view.bounds.size.width)
-        
+
         // Update Offset
         let targetOffset = CGFloat(self.currentSlide()) * layout.itemSize.width
-        
+
         // We do this half-way through the animation
         let delay = (duration / 2) * NSTimeInterval(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
-            self.collectionView!.contentOffset.x = targetOffset
+            self.collectionView.contentOffset.x = targetOffset
         }
     }
 }

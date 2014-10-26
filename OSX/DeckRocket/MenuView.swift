@@ -25,21 +25,21 @@ class MenuView: NSView, NSMenuDelegate {
     required convenience init(coder: NSCoder) {
         self.init()
     }
-    
+
     // Menu
-    
+
     func setupMenu() {
         let menu = NSMenu()
         menu.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
-        menu.itemAtIndex(0).enabled = false
+        menu.itemAtIndex(0)!.enabled = false
         menu.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
         self.menu = menu
-        self.menu.delegate = self
+        self.menu!.delegate = self
     }
-    
-    override func mouseDown(theEvent: NSEvent!) {
+
+    override func mouseDown(theEvent: NSEvent) {
         super.mouseDown(theEvent)
-        statusItem.popUpStatusItemMenu(menu)
+        statusItem.popUpStatusItemMenu(menu!)
     }
 
     func menuWillOpen(menu: NSMenu!) {
@@ -60,11 +60,11 @@ class MenuView: NSView, NSMenuDelegate {
 
     // Dragging
 
-    override func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
+    override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
         return NSDragOperation.Copy
     }
 
-    override func performDragOperation(sender: NSDraggingInfo!) -> Bool {
+    override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         let pboard = sender.draggingPasteboard()
         if contains(pboard.types as [NSString], NSFilenamesPboardType) {
             let files = pboard.propertyListForType(NSFilenamesPboardType) as [String]
