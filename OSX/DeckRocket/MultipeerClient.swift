@@ -15,14 +15,15 @@ var ProgressContext = KVOContext()
 
 class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
 
-    // Properties
+    // MARK: Properties
+
     let localPeerID = MCPeerID(displayName: NSHost.currentHost().localizedName)
     let advertiser: MCNearbyServiceAdvertiser?
     var session: MCSession?
     var onStateChange: stateChange?
     var pdfProgress: NSProgress?
 
-    // Lifecycle
+    // MARK: Lifecycle
 
     override init() {
         super.init()
@@ -31,7 +32,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
         advertiser!.startAdvertisingPeer()
     }
 
-    // Send File
+    // MARK: Send File
 
     func sendFile(filePath: String) {
         let url = NSURL(fileURLWithPath: filePath)
@@ -55,7 +56,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
         pdfProgress!.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: &ProgressContext)
     }
 
-    // MCNearbyServiceAdvertiserDelegate
+    // MARK: MCNearbyServiceAdvertiserDelegate
 
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!)  {
         session = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .None)
@@ -63,7 +64,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
         invitationHandler(true, session!)
     }
 
-    // MCSessionDelegate
+    // MARK: MCSessionDelegate
 
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         if let block = onStateChange! {
@@ -90,7 +91,7 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
 
     }
 
-    // KVO
+    // MARK: KVO
 
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<()>) {
         if context == &ProgressContext {

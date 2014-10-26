@@ -13,7 +13,7 @@ typealias stateChange = ((state: MCSessionState, peerID: MCPeerID) -> ())?
 
 class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
 
-    // Properties
+    // MARK: Properties
 
     let localPeerID = MCPeerID(displayName: UIDevice.currentDevice().name)
     var browser: MCNearbyServiceBrowser?
@@ -21,7 +21,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     var state = MCSessionState.NotConnected
     var onStateChange: stateChange?
 
-    // Init
+    // MARK: Init
 
     override init() {
         super.init()
@@ -30,7 +30,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
         browser!.startBrowsingForPeers()
     }
 
-    // Send
+    // MARK: Send
 
     func send(data: NSData) {
         session!.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable, error: nil)
@@ -40,7 +40,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
         send(string.dataUsingEncoding(NSUTF8StringEncoding)!)
     }
 
-    // MCNearbyServiceBrowserDelegate
+    // MARK: MCNearbyServiceBrowserDelegate
 
     func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
         if session == nil {
@@ -54,7 +54,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
 
     }
 
-    // MCSessionDelegate
+    // MARK: MCSessionDelegate
 
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         self.state = state
@@ -91,7 +91,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
         }
     }
 
-    // Handle Resources
+    // MARK: Handle Resources
 
     func handlePDF(resourceName: String!, atURL localURL: NSURL!) {
         promptToLoadResource("New Presentation File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "pdfPath")

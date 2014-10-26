@@ -12,8 +12,10 @@ class MenuView: NSView, NSMenuDelegate {
     var highlight = false
 
     // NSVariableStatusItemLength == -1
-    // Not using symbol because it doesn't link properly in 10.10
+    // Not using symbol because it doesn't link properly in Swift
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+
+    // MARK: Initializers
 
     override init() {
         super.init(frame: NSRect(x: 0, y: 0, width: 24, height: 24))
@@ -26,7 +28,7 @@ class MenuView: NSView, NSMenuDelegate {
         self.init()
     }
 
-    // Menu
+    // MARK: Menu
 
     func setupMenu() {
         let menu = NSMenu()
@@ -58,7 +60,7 @@ class MenuView: NSView, NSMenuDelegate {
         "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(13)])
     }
 
-    // Dragging
+    // MARK: Dragging
 
     override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
         return NSDragOperation.Copy

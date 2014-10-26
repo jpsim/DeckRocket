@@ -10,8 +10,13 @@ import Foundation
 import UIKit
 
 class Presentation {
+
+    // MARK: Properties
+
     var markdown = ""
     var slides = [Slide]()
+
+    // MARK: Initializers
 
     init(pdfPath: String, markdown: String?) {
         let slideImages = UIImage.imagesFromPDFPath(pdfPath)
@@ -32,7 +37,7 @@ class Presentation {
         }
     }
 
-    // Markdown Parsing
+    // MARK: Markdown Parsing
 
     func pages() -> [String] {
         let locations = pageLocations()

@@ -11,7 +11,7 @@ import MultipeerConnectivity
 
 class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
-    // Properties
+    // MARK: Properties
 
     var presentation: Presentation?
     let multipeerClient = MultipeerClient()
@@ -20,7 +20,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     let nextSlideView = UIImageView()
     let infoLabel = UILabel()
 
-    // View Lifecycle
+    // MARK: View Lifecycle
 
     override init() {
         super.init(collectionViewLayout: CollectionViewLayout())
@@ -38,7 +38,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         updatePresentation()
     }
 
-    // Connectivity Updates
+    // MARK: Connectivity Updates
 
     func setupConnectivityObserver() {
         multipeerClient.onStateChange = {(state: MCSessionState, peerID: MCPeerID) -> () in
@@ -71,7 +71,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         }
     }
 
-    // Presentation Updates
+    // MARK: Presentation Updates
 
     func updatePresentation() {
         if let pdfPath = NSUserDefaults.standardUserDefaults().objectForKey("pdfPath") as? NSString {
@@ -87,7 +87,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         multipeerClient.onStateChange!!(state: multipeerClient.state, peerID: MCPeerID())
     }
 
-    // UI
+    // MARK: UI
 
     func setupUI() {
         setupCollectionView()
@@ -197,7 +197,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         effectView.addConstraints([ratio, height, left, right, bottom])
     }
 
-    // Gestures
+    // MARK: Gestures
 
     func longPress(sender: UILongPressGestureRecognizer) {
         switch sender.state {
@@ -232,7 +232,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         }
     }
 
-    // Collection View
+    // MARK: Collection View
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let presentation = self.presentation {
@@ -248,7 +248,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         return cell
     }
 
-    // UIScrollViewDelegate
+    // MARK: UIScrollViewDelegate
 
     func currentSlide() -> UInt {
         return UInt(round(collectionView.contentOffset.x / collectionView.frame.size.width))
@@ -258,7 +258,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         multipeerClient.sendString("\(currentSlide())")
     }
 
-    // Rotation
+    // MARK: Rotation
 
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
 
