@@ -106,7 +106,6 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     func setupEffectView() {
         effectView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        effectView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "refreshConnection"))
         view.addSubview(effectView)
 
         let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[effectView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["effectView": effectView])
@@ -199,11 +198,6 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     }
 
     // Gestures
-
-    func refreshConnection() {
-        multipeerClient.browser!.stopBrowsingForPeers()
-        multipeerClient.browser!.startBrowsingForPeers()
-    }
 
     func longPress(sender: UILongPressGestureRecognizer) {
         switch sender.state {
