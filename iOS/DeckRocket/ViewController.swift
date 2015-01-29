@@ -80,8 +80,8 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
                 markdown = String(contentsOfFile: mdPath, encoding: NSUTF8StringEncoding)
             }
             presentation = Presentation(pdfPath: pdfPath, markdown: markdown?)
-            collectionView.contentOffset.x = 0
-            collectionView.reloadData()
+            collectionView!.contentOffset.x = 0
+            collectionView!.reloadData()
         }
         // Force state change block
         multipeerClient.onStateChange!!(state: multipeerClient.state, peerID: MCPeerID())
@@ -98,10 +98,10 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     }
 
     func setupCollectionView() {
-        collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
-        collectionView.pagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView!.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
+        collectionView!.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
+        collectionView!.pagingEnabled = true
+        collectionView!.showsHorizontalScrollIndicator = false
     }
 
     func setupEffectView() {
@@ -251,7 +251,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // MARK: UIScrollViewDelegate
 
     func currentSlide() -> UInt {
-        return UInt(round(collectionView.contentOffset.x / collectionView.frame.size.width))
+        return UInt(round(collectionView!.contentOffset.x / collectionView!.frame.size.width))
     }
 
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -263,7 +263,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
 
         // Update Layout
-        let layout = collectionView.collectionViewLayout as CollectionViewLayout
+        let layout = collectionView!.collectionViewLayout as CollectionViewLayout
         layout.invalidateLayout()
         layout.itemSize = CGSize(width: view.bounds.size.height, height: view.bounds.size.width)
 
@@ -274,7 +274,7 @@ class ViewController: UICollectionViewController, UIScrollViewDelegate {
         let delay = (duration / 2) * NSTimeInterval(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
-            self.collectionView.contentOffset.x = targetOffset
+            self.collectionView!.contentOffset.x = targetOffset
         }
     }
 }
