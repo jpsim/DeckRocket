@@ -18,7 +18,7 @@ DeckRocket is built in Swift and relies on Multipeer Connectivity on both OSX an
 2. Open and run both `OSX/DeckRocket.xcodeproj` and `iOS/DeckRocket.xcodeproj`. You should see a :rocket: icon in your menu bar.
 3. Export your Deckset presentation as a PDF.
 4. Drag your PDF onto the :rocket: icon in your Mac's menu bar. The file should start transferring to your iOS device instantly.
-5. (Optional) Repeat step 4 with your presentation's markdown file for access to presenter notes in the remote app.
+5. (Optional) Repeat step 4 with your presentation's markdown file for access to presenter notes in the remote app. To show your notes and preview the next slide, simply press and hold.
 
 A connection should be established between the OSX and iOS apps within a few seconds. You'll then be able to swipe through your slides and see Deckset navigate to them fairly instantly.
 
