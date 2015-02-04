@@ -1,0 +1,8 @@
+# Xcode
+#
+build/
+xcuserdata
+*.xccheckout
+DerivedData
+*.ipa
+*.xcuserstate
