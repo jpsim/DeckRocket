@@ -8,11 +8,13 @@
 
 import UIKit
 
-class CollectionViewLayout: UICollectionViewFlowLayout {
+final class CollectionViewLayout: UICollectionViewFlowLayout {
 
     override init() {
         super.init()
-        itemSize = UIApplication.sharedApplication().delegate!.window!!.bounds.size
+        if let windowSize = UIApplication.sharedApplication().delegate?.window??.bounds.size {
+            itemSize = windowSize
+        }
         scrollDirection = .Horizontal
         minimumInteritemSpacing = 0
         minimumLineSpacing = 0

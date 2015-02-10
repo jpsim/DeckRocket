@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Slide {
+struct Slide {
 
     // MARK: Properties
 
@@ -22,49 +22,43 @@ class Slide {
 
     init(image: UIImage, markdown: String?) {
         self.image = image
-        if markdown != nil {
-            self.markdown = markdown
-            body = bodyFromMarkdown()
-            notes = notesFromMarkdown()
-        }
+        self.markdown = markdown
+        body = Slide.bodyFromMarkdown(markdown)
+        notes = Slide.notesFromMarkdown(markdown)
     }
 
     // MARK: String Parsing
 
-    func bodyFromMarkdown() -> String {
+    private static func bodyFromMarkdown(markdown: NSString?) -> String? {
         // Skip the trailing \n
-        let bodyRange = NSRange(location: 0, length: notesStart() - 1)
-        return (markdown! as NSString).substringWithRange(bodyRange)
+        return markdown?.substringWithRange(NSRange(location: 0, length: notesStart(markdown!) - 1)) // Safe to force unwrap
     }
 
-    func notesFromMarkdown() -> String? {
-        let nsMarkdown = markdown! as NSString
-
-        var start = notesStart()
-        if start == nsMarkdown.length {
-            // No notes
-            return nil
+    private static func notesFromMarkdown(markdown: NSString?) -> String? {
+        if let markdown = markdown {
+            let start = notesStart(markdown)
+            if start == markdown.length {
+                return nil // No notes
+            }
+            // Skip the leading ^
+            let startWithOutLeadingCaret = start + 1
+            let length = markdown.length - startWithOutLeadingCaret
+            let notesRange = NSRange(location: startWithOutLeadingCaret, length: length)
+            return markdown.substringWithRange(notesRange)
         }
-
-        // Skip the leading ^
-        start++
-        let length = nsMarkdown.length - start
-
-        let notesRange = NSRange(location: start, length: length)
-        return nsMarkdown.substringWithRange(notesRange)
+        return nil
     }
 
-    func notesStart() -> Int {
+    private static func notesStart(markdown: NSString) -> Int {
         // Pattern must match http://www.decksetapp.com/support/#how-do-i-add-presenter-notes
         let pattern = "^\\^" // ^\^
         let notesExpression = NSRegularExpression(pattern: pattern,
-            options: NSRegularExpressionOptions.AnchorsMatchLines,
+            options: .AnchorsMatchLines,
             error: nil)
 
-        let fullRange = NSRange(location: 0, length: (markdown! as NSString).length)
-        if let notesMatch = notesExpression?.firstMatchInString(markdown!, options: NSMatchingOptions(0), range: fullRange) {
-            return notesMatch.range.location
-        }
-        return fullRange.length
+        let fullRange = NSRange(location: 0, length: markdown.length)
+        return notesExpression?
+            .firstMatchInString(markdown as! String, options: nil, range: fullRange)?.range.location // Safe to force unwrap
+            ?? fullRange.length
     }
 }

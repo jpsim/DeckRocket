@@ -8,14 +8,14 @@
 
 import Cocoa
 
-let hudWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 300, height: 300),
+private let hudWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 300, height: 300),
     styleMask: NSBorderlessWindowMask,
     backing: .Buffered,
     defer: false)
 
-class HUDView: NSView {
+final class HUDView: NSView {
 
-    override class func initialize() {
+    override static func initialize() {
         hudWindow.backgroundColor = NSColor.clearColor()
         hudWindow.opaque = false
         hudWindow.makeKeyAndOrderFront(NSApp)
@@ -25,8 +25,10 @@ class HUDView: NSView {
         DJProgressHUD.setBackgroundAlpha(0, disableActions: false)
     }
 
-    class func show(string: String) {
-        DJProgressHUD.showProgress(1, withStatus: string, fromView: hudWindow.contentView as NSView)
+    static func show(string: String) {
+        if let windowView = hudWindow.contentView as? NSView {
+            DJProgressHUD.showProgress(1, withStatus: string, fromView: windowView)
+        }
         let delay = 2 * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
@@ -34,15 +36,19 @@ class HUDView: NSView {
         }
     }
 
-    class func showProgress(progress: CGFloat, string: String) {
-        DJProgressHUD.showProgress(progress, withStatus: string, fromView: hudWindow.contentView as NSView)
+    static func showProgress(progress: CGFloat, string: String) {
+        if let windowView = hudWindow.contentView as? NSView {
+            DJProgressHUD.showProgress(progress, withStatus: string, fromView: windowView)
+        }
     }
 
-    class func showWithActivity(string: String) {
-        DJProgressHUD.showStatus(string, fromView: hudWindow.contentView as NSView)
+    static func showWithActivity(string: String) {
+        if let windowView = hudWindow.contentView as? NSView {
+            DJProgressHUD.showStatus(string, fromView: windowView)
+        }
     }
 
-    class func dismiss() {
+    static func dismiss() {
         DJProgressHUD.dismiss()
     }
 }

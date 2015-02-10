@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Cell: UICollectionViewCell {
+final class Cell: UICollectionViewCell {
     let imageView = UIImageView()
 
     override init(frame: CGRect) {
@@ -22,6 +22,6 @@ class Cell: UICollectionViewCell {
     }
 
     override func layoutSubviews() {
-        imageView.frame = self.bounds
+        imageView.frame = bounds
     }
 }

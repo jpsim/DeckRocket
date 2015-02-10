@@ -11,33 +11,37 @@ import MultipeerConnectivity
 
 typealias stateChange = ((state: MCSessionState, peerID: MCPeerID) -> ())?
 
-class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
+final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
 
     // MARK: Properties
 
-    let localPeerID = MCPeerID(displayName: UIDevice.currentDevice().name)
-    var browser: MCNearbyServiceBrowser?
-    var session: MCSession?
-    var state = MCSessionState.NotConnected
+    private let localPeerID = MCPeerID(displayName: UIDevice.currentDevice().name)
+    let browser: MCNearbyServiceBrowser?
+    private(set) var session: MCSession?
+    private(set) var state = MCSessionState.NotConnected
     var onStateChange: stateChange?
 
     // MARK: Init
 
     override init() {
-        super.init()
         browser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: "deckrocket")
-        browser!.delegate = self
-        browser!.startBrowsingForPeers()
+        super.init()
+        browser?.delegate = self
+        browser?.startBrowsingForPeers()
     }
 
     // MARK: Send
 
     func send(data: NSData) {
-        session!.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable, error: nil)
+        if let session = session {
+            session.sendData(data, toPeers: session.connectedPeers, withMode: .Reliable, error: nil)
+        }
     }
 
     func sendString(string: NSString) {
-        send(string.dataUsingEncoding(NSUTF8StringEncoding)!)
+        if let stringData = string.dataUsingEncoding(NSUTF8StringEncoding) {
+            send(stringData)
+        }
     }
 
     // MARK: MCNearbyServiceBrowserDelegate
@@ -45,7 +49,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
     func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
         if session == nil {
             session = MCSession(peer: localPeerID)
-            session!.delegate = self
+            session?.delegate = self
         }
         browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 30)
     }
@@ -58,9 +62,7 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
 
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         self.state = state
-        if let block = onStateChange! {
-            block(state: state, peerID: peerID)
-        }
+        onStateChange??(state: state, peerID: peerID)
     }
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
@@ -77,54 +79,60 @@ class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelega
 
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
         if error == nil {
-            dispatch_async(dispatch_get_main_queue()) {
-                let fileType = FileType(fileExtension: resourceName.pathExtension)
-                switch fileType {
-                case .PDF:
-                    self.handlePDF(resourceName, atURL: localURL)
-                case .Markdown:
-                    self.handleMarkdown(resourceName, atURL: localURL)
-                case .Unknown:
-                    println("file type unknown")
-                }
+            // FIXME: Switch on FileType once it works
+            // TODO: File radar for this
+            if contains(FileType.extensionsForType(.PDF), resourceName.pathExtension) {
+                handlePDF(resourceName, atURL: localURL)
+            } else if contains(FileType.extensionsForType(.Markdown), resourceName.pathExtension) {
+                handleMarkdown(resourceName, atURL: localURL)
             }
+//            if let fileType = FileType(fileExtension: resourceName.pathExtension) {
+//                switch fileType {
+//                    case .PDF:
+//                        handlePDF(resourceName, atURL: localURL)
+//                    case .Markdown:
+//                        handleMarkdown(resourceName, atURL: localURL)
+//                }
+//            }
         }
     }
 
     // MARK: Handle Resources
 
-    func handlePDF(resourceName: String!, atURL localURL: NSURL!) {
+    private func handlePDF(resourceName: String!, atURL localURL: NSURL!) {
         promptToLoadResource("New Presentation File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "pdfPath")
     }
 
-    func handleMarkdown(resourceName: String!, atURL localURL: NSURL!) {
+    private func handleMarkdown(resourceName: String!, atURL localURL: NSURL!) {
         promptToLoadResource("New Markdown File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "mdPath")
     }
 
-    func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
-        let rootVC = UIApplication.sharedApplication().delegate!.window!!.rootViewController as ViewController
+    private func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
+        let rootVC = UIApplication.sharedApplication().delegate?.window??.rootViewController as? ViewController
 
         let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Load", style: .Default) { action in
-            var error: NSError? = nil
-            let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-            let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
+            if let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as? NSString {
+                let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
 
-            if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-                NSFileManager.defaultManager().removeItemAtPath(filePath, error: nil)
-            }
+                var error: NSError? = nil
+                if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+                    NSFileManager.defaultManager().removeItemAtPath(filePath, error: &error)
+                }
 
-            let url = NSURL(fileURLWithPath: filePath)
-
-            NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: url!, error: &error)
-            if error == nil {
-                NSUserDefaults.standardUserDefaults().setObject(filePath, forKey: userDefaultsKey)
-                NSUserDefaults.standardUserDefaults().synchronize()
-                rootVC.updatePresentation()
+                if let url = NSURL(fileURLWithPath: filePath) {
+                    NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: url, error: &error)
+                    if error == nil {
+                        NSUserDefaults.standardUserDefaults().setObject(filePath, forKey: userDefaultsKey)
+                        NSUserDefaults.standardUserDefaults().synchronize()
+                        rootVC?.updatePresentation()
+                    }
+                }
             }
         })
-
-        rootVC.presentViewController(alert, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            rootVC?.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }
