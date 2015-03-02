@@ -12,8 +12,8 @@ import CoreGraphics
 
 extension UIImage {
     static func imagesFromPDFPath(pdfPath: String) -> [UIImage] {
-        if let pdfURL = NSURL(fileURLWithPath: pdfPath) {
-            let pdf = CGPDFDocumentCreateWithURL(pdfURL)
+        if let pdfURL = NSURL(fileURLWithPath: pdfPath),
+            let pdf = CGPDFDocumentCreateWithURL(pdfURL) {
             let numberOfPages = CGPDFDocumentGetNumberOfPages(pdf)
 
             if numberOfPages == 0 {
@@ -25,7 +25,7 @@ extension UIImage {
                 let largestDimension = max(screenSize.width, screenSize.height)
                 let largestSize = CGSize(width: largestDimension, height: largestDimension)
 
-                for pageNumber in 1...numberOfPages {
+                for pageNumber in 1...Int(numberOfPages) {
                     if let image = UIImage(pdfURL: pdfURL, page: pageNumber, fitSize: largestSize) {
                         images.append(image)
                     }
@@ -36,13 +36,13 @@ extension UIImage {
         return []
     }
 
-    private static func pdfRectForURL(url: NSURL, page: UInt) -> CGRect {
+    private static func pdfRectForURL(url: NSURL, page: Int) -> CGRect {
         let pdf = CGPDFDocumentCreateWithURL(url)
         let pageRef = CGPDFDocumentGetPage(pdf, page)
         return CGPDFPageGetBoxRect(pageRef, kCGPDFCropBox)
     }
 
-    convenience init?(pdfURL: NSURL, page: UInt, size: CGSize) {
+    convenience init?(pdfURL: NSURL, page: Int, size: CGSize) {
         UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.mainScreen().scale)
 
         let ctx = UIGraphicsGetCurrentContext()
@@ -66,7 +66,7 @@ extension UIImage {
         self.init(CGImage: pdfImage.CGImage)
     }
 
-    convenience init?(pdfURL: NSURL, page: UInt, fitSize size: CGSize) {
+    convenience init?(pdfURL: NSURL, page: Int, fitSize size: CGSize) {
         let rect = UIImage.pdfRectForURL(pdfURL, page: page)
         let scaleFactor = max(rect.size.width / size.width, rect.size.height / size.height)
         let newWidth = ceil(rect.size.width / scaleFactor)

@@ -9,8 +9,17 @@
 import UIKit
 import MultipeerConnectivity
 
+let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+
 private func userDefaultsString(key: String) -> String? {
     return NSUserDefaults.standardUserDefaults().objectForKey(key) as? NSString as? String
+}
+
+private func userDefaultsPathIfFileExists(key: String) -> String? {
+    if let name = userDefaultsString(key), let path = Optional(documentsPath.stringByAppendingPathComponent(name)) where NSFileManager.defaultManager().fileExistsAtPath(path) {
+        return path
+    }
+    return nil
 }
 
 final class ViewController: UICollectionViewController, UIScrollViewDelegate {
@@ -19,6 +28,8 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     private var presentation: Presentation?
     private let multipeerClient = MultipeerClient()
+    // UIVisualEffectView's alpha can't be animated, so we nest it in a parent view
+    private let effectParentView = UIView()
     private let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     private let notesView = UITextView()
     private let nextSlideView = UIImageView()
@@ -52,23 +63,23 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
                 switch state {
                     case .NotConnected:
                         if self.multipeerClient.session == nil {
-                            self.effectView.alpha = 1
+                            self.effectParentView.alpha = 1
                             self.infoLabel.text = "Not Connected"
                         } else if self.multipeerClient.session!.connectedPeers.count == 0 { // Safe to force unwrap
-                            self.effectView.alpha = 1
+                            self.effectParentView.alpha = 1
                             self.infoLabel.text = "Not Connected"
                             self.multipeerClient.browser?.invitePeer(peerID, toSession: self.multipeerClient.session, withContext: nil, timeout: 30)
                         }
                     case .Connected:
                         if let presentation = self.presentation {
-                            self.effectView.alpha = 0
+                            self.effectParentView.alpha = 0
                             self.infoLabel.text = ""
                         } else {
-                            self.effectView.alpha = 1
+                            self.effectParentView.alpha = 1
                             self.infoLabel.text = "No Presentation Loaded"
                         }
                     case .Connecting:
-                        self.effectView.alpha = 1
+                        self.effectParentView.alpha = 1
                         self.infoLabel.text = "Connecting..."
                 }
             })
@@ -78,9 +89,9 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // MARK: Presentation Updates
 
     func updatePresentation() {
-        if let pdfPath = userDefaultsString("pdfPath") {
+        if let pdfPath = userDefaultsPathIfFileExists("pdfName") {
             let markdown: String?
-            if let mdPath = userDefaultsString("mdPath") {
+            if let mdPath = userDefaultsPathIfFileExists("mdName") {
                 markdown = String(contentsOfFile: mdPath, encoding: NSUTF8StringEncoding)
             } else {
                 markdown = nil
@@ -111,13 +122,21 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
     }
 
     private func setupEffectView() {
-        effectView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(effectView)
+        effectParentView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.addSubview(effectParentView)
 
-        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
-        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
+        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[effectParentView]|", options: nil, metrics: nil, views: ["effectParentView": effectParentView])
+        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectParentView]|", options: nil, metrics: nil, views: ["effectParentView": effectParentView])
         view.addConstraints(horizontal)
         view.addConstraints(vertical)
+
+        effectView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        effectParentView.addSubview(effectView)
+
+        let horizontal2 = NSLayoutConstraint.constraintsWithVisualFormat("|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
+        let vertical2 = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
+        effectParentView.addConstraints(horizontal2)
+        effectParentView.addConstraints(vertical2)
     }
 
     private func setupInfoLabel() {
@@ -213,10 +232,8 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
                 break
             default:
                 // Don't do anything if the effect view is now being used to show a connectivity message
-                if let session = multipeerClient.session {
-                    if session.connectedPeers.count > 0 {
-                        showNotes(false)
-                    }
+                if let session = multipeerClient.session where session.connectedPeers.count > 0 {
+                    showNotes(false)
                 }
         }
     }
@@ -233,11 +250,12 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
             } else {
                 nextSlideView.image = nil
             }
+            let alpha = CGFloat(show)
             UIView.animateWithDuration(0.25, animations: {
-                self.effectView.alpha = CGFloat(show)
+                self.effectParentView.alpha = alpha
             }) { finished in
-                self.notesView.alpha = CGFloat(show)
-                self.nextSlideView.alpha = CGFloat(show)
+                self.notesView.alpha = alpha
+                self.nextSlideView.alpha = alpha
             }
         }
     }

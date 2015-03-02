@@ -8,7 +8,7 @@
 
 ## Requirements
 
-DeckRocket is built in Swift and relies on Multipeer Connectivity on both OSX and iOS. Xcode 6.3b, OS X 10.10 and iOS 8 are all required to build, install and use DeckRocket.
+DeckRocket is built in Swift and relies on Multipeer Connectivity on both OSX and iOS. Xcode 6.3b2, OS X 10.10 and iOS 8 are all required to build, install and use DeckRocket.
 
 ## Usage
 

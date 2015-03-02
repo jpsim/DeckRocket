@@ -11,7 +11,8 @@ import MultipeerConnectivity
 
 typealias stateChange = ((state: MCSessionState) -> ())?
 private typealias KVOContext = UInt8
-private var ProgressContext = KVOContext()
+private var progressContext = KVOContext()
+private var lastDisplayTime = NSDate()
 
 final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
 
@@ -45,7 +46,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
         if let peer = session?.connectedPeers[0] as? MCPeerID {
             pdfProgress = session?.sendResourceAtURL(url, withName: filePath.lastPathComponent, toPeer: peer) { error in
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.pdfProgress?.removeObserver(self, forKeyPath: "fractionCompleted", context: &ProgressContext)
+                    self.pdfProgress?.removeObserver(self, forKeyPath: "fractionCompleted", context: &progressContext)
                     if let errorDescription = error?.localizedDescription {
                         HUDView.show("Error!\n\(errorDescription)")
                     } else {
@@ -53,7 +54,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
                     }
                 }
             }
-            pdfProgress?.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: &ProgressContext)
+            pdfProgress?.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: &progressContext)
         }
     }
 
@@ -96,14 +97,15 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
     // MARK: KVO
 
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<()>) {
-        if context == &ProgressContext {
-            dispatch_async(dispatch_get_main_queue()) {
+        if context != &progressContext {
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        } else if abs(lastDisplayTime.timeIntervalSinceNow) > 1/60 { // Update HUD at no more than 60fps
+            dispatch_sync(dispatch_get_main_queue()) {
                 if let progress = change[NSKeyValueChangeNewKey] as? CGFloat {
                     HUDView.showProgress(progress, string: "Sending File to iPhone")
+                    lastDisplayTime = NSDate()
                 }
             }
-        } else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
     }
 }

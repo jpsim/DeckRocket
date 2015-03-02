@@ -33,9 +33,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     // MARK: Send
 
     func send(data: NSData) {
-        if let session = session {
-            session.sendData(data, toPeers: session.connectedPeers, withMode: .Reliable, error: nil)
-        }
+        session?.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable, error: nil) // Safe to force unwrap
     }
 
     func sendString(string: NSString) {
@@ -79,32 +77,25 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
 
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
         if error == nil {
-            // FIXME: Switch on FileType once it works
-            // TODO: File radar for this
-            if contains(FileType.extensionsForType(.PDF), resourceName.pathExtension) {
-                handlePDF(resourceName, atURL: localURL)
-            } else if contains(FileType.extensionsForType(.Markdown), resourceName.pathExtension) {
-                handleMarkdown(resourceName, atURL: localURL)
+            if let fileType = FileType(fileExtension: resourceName.pathExtension) {
+                switch fileType {
+                    case .PDF:
+                        handlePDF(resourceName, atURL: localURL)
+                    case .Markdown:
+                        handleMarkdown(resourceName, atURL: localURL)
+                }
             }
-//            if let fileType = FileType(fileExtension: resourceName.pathExtension) {
-//                switch fileType {
-//                    case .PDF:
-//                        handlePDF(resourceName, atURL: localURL)
-//                    case .Markdown:
-//                        handleMarkdown(resourceName, atURL: localURL)
-//                }
-//            }
         }
     }
 
     // MARK: Handle Resources
 
     private func handlePDF(resourceName: String!, atURL localURL: NSURL!) {
-        promptToLoadResource("New Presentation File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "pdfPath")
+        promptToLoadResource("New Presentation File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "pdfName")
     }
 
     private func handleMarkdown(resourceName: String!, atURL localURL: NSURL!) {
-        promptToLoadResource("New Markdown File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "mdPath")
+        promptToLoadResource("New Markdown File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "mdName")
     }
 
     private func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
@@ -113,22 +104,21 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
         let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Load", style: .Default) { action in
-            if let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as? NSString {
-                let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
+            let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
+            let fileManager = NSFileManager.defaultManager()
 
-                var error: NSError? = nil
-                if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-                    NSFileManager.defaultManager().removeItemAtPath(filePath, error: &error)
-                }
+            var error: NSError? = nil
+            if fileManager.fileExistsAtPath(filePath) {
+                fileManager.removeItemAtPath(filePath, error: &error)
+            }
 
-                if let url = NSURL(fileURLWithPath: filePath) {
-                    NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: url, error: &error)
-                    if error == nil {
-                        NSUserDefaults.standardUserDefaults().setObject(filePath, forKey: userDefaultsKey)
-                        NSUserDefaults.standardUserDefaults().synchronize()
-                        rootVC?.updatePresentation()
-                    }
-                }
+            if let url = NSURL(fileURLWithPath: filePath) where fileManager.moveItemAtURL(localURL, toURL: url, error: &error) {
+                NSUserDefaults.standardUserDefaults().setObject(resourceName, forKey: userDefaultsKey)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                rootVC?.updatePresentation()
+            } else {
+                let message = error?.localizedDescription ?? "move file failed with no error"
+                fatalError(message)
             }
         })
         dispatch_async(dispatch_get_main_queue()) {
