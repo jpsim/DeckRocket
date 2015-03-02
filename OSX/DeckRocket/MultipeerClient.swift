@@ -10,26 +10,27 @@ import Foundation
 import MultipeerConnectivity
 
 typealias stateChange = ((state: MCSessionState) -> ())?
-typealias KVOContext = UInt8
-var ProgressContext = KVOContext()
+private typealias KVOContext = UInt8
+private var progressContext = KVOContext()
+private var lastDisplayTime = NSDate()
 
-class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
+final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
 
     // MARK: Properties
 
-    let localPeerID = MCPeerID(displayName: NSHost.currentHost().localizedName)
-    let advertiser: MCNearbyServiceAdvertiser?
-    var session: MCSession?
+    private let localPeerID = MCPeerID(displayName: NSHost.currentHost().localizedName)
+    private let advertiser: MCNearbyServiceAdvertiser?
+    private var session: MCSession?
+    private var pdfProgress: NSProgress?
     var onStateChange: stateChange?
-    var pdfProgress: NSProgress?
 
     // MARK: Lifecycle
 
     override init() {
-        super.init()
         advertiser = MCNearbyServiceAdvertiser(peer: localPeerID, discoveryInfo: nil, serviceType: "deckrocket")
-        advertiser!.delegate = self
-        advertiser!.startAdvertisingPeer()
+        super.init()
+        advertiser?.delegate = self
+        advertiser?.startAdvertisingPeer()
     }
 
     // MARK: Send File
@@ -37,46 +38,48 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     func sendFile(filePath: String) {
         let url = NSURL(fileURLWithPath: filePath)
 
-        if session == nil || session!.connectedPeers.count == 0 {
+        if session == nil || session!.connectedPeers.count == 0 { // Safe to force unwrap
             HUDView.show("Error!\niPhone not connected")
             return
         }
 
-        let peer = session!.connectedPeers[0] as MCPeerID
-        pdfProgress = session!.sendResourceAtURL(url, withName: filePath.lastPathComponent, toPeer: peer) { error in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.pdfProgress!.removeObserver(self, forKeyPath: "fractionCompleted", context: &ProgressContext)
-                if error != nil {
-                    HUDView.show("Error!\n\(error.localizedDescription)")
-                } else {
-                    HUDView.show("Success!")
+        if let peer = session?.connectedPeers[0] as? MCPeerID {
+            pdfProgress = session?.sendResourceAtURL(url, withName: filePath.lastPathComponent, toPeer: peer) { error in
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.pdfProgress?.removeObserver(self, forKeyPath: "fractionCompleted", context: &progressContext)
+                    if let errorDescription = error?.localizedDescription {
+                        HUDView.show("Error!\n\(errorDescription)")
+                    } else {
+                        HUDView.show("Success!")
+                    }
                 }
             }
+            pdfProgress?.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: &progressContext)
         }
-        pdfProgress!.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: &ProgressContext)
     }
 
     // MARK: MCNearbyServiceAdvertiserDelegate
 
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!)  {
         session = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .None)
-        session!.delegate = self
-        invitationHandler(true, session!)
+        session?.delegate = self
+        invitationHandler(true, session)
     }
 
     // MARK: MCSessionDelegate
 
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
-        if let block = onStateChange! {
-            block(state: state)
-        }
+        onStateChange??(state: state)
     }
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        let task = NSTask()
-        task.launchPath = NSBundle.mainBundle().pathForResource("deckrocket", ofType: "scpt")!
-        task.arguments = [NSString(data: data, encoding: NSUTF8StringEncoding)!]
-        task.launch()
+        if let launchPath = NSBundle.mainBundle().pathForResource("deckrocket", ofType: "scpt"),
+            argument = NSString(data: data, encoding: NSUTF8StringEncoding) {
+            let task = NSTask()
+            task.launchPath = launchPath
+            task.arguments = [argument]
+            task.launch()
+        }
     }
 
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
@@ -94,13 +97,15 @@ class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSessionDel
     // MARK: KVO
 
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<()>) {
-        if context == &ProgressContext {
-            dispatch_async(dispatch_get_main_queue()) {
-                let progress = change[NSKeyValueChangeNewKey]! as CGFloat
-                HUDView.showProgress(progress, string: "Sending File to iPhone")
-            }
-        } else {
+        if context != &progressContext {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        } else if abs(lastDisplayTime.timeIntervalSinceNow) > 1/60 { // Update HUD at no more than 60fps
+            dispatch_sync(dispatch_get_main_queue()) {
+                if let progress = change[NSKeyValueChangeNewKey] as? CGFloat {
+                    HUDView.showProgress(progress, string: "Sending File to iPhone")
+                    lastDisplayTime = NSDate()
+                }
+            }
         }
     }
 }

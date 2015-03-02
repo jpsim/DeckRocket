@@ -9,27 +9,26 @@
 import Foundation
 
 enum FileType {
-    case PDF, Markdown, Unknown
+    case PDF, Markdown
 
-    init(fileExtension: String) {
-        var ext = fileExtension.lowercaseString
+    init?(fileExtension: String) {
+        let ext = fileExtension.lowercaseString
         if contains(FileType.extensionsForType(PDF), ext) {
             self = PDF
+            return
         } else if contains(FileType.extensionsForType(Markdown), ext) {
             self = Markdown
-        } else {
-            self = Unknown
+            return
         }
+        return nil
     }
 
     static func extensionsForType(fileType: FileType) -> [String] {
         switch fileType {
-        case PDF:
-            return ["pdf"]
-        case Markdown:
-            return ["markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text"]
-        case Unknown:
-            return [String]()
+            case PDF:
+                return ["pdf"]
+            case Markdown:
+                return ["markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text"]
         }
     }
 }

@@ -9,18 +9,18 @@
 import Cocoa
 import MultipeerConnectivity
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: Properties
 
     let multipeerClient = MultipeerClient()
-    let menuView = MenuView()
+    private let menuView = MenuView()
 
     // MARK: App
 
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        multipeerClient.onStateChange = {(state: MCSessionState) -> () in
-            var stateString = ""
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
+        multipeerClient.onStateChange = { state in
+            let stateString: String
             switch state {
                 case .NotConnected:
                     stateString = "Not Connected"
@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     stateString = "Connected"
             }
             dispatch_async(dispatch_get_main_queue()) {
-                self.menuView.menu!.itemAtIndex(0)!.title = stateString
+                self.menuView.menu?.itemAtIndex(0)?.title = stateString
             }
         }
     }

@@ -8,12 +8,13 @@
 
 import Cocoa
 
-class MenuView: NSView, NSMenuDelegate {
-    var highlight = false
+// FIXME: Use system-defined constant once accessible from Swift.
+let NSVariableStatusItemLength: CGFloat = -1
 
-    // NSVariableStatusItemLength == -1
-    // Not using symbol because it doesn't link properly in Swift
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+final class MenuView: NSView, NSMenuDelegate {
+    private var highlight = false
+
+    private let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
 
     // MARK: Initializers
 
@@ -30,26 +31,28 @@ class MenuView: NSView, NSMenuDelegate {
 
     // MARK: Menu
 
-    func setupMenu() {
+    private func setupMenu() {
         let menu = NSMenu()
         menu.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
-        menu.itemAtIndex(0)!.enabled = false
+        menu.itemAtIndex(0)?.enabled = false
         menu.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
         self.menu = menu
-        self.menu!.delegate = self
+        self.menu?.delegate = self
     }
 
     override func mouseDown(theEvent: NSEvent) {
         super.mouseDown(theEvent)
-        statusItem.popUpStatusItemMenu(menu!)
+        if let menu = menu {
+            statusItem.popUpStatusItemMenu(menu)
+        }
     }
 
-    func menuWillOpen(menu: NSMenu!) {
+    func menuWillOpen(menu: NSMenu) {
         highlight = true
         needsDisplay = true
     }
 
-    func menuDidClose(menu: NSMenu!) {
+    func menuDidClose(menu: NSMenu) {
         highlight = false
         needsDisplay = true
     }
@@ -63,32 +66,33 @@ class MenuView: NSView, NSMenuDelegate {
     // MARK: Dragging
 
     override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
-        return NSDragOperation.Copy
+        return .Copy
     }
 
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         let pboard = sender.draggingPasteboard()
-        if contains(pboard.types as [NSString], NSFilenamesPboardType) {
-            let files = pboard.propertyListForType(NSFilenamesPboardType) as [String]
-            let file = files[0]
-            if validateFile(file) {
-                let appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
-                appDelegate.multipeerClient.sendFile(file)
+        if contains((pboard.types as? [String]) ?? [], NSFilenamesPboardType) {
+            if let file = (pboard.propertyListForType(NSFilenamesPboardType) as? [String])?.first {
+                if validateFile(file) {
+                    let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate
+                    appDelegate?.multipeerClient.sendFile(file)
+                } else {
+                    HUDView.show("Error!\nOnly PDF and Markdown files can be sent")
+                }
             } else {
-                HUDView.show("Error!\nOnly PDF and Markdown files can be sent")
+                HUDView.show("Error!\nFile not found")
             }
         }
         return true
     }
 
-    func validateFile(filePath: NSString) -> Bool {
-        var allowedExtensions = [
+    private func validateFile(filePath: NSString) -> Bool {
+        let allowedExtensions = [
             // Markdown
             "markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text",
             // PDF
             "pdf"
         ]
-
         return contains(allowedExtensions, filePath.pathExtension.lowercaseString)
     }
 }

@@ -11,36 +11,38 @@ import UIKit
 import CoreGraphics
 
 extension UIImage {
-    class func imagesFromPDFPath(pdfPath: String) -> [UIImage] {
-        let pdfURL = NSURL(fileURLWithPath: pdfPath)
-        let pdf = CGPDFDocumentCreateWithURL(pdfURL)
-        let numberOfPages = CGPDFDocumentGetNumberOfPages(pdf)
-        var images = [UIImage]()
+    static func imagesFromPDFPath(pdfPath: String) -> [UIImage] {
+        if let pdfURL = NSURL(fileURLWithPath: pdfPath),
+            let pdf = CGPDFDocumentCreateWithURL(pdfURL) {
+            let numberOfPages = CGPDFDocumentGetNumberOfPages(pdf)
 
-        if numberOfPages == 0 {
+            if numberOfPages == 0 {
+                return []
+            }
+
+            var images = [UIImage]()
+            if let screenSize = UIApplication.sharedApplication().delegate?.window??.bounds.size {
+                let largestDimension = max(screenSize.width, screenSize.height)
+                let largestSize = CGSize(width: largestDimension, height: largestDimension)
+
+                for pageNumber in 1...Int(numberOfPages) {
+                    if let image = UIImage(pdfURL: pdfURL, page: pageNumber, fitSize: largestSize) {
+                        images.append(image)
+                    }
+                }
+            }
             return images
         }
-
-        let screenSize = UIApplication.sharedApplication().delegate!.window!!.bounds.size
-        let largestDimension = max(screenSize.width, screenSize.height)
-        let largestSize = CGSize(width: largestDimension, height: largestDimension)
-
-        for pageNumber in 1...numberOfPages {
-            images.append(UIImage.imageWithPDFURL(pdfURL!, page: pageNumber, fitSize: largestSize))
-        }
-        return images
+        return []
     }
 
-    class func pdfRectForURL(url: NSURL, page: UInt) -> CGRect {
-        let pdf = CGPDFDocumentCreateWithURL(url);
-        let pageRef = CGPDFDocumentGetPage(pdf, page);
-
-        let rect = CGPDFPageGetBoxRect(pageRef, kCGPDFCropBox)
-
-        return rect
+    private static func pdfRectForURL(url: NSURL, page: Int) -> CGRect {
+        let pdf = CGPDFDocumentCreateWithURL(url)
+        let pageRef = CGPDFDocumentGetPage(pdf, page)
+        return CGPDFPageGetBoxRect(pageRef, kCGPDFCropBox)
     }
 
-    class func imageWithPDFURL(url: NSURL, page: UInt, size: CGSize) -> UIImage {
+    convenience init?(pdfURL: NSURL, page: Int, size: CGSize) {
         UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.mainScreen().scale)
 
         let ctx = UIGraphicsGetCurrentContext()
@@ -50,28 +52,26 @@ extension UIImage {
         CGContextScaleCTM(ctx, 1, -1)
         CGContextTranslateCTM(ctx, 0, -size.height)
 
-        let pdf = CGPDFDocumentCreateWithURL(url)
-
+        let pdf = CGPDFDocumentCreateWithURL(pdfURL)
         let pageRef = CGPDFDocumentGetPage(pdf, page)
-
         let rect = CGPDFPageGetBoxRect(pageRef, kCGPDFCropBox)
 
-        CGContextScaleCTM(ctx, size.width/rect.size.width, size.height/rect.size.height)
+        CGContextScaleCTM(ctx, size.width / rect.size.width, size.height / rect.size.height)
         CGContextTranslateCTM(ctx, -rect.origin.x, -rect.origin.y)
         CGContextDrawPDFPage(ctx, pageRef)
 
-        let pdfImage = UIGraphicsGetImageFromCurrentImageContext();
+        let pdfImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return pdfImage
+        self.init(CGImage: pdfImage.CGImage)
     }
 
-    class func imageWithPDFURL(url: NSURL, page: UInt, fitSize size: CGSize) -> UIImage {
-        let rect = pdfRectForURL(url, page: page)
-        let scaleFactor = max(rect.size.width/size.width, rect.size.height/size.height)
-        let newWidth = ceil(rect.size.width/scaleFactor)
-        let newHeight = ceil(rect.size.height/scaleFactor)
+    convenience init?(pdfURL: NSURL, page: Int, fitSize size: CGSize) {
+        let rect = UIImage.pdfRectForURL(pdfURL, page: page)
+        let scaleFactor = max(rect.size.width / size.width, rect.size.height / size.height)
+        let newWidth = ceil(rect.size.width / scaleFactor)
+        let newHeight = ceil(rect.size.height / scaleFactor)
         let newSize = CGSize(width: newWidth, height: newHeight)
-        return UIImage.imageWithPDFURL(url, page: page, size: newSize)
+        self.init(pdfURL: pdfURL, page: page, size: newSize)
     }
 }
