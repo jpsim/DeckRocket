@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -137,7 +137,7 @@
 		E88F0FE6194BB85A00D243DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "JP Simard";
 				TargetAttributes = {
 					E88F0FED194BB85A00D243DE = {
@@ -146,7 +146,7 @@
 				};
 			};
 			buildConfigurationList = E88F0FE9194BB85A00D243DE /* Build configuration list for PBXProject "DeckRocket" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
