@@ -18,7 +18,7 @@ final class MenuView: NSView, NSMenuDelegate {
 
     // MARK: Initializers
 
-    override init() {
+    init() {
         super.init(frame: NSRect(x: 0, y: 0, width: 24, height: 24))
         registerForDraggedTypes([NSFilenamesPboardType])
         statusItem.view = self
