@@ -8,3 +8,4 @@
 
 #import "DJProgressHUD.h"
 #import "Deckset.h"
+#import "DDHotKeyCenter.h"
