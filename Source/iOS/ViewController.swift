@@ -9,19 +9,6 @@
 import UIKit
 import MultipeerConnectivity
 
-let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
-
-private func userDefaultsPathIfFileExists(key: String) -> String? {
-    let userDefaultsString = NSUserDefaults.standardUserDefaults().objectForKey(key) as? NSString as? String
-    return flatMap(userDefaultsString) { name in
-        let path = documentsPath.stringByAppendingPathComponent(name)
-        if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            return path
-        }
-        return nil
-    }
-}
-
 final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     // MARK: Properties
@@ -55,7 +42,10 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
         setupUI()
         setupConnectivityObserver()
-        updatePresentation()
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        if let slidesData = NSData(contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")) {
+            slides = flatMap(Slide.slidesfromData(slidesData)) { compact($0) }
+        }
     }
 
     // MARK: Connectivity Updates
@@ -81,21 +71,6 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
         }
     }
 
-    // MARK: Presentation Updates
-
-    func updatePresentation() {
-        if let pdfPath = userDefaultsPathIfFileExists("pdfName") {
-            let markdown = flatMap(userDefaultsPathIfFileExists("mdName")) { mdPath in
-                String(contentsOfFile: mdPath, encoding: NSUTF8StringEncoding)
-            }
-            slides = Presentation(pdfPath: pdfPath, markdown: markdown).slides
-            collectionView?.contentOffset.x = 0
-            collectionView?.reloadData()
-        }
-        // Trigger state change block
-        multipeerClient.onStateChange??(state: multipeerClient.state, peerID: MCPeerID())
-    }
-
     // MARK: UI
 
     private func setupUI() {
@@ -116,11 +91,10 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
         infoLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         infoLabel.numberOfLines = 0
         infoLabel.text = "Thanks for installing DeckRocket!\n\n" +
-                         "To get started, follow these steps:\n\n" +
-                         "1. Open a presentation in Deckset on your Mac and export it to PDF.\n" +
+                         "To get started, follow these simple steps:\n\n" +
+                         "1. Open a presentation in Deckset on your Mac.\n" +
                          "2. Launch DeckRocket on your Mac.\n" +
-                         "3. Drag your PDF onto the 🚀 icon in your Mac's menu bar.\n" +
-                         "4. (Optional) Repeat step 3 with your presentation's markdown file for access to presenter notes in the remote app.\n\n" +
+                         "3. Click the DeckRocket menu bar icon and select \"Send Slides\".\n\n" +
                          "From there, swipe on your phone to control your Deckset slides, " +
                          "tap the screen to toggle between current slide and notes view, and finally: " +
                          "keep an eye on the color of the border! Red means the connection was lost. Green means everything should work!"

@@ -64,7 +64,13 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     }
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        data.writeToFile(documentsPath.stringByAppendingPathComponent("slides"), atomically: false)
+        if let rootVC = UIApplication.sharedApplication().delegate?.window??.rootViewController as? ViewController,
+            data = data,
+            slides = Slide.slidesfromData(data) {
+            rootVC.slides = compact(slides)
+        }
     }
 
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
@@ -76,53 +82,6 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     }
 
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        if error == nil {
-            if let fileType = FileType(fileExtension: resourceName.pathExtension) {
-                switch fileType {
-                    case .PDF:
-                        handlePDF(resourceName, atURL: localURL)
-                    case .Markdown:
-                        handleMarkdown(resourceName, atURL: localURL)
-                }
-            }
-        }
-    }
 
-    // MARK: Handle Resources
-
-    private func handlePDF(resourceName: String!, atURL localURL: NSURL!) {
-        promptToLoadResource("New Presentation File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "pdfName")
-    }
-
-    private func handleMarkdown(resourceName: String!, atURL localURL: NSURL!) {
-        promptToLoadResource("New Markdown File", resourceName: resourceName, atURL: localURL, userDefaultsKey: "mdName")
-    }
-
-    private func promptToLoadResource(title: String, resourceName: String, atURL localURL: NSURL, userDefaultsKey: String) {
-        let rootVC = UIApplication.sharedApplication().delegate?.window??.rootViewController as? ViewController
-
-        let alert = UIAlertController(title: title, message: "Would you like to load \"\(resourceName)\"?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Load", style: .Default) { action in
-            let filePath = documentsPath.stringByAppendingPathComponent(resourceName)
-            let fileManager = NSFileManager.defaultManager()
-
-            var error: NSError? = nil
-            if fileManager.fileExistsAtPath(filePath) {
-                fileManager.removeItemAtPath(filePath, error: &error)
-            }
-
-            if let url = NSURL(fileURLWithPath: filePath) where fileManager.moveItemAtURL(localURL, toURL: url, error: &error) {
-                NSUserDefaults.standardUserDefaults().setObject(resourceName, forKey: userDefaultsKey)
-                NSUserDefaults.standardUserDefaults().synchronize()
-                rootVC?.updatePresentation()
-            } else {
-                let message = error?.localizedDescription ?? "move file failed with no error"
-                fatalError(message)
-            }
-        })
-        dispatch_async(dispatch_get_main_queue()) {
-            rootVC?.presentViewController(alert, animated: true, completion: nil)
-        }
     }
 }

@@ -13,6 +13,13 @@ struct DecksetDocument {
 
     private let sbDocument: AnyObject
 
+    /// Slides in the current document.
+    var slides: [DecksetSlide] {
+        return map(sbDocument.valueForKey("slides") as! [AnyObject]) {
+            DecksetSlide(sbSlide: $0)
+        }
+    }
+
     /// Its name.
     var name: String {
         return sbDocument.valueForKey("name") as! String

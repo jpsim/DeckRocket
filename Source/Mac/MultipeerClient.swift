@@ -35,18 +35,21 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
 
     // MARK: Send File
 
-    func sendFile(filePath: String) {
-        let url = NSURL(fileURLWithPath: filePath)
-
-        if session == nil || session!.connectedPeers.count == 0 { // Safe to force unwrap
-            HUDView.show("Error!\niPhone not connected")
-            return
-        }
-
-        if let peer = session?.connectedPeers[0] as? MCPeerID {
-            pdfProgress = session?.sendResourceAtURL(url, withName: filePath.lastPathComponent, toPeer: peer) { error in
+    func sendSlides(scriptingSlides: [DecksetSlide]) {
+        if let peer = session?.connectedPeers.first as! MCPeerID? {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.pdfProgress?.removeObserver(self, forKeyPath: "fractionCompleted", context: &progressContext)
+                    HUDView.showWithActivity("Exporting slides...")
+                }
+                let slidesData = NSKeyedArchiver.archivedDataWithRootObject(map(scriptingSlides) {
+                    Slide(pdfData: $0.pdfData, notes: $0.notes)!.dictionaryRepresentation!
+                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    HUDView.showWithActivity("Sending slides...")
+                }
+                var error: NSError? = nil
+                self.session?.sendData(slidesData, toPeers: [peer], withMode: .Reliable, error: &error)
+                dispatch_async(dispatch_get_main_queue()) {
                     if let errorDescription = error?.localizedDescription {
                         HUDView.show("Error!\n\(errorDescription)")
                     } else {
@@ -54,7 +57,8 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
                     }
                 }
             }
-            pdfProgress?.addObserver(self, forKeyPath: "fractionCompleted", options: .New, context: &progressContext)
+        } else {
+            HUDView.show("Error!\nRemote not connected")
         }
     }
 
@@ -74,7 +78,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         if let index = NSString(data: data, encoding: NSUTF8StringEncoding)?.integerValue {
-            DecksetApp()?.documents.first?.setSlideIndex(index)
+            DecksetApp(beta: true)?.documents.first?.setSlideIndex(index)
         }
     }
 

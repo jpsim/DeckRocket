@@ -20,7 +20,6 @@ final class MenuView: NSView, NSMenuDelegate {
 
     init() {
         super.init(frame: NSRect(x: 0, y: 0, width: 24, height: 24))
-        registerForDraggedTypes([NSFilenamesPboardType])
         statusItem.view = self
         setupMenu()
     }
@@ -36,6 +35,8 @@ final class MenuView: NSView, NSMenuDelegate {
         menu?.autoenablesItems = false
         menu?.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
         menu?.itemAtIndex(0)?.enabled = false
+        menu?.addItemWithTitle("Send Slides", action: "sendSlides", keyEquivalent: "")
+        menu?.itemAtIndex(1)?.enabled = false
         menu?.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
         menu?.delegate = self
     }
@@ -61,38 +62,5 @@ final class MenuView: NSView, NSMenuDelegate {
         super.drawRect(dirtyRect)
         statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
         "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(14)])
-    }
-
-    // MARK: Dragging
-
-    override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
-        return .Copy
-    }
-
-    override func performDragOperation(sender: NSDraggingInfo) -> Bool {
-        let pboard = sender.draggingPasteboard()
-        if contains((pboard.types as? [String]) ?? [], NSFilenamesPboardType) {
-            if let file = (pboard.propertyListForType(NSFilenamesPboardType) as? [String])?.first {
-                if validateFile(file) {
-                    let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate
-                    appDelegate?.multipeerClient.sendFile(file)
-                } else {
-                    HUDView.show("Error!\nOnly PDF and Markdown files can be sent")
-                }
-            } else {
-                HUDView.show("Error!\nFile not found")
-            }
-        }
-        return true
-    }
-
-    private func validateFile(filePath: NSString) -> Bool {
-        let allowedExtensions = [
-            // Markdown
-            "markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text",
-            // PDF
-            "pdf"
-        ]
-        return contains(allowedExtensions, filePath.pathExtension.lowercaseString)
     }
 }
