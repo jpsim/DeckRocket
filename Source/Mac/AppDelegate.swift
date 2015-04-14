@@ -25,7 +25,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 case .NotConnected:
                     stateString = "Not Connected"
                 case .Connecting:
-                    stateString = "Connecting"
+                    stateString = "Connecting..."
                 case .Connected:
                     stateString = "Connected"
             }

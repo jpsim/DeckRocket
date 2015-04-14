@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E810B4661ADD65AB00550385 /* DecksetDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112691AD6D6070004365A /* DecksetDocument.swift */; };
+		E810B4671ADD65AB00550385 /* DecksetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851126B1AD6D6070004365A /* DecksetWindow.swift */; };
 		E851127E1AD6D6070004365A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125A1AD6D6070004365A /* AppDelegate.swift */; };
 		E851127F1AD6D6070004365A /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125B1AD6D6070004365A /* Cell.swift */; };
 		E85112801AD6D6070004365A /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125C1AD6D6070004365A /* CollectionViewLayout.swift */; };
@@ -15,6 +17,7 @@
 		E85112971AD6D6520004365A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E851125D1AD6D6070004365A /* Images.xcassets */; };
 		E85112C31AD6D8850004365A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E85112761AD6D6070004365A /* Images.xcassets */; };
 		E85112C41AD6D8BF0004365A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112621AD6D6070004365A /* AppDelegate.swift */; };
+		E85112C61AD6D8CC0004365A /* DecksetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112681AD6D6070004365A /* DecksetApp.swift */; };
 		E85112CA1AD6D8D40004365A /* DJActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E851126E1AD6D6070004365A /* DJActivityIndicator.m */; };
 		E85112CB1AD6D8D40004365A /* DJBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112701AD6D6070004365A /* DJBezierPath.m */; };
 		E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112721AD6D6070004365A /* DJProgressHUD.m */; };
@@ -41,6 +44,10 @@
 		E85112621AD6D6070004365A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E85112641AD6D6070004365A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E85112651AD6D6070004365A /* DeckRocket-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DeckRocket-Bridging-Header.h"; sourceTree = "<group>"; };
+		E85112671AD6D6070004365A /* Deckset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deckset.h; sourceTree = "<group>"; };
+		E85112681AD6D6070004365A /* DecksetApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecksetApp.swift; sourceTree = "<group>"; };
+		E85112691AD6D6070004365A /* DecksetDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecksetDocument.swift; sourceTree = "<group>"; };
+		E851126B1AD6D6070004365A /* DecksetWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecksetWindow.swift; sourceTree = "<group>"; };
 		E851126D1AD6D6070004365A /* DJActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJActivityIndicator.h; sourceTree = "<group>"; };
 		E851126E1AD6D6070004365A /* DJActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJActivityIndicator.m; sourceTree = "<group>"; };
 		E851126F1AD6D6070004365A /* DJBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBezierPath.h; sourceTree = "<group>"; };
@@ -98,6 +105,7 @@
 				E85112621AD6D6070004365A /* AppDelegate.swift */,
 				E85112631AD6D6070004365A /* Main.storyboard */,
 				E85112651AD6D6070004365A /* DeckRocket-Bridging-Header.h */,
+				E85112661AD6D6070004365A /* Deckset */,
 				E851126C1AD6D6070004365A /* DJProgressHUD */,
 				E85112751AD6D6070004365A /* HUDView.swift */,
 				E85112761AD6D6070004365A /* Images.xcassets */,
@@ -108,6 +116,17 @@
 			);
 			name = Mac;
 			path = Source/Mac;
+			sourceTree = "<group>";
+		};
+		E85112661AD6D6070004365A /* Deckset */ = {
+			isa = PBXGroup;
+			children = (
+				E85112671AD6D6070004365A /* Deckset.h */,
+				E85112681AD6D6070004365A /* DecksetApp.swift */,
+				E85112691AD6D6070004365A /* DecksetDocument.swift */,
+				E851126B1AD6D6070004365A /* DecksetWindow.swift */,
+			);
+			path = Deckset;
 			sourceTree = "<group>";
 		};
 		E851126C1AD6D6070004365A /* DJProgressHUD */ = {
@@ -233,11 +252,14 @@
 				E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */,
 				E85112CB1AD6D8D40004365A /* DJBezierPath.m in Sources */,
 				E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */,
+				E810B4661ADD65AB00550385 /* DecksetDocument.swift in Sources */,
 				E85112C41AD6D8BF0004365A /* AppDelegate.swift in Sources */,
 				E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */,
 				E85112CF1AD6D8DB0004365A /* main.swift in Sources */,
 				E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */,
+				E810B4671ADD65AB00550385 /* DecksetWindow.swift in Sources */,
 				E85112CE1AD6D8DB0004365A /* HUDView.swift in Sources */,
+				E85112C61AD6D8CC0004365A /* DecksetApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

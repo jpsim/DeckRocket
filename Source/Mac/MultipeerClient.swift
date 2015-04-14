@@ -73,12 +73,8 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
     }
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        if let launchPath = NSBundle.mainBundle().pathForResource("deckrocket", ofType: "scpt"),
-            argument = NSString(data: data, encoding: NSUTF8StringEncoding) {
-            let task = NSTask()
-            task.launchPath = launchPath
-            task.arguments = [argument]
-            task.launch()
+        if let index = NSString(data: data, encoding: NSUTF8StringEncoding)?.integerValue {
+            DecksetApp()?.documents.first?.setSlideIndex(index)
         }
     }
 
