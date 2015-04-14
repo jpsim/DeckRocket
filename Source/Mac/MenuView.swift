@@ -32,12 +32,12 @@ final class MenuView: NSView, NSMenuDelegate {
     // MARK: Menu
 
     private func setupMenu() {
-        let menu = NSMenu()
-        menu.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
-        menu.itemAtIndex(0)?.enabled = false
-        menu.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
-        self.menu = menu
-        self.menu?.delegate = self
+        menu = NSMenu()
+        menu?.autoenablesItems = false
+        menu?.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
+        menu?.itemAtIndex(0)?.enabled = false
+        menu?.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
+        menu?.delegate = self
     }
 
     override func mouseDown(theEvent: NSEvent) {
@@ -60,7 +60,7 @@ final class MenuView: NSView, NSMenuDelegate {
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
         statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
-        "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(13)])
+        "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(14)])
     }
 
     // MARK: Dragging
