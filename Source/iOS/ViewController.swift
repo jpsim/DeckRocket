@@ -11,28 +11,33 @@ import MultipeerConnectivity
 
 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
 
-private func userDefaultsString(key: String) -> String? {
-    return NSUserDefaults.standardUserDefaults().objectForKey(key) as? NSString as? String
-}
-
 private func userDefaultsPathIfFileExists(key: String) -> String? {
-    if let name = userDefaultsString(key), let path = Optional(documentsPath.stringByAppendingPathComponent(name)) where NSFileManager.defaultManager().fileExistsAtPath(path) {
-        return path
+    let userDefaultsString = NSUserDefaults.standardUserDefaults().objectForKey(key) as? NSString as? String
+    return flatMap(userDefaultsString) { name in
+        let path = documentsPath.stringByAppendingPathComponent(name)
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            return path
+        }
+        return nil
     }
-    return nil
 }
 
 final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     // MARK: Properties
 
-    private var presentation: Presentation?
+    var slides: [Slide]? {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.infoLabel.hidden = self.slides != nil
+                self.collectionView?.contentOffset.x = 0
+                self.collectionView?.reloadData()
+                // Trigger state change block
+                self.multipeerClient.onStateChange??(state: self.multipeerClient.state, peerID: MCPeerID())
+            }
+        }
+    }
     private let multipeerClient = MultipeerClient()
-    // UIVisualEffectView's alpha can't be animated, so we nest it in a parent view
-    private let effectParentView = UIView()
-    private let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
-    private let notesView = UITextView()
-    private let nextSlideView = UIImageView()
     private let infoLabel = UILabel()
 
     // MARK: View Lifecycle
@@ -57,32 +62,22 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     private func setupConnectivityObserver() {
         multipeerClient.onStateChange = { state, peerID in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.notesView.alpha = 0
-                self.nextSlideView.alpha = 0
-                switch state {
-                    case .NotConnected:
-                        if self.multipeerClient.session == nil {
-                            self.effectParentView.alpha = 1
-                            self.infoLabel.text = "Not Connected"
-                        } else if self.multipeerClient.session!.connectedPeers.count == 0 { // Safe to force unwrap
-                            self.effectParentView.alpha = 1
-                            self.infoLabel.text = "Not Connected"
-                            self.multipeerClient.browser?.invitePeer(peerID, toSession: self.multipeerClient.session, withContext: nil, timeout: 30)
-                        }
-                    case .Connected:
-                        if let presentation = self.presentation {
-                            self.effectParentView.alpha = 0
-                            self.infoLabel.text = ""
-                        } else {
-                            self.effectParentView.alpha = 1
-                            self.infoLabel.text = "No Presentation Loaded"
-                        }
-                    case .Connecting:
-                        self.effectParentView.alpha = 1
-                        self.infoLabel.text = "Connecting..."
-                }
-            })
+            let client = self.multipeerClient
+            let borderColor: CGColorRef
+            switch state {
+                case .NotConnected:
+                    borderColor = UIColor.redColor().CGColor
+                    if client.session?.connectedPeers.count == 0 {
+                        client.browser?.invitePeer(peerID, toSession: client.session, withContext: nil, timeout: 30)
+                    }
+                case .Connecting:
+                    borderColor = UIColor.orangeColor().CGColor
+                case .Connected:
+                    borderColor = UIColor.greenColor().CGColor
+            }
+            dispatch_async(dispatch_get_main_queue()) {
+                collectionView?.layer.borderColor = borderColor
+            }
         }
     }
 
@@ -90,13 +85,10 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     func updatePresentation() {
         if let pdfPath = userDefaultsPathIfFileExists("pdfName") {
-            let markdown: String?
-            if let mdPath = userDefaultsPathIfFileExists("mdName") {
-                markdown = String(contentsOfFile: mdPath, encoding: NSUTF8StringEncoding)
-            } else {
-                markdown = nil
+            let markdown = flatMap(userDefaultsPathIfFileExists("mdName")) { mdPath in
+                String(contentsOfFile: mdPath, encoding: NSUTF8StringEncoding)
             }
-            presentation = Presentation(pdfPath: pdfPath, markdown: markdown)
+            slides = Presentation(pdfPath: pdfPath, markdown: markdown).slides
             collectionView?.contentOffset.x = 0
             collectionView?.reloadData()
         }
@@ -108,168 +100,51 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     private func setupUI() {
         setupCollectionView()
-        setupEffectView()
         setupInfoLabel()
-        setupNotesView()
-        setupNextSlideView()
     }
 
     private func setupCollectionView() {
         collectionView?.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
-        collectionView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "longPress:"))
         collectionView?.pagingEnabled = true
         collectionView?.showsHorizontalScrollIndicator = false
-    }
-
-    private func setupEffectView() {
-        effectParentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(effectParentView)
-
-        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[effectParentView]|", options: nil, metrics: nil, views: ["effectParentView": effectParentView])
-        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectParentView]|", options: nil, metrics: nil, views: ["effectParentView": effectParentView])
-        view.addConstraints(horizontal)
-        view.addConstraints(vertical)
-
-        effectView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        effectParentView.addSubview(effectView)
-
-        let horizontal2 = NSLayoutConstraint.constraintsWithVisualFormat("|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
-        let vertical2 = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
-        effectParentView.addConstraints(horizontal2)
-        effectParentView.addConstraints(vertical2)
+        collectionView?.layer.borderColor = UIColor.redColor().CGColor
+        collectionView?.layer.borderWidth = 2
     }
 
     private func setupInfoLabel() {
+        infoLabel.userInteractionEnabled = false
         infoLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        infoLabel.text = "Not Connected"
+        infoLabel.numberOfLines = 0
+        infoLabel.text = "Thanks for installing DeckRocket!\n\n" +
+                         "To get started, follow these steps:\n\n" +
+                         "1. Open a presentation in Deckset on your Mac and export it to PDF.\n" +
+                         "2. Launch DeckRocket on your Mac.\n" +
+                         "3. Drag your PDF onto the 🚀 icon in your Mac's menu bar.\n" +
+                         "4. (Optional) Repeat step 3 with your presentation's markdown file for access to presenter notes in the remote app.\n\n" +
+                         "From there, swipe on your phone to control your Deckset slides, " +
+                         "tap the screen to toggle between current slide and notes view, and finally: " +
+                         "keep an eye on the color of the border! Red means the connection was lost. Green means everything should work!"
         infoLabel.textColor = UIColor.whiteColor()
-        effectView.addSubview(infoLabel)
+        view.addSubview(infoLabel)
 
         // Constraints
-        let centerX = NSLayoutConstraint(item: infoLabel,
-            attribute: .CenterX,
-            relatedBy: .Equal,
-            toItem: effectView,
-            attribute: .CenterX,
-            multiplier: 1,
-            constant: 0)
-        let centerY = NSLayoutConstraint(item: infoLabel,
-            attribute: .CenterY,
-            relatedBy: .Equal,
-            toItem: effectView,
-            attribute: .CenterY,
-            multiplier: 1,
-            constant: 0)
-        effectView.addConstraints([centerX, centerY])
-    }
-
-    private func setupNotesView() {
-        notesView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        notesView.font = UIFont.systemFontOfSize(30)
-        notesView.backgroundColor = UIColor.clearColor()
-        notesView.textColor = UIColor.whiteColor()
-        notesView.userInteractionEnabled = false
-        notesView.alpha = 0
-        effectView.addSubview(notesView)
-
-        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[notesView]|", options: nil, metrics: nil, views: ["notesView": notesView])
-        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[notesView]|", options: nil, metrics: nil, views: ["notesView": notesView])
-        effectView.addConstraints(horizontal)
-        effectView.addConstraints(vertical)
-    }
-
-    private func setupNextSlideView() {
-        nextSlideView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        nextSlideView.contentMode = UIViewContentMode.ScaleAspectFit
-        effectView.addSubview(nextSlideView)
-
-        // Constraints
-        let ratio = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Width,
-            relatedBy: .Equal,
-            toItem: nextSlideView,
-            attribute: .Height,
-            multiplier: 16.0/9,
-            constant: 0)
-        let height = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Height,
-            relatedBy: .LessThanOrEqual,
-            toItem: effectView,
-            attribute: .Height,
-            multiplier: 0.5,
-            constant: 0)
-        let left = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Left,
-            relatedBy: .GreaterThanOrEqual,
-            toItem: effectView,
-            attribute: .Left,
-            multiplier: 1,
-            constant: 10)
-        let right = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Right,
-            relatedBy: .Equal,
-            toItem: effectView,
-            attribute: .Right,
-            multiplier: 1,
-            constant: -10)
-        let bottom = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Bottom,
-            relatedBy: .Equal,
-            toItem: effectView,
-            attribute: .Bottom,
-            multiplier: 1,
-            constant: -10)
-        effectView.addConstraints([ratio, height, left, right, bottom])
-    }
-
-    // MARK: Gestures
-
-    func longPress(sender: UILongPressGestureRecognizer) {
-        switch sender.state {
-            case .Began:
-                showNotes(true)
-            case .Changed:
-                break
-            default:
-                // Don't do anything if the effect view is now being used to show a connectivity message
-                if let session = multipeerClient.session where session.connectedPeers.count > 0 {
-                    showNotes(false)
-                }
-        }
-    }
-
-    private func showNotes(show: Bool) {
-        if let presentation = presentation {
-            let currentSlideIndex = Int(currentSlide())
-            notesView.text = presentation.slides[currentSlideIndex].notes
-            notesView.alpha = 1
-            nextSlideView.alpha = 1
-
-            if currentSlideIndex < presentation.slides.count - 1 {
-                nextSlideView.image = presentation.slides[currentSlideIndex + 1].image
-            } else {
-                nextSlideView.image = nil
-            }
-            let alpha = CGFloat(show)
-            UIView.animateWithDuration(0.25, animations: {
-                self.effectParentView.alpha = alpha
-            }) { finished in
-                self.notesView.alpha = alpha
-                self.nextSlideView.alpha = alpha
-            }
-        }
+        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|-20-[infoLabel]-20-|", options: nil, metrics: nil, views: ["infoLabel": infoLabel])
+        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[infoLabel]|", options: nil, metrics: nil, views: ["infoLabel": infoLabel])
+        view.addConstraints(horizontal)
+        view.addConstraints(vertical)
     }
 
     // MARK: Collection View
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presentation?.slides.count ?? 0
+        return slides?.count ?? 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! Cell
-        let slide = presentation?.slides[indexPath.item]
-        cell.imageView.image = slide?.image
+        cell.imageView.image = slides?[indexPath.item].image
+        cell.notesView.text = slides?[indexPath.item].notes
+        cell.nextSlideView.image = indexPath.item + 1 < slides?.count ? slides?[indexPath.item + 1].image : nil
         return cell
     }
 
@@ -289,7 +164,6 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // MARK: Rotation
 
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-
         // Update Layout
         let layout = collectionView?.collectionViewLayout as? CollectionViewLayout
         layout?.invalidateLayout()
