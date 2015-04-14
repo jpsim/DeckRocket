@@ -37,7 +37,7 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     // MARK: View Lifecycle
 
-    override init() {
+    init() {
         super.init(collectionViewLayout: CollectionViewLayout())
     }
 

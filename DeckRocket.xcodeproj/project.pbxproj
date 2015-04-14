@@ -1,0 +1,502 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E851127E1AD6D6070004365A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125A1AD6D6070004365A /* AppDelegate.swift */; };
+		E851127F1AD6D6070004365A /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125B1AD6D6070004365A /* Cell.swift */; };
+		E85112801AD6D6070004365A /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125C1AD6D6070004365A /* CollectionViewLayout.swift */; };
+		E85112831AD6D6070004365A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125F1AD6D6070004365A /* MultipeerClient.swift */; };
+		E85112841AD6D6070004365A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112601AD6D6070004365A /* ViewController.swift */; };
+		E85112971AD6D6520004365A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E851125D1AD6D6070004365A /* Images.xcassets */; };
+		E85112C31AD6D8850004365A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E85112761AD6D6070004365A /* Images.xcassets */; };
+		E85112C41AD6D8BF0004365A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112621AD6D6070004365A /* AppDelegate.swift */; };
+		E85112CA1AD6D8D40004365A /* DJActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E851126E1AD6D6070004365A /* DJActivityIndicator.m */; };
+		E85112CB1AD6D8D40004365A /* DJBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112701AD6D6070004365A /* DJBezierPath.m */; };
+		E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112721AD6D6070004365A /* DJProgressHUD.m */; };
+		E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112741AD6D6070004365A /* DJProgressIndicator.m */; };
+		E85112CE1AD6D8DB0004365A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112751AD6D6070004365A /* HUDView.swift */; };
+		E85112CF1AD6D8DB0004365A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112781AD6D6070004365A /* main.swift */; };
+		E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112791AD6D6070004365A /* MenuView.swift */; };
+		E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851127A1AD6D6070004365A /* MultipeerClient.swift */; };
+		E85112D21AD6D8F40004365A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E85112631AD6D6070004365A /* Main.storyboard */; };
+		E8E08C5D1ADD625800D414A3 /* PDFImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C5A1ADD625800D414A3 /* PDFImages.swift */; };
+		E8E08C5E1ADD625800D414A3 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C5B1ADD625800D414A3 /* Presentation.swift */; };
+		E8E08C5F1ADD625800D414A3 /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C5C1ADD625800D414A3 /* Slide.swift */; };
+		E8E08C611ADD627A00D414A3 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C601ADD627A00D414A3 /* FileType.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E851125A1AD6D6070004365A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E851125B1AD6D6070004365A /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		E851125C1AD6D6070004365A /* CollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
+		E851125D1AD6D6070004365A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E851125E1AD6D6070004365A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E851125F1AD6D6070004365A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
+		E85112601AD6D6070004365A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E85112621AD6D6070004365A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E85112641AD6D6070004365A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E85112651AD6D6070004365A /* DeckRocket-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DeckRocket-Bridging-Header.h"; sourceTree = "<group>"; };
+		E851126D1AD6D6070004365A /* DJActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJActivityIndicator.h; sourceTree = "<group>"; };
+		E851126E1AD6D6070004365A /* DJActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJActivityIndicator.m; sourceTree = "<group>"; };
+		E851126F1AD6D6070004365A /* DJBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBezierPath.h; sourceTree = "<group>"; };
+		E85112701AD6D6070004365A /* DJBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJBezierPath.m; sourceTree = "<group>"; };
+		E85112711AD6D6070004365A /* DJProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressHUD.h; sourceTree = "<group>"; };
+		E85112721AD6D6070004365A /* DJProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressHUD.m; sourceTree = "<group>"; };
+		E85112731AD6D6070004365A /* DJProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressIndicator.h; sourceTree = "<group>"; };
+		E85112741AD6D6070004365A /* DJProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressIndicator.m; sourceTree = "<group>"; };
+		E85112751AD6D6070004365A /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
+		E85112761AD6D6070004365A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E85112771AD6D6070004365A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E85112781AD6D6070004365A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		E85112791AD6D6070004365A /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		E851127A1AD6D6070004365A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
+		E85112A41AD6D84A0004365A /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E89980881AD6D54600441BCC /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8E08C5A1ADD625800D414A3 /* PDFImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFImages.swift; sourceTree = "<group>"; };
+		E8E08C5B1ADD625800D414A3 /* Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
+		E8E08C5C1ADD625800D414A3 /* Slide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
+		E8E08C601ADD627A00D414A3 /* FileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		E82788C71AD6D3EF00325FE1 = {
+			isa = PBXGroup;
+			children = (
+				E85112591AD6D6070004365A /* iOS */,
+				E85112611AD6D6070004365A /* Mac */,
+				E89980891AD6D54600441BCC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E85112591AD6D6070004365A /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				E851125A1AD6D6070004365A /* AppDelegate.swift */,
+				E851125B1AD6D6070004365A /* Cell.swift */,
+				E851125C1AD6D6070004365A /* CollectionViewLayout.swift */,
+				E8E08C601ADD627A00D414A3 /* FileType.swift */,
+				E851125D1AD6D6070004365A /* Images.xcassets */,
+				E851125E1AD6D6070004365A /* Info.plist */,
+				E851125F1AD6D6070004365A /* MultipeerClient.swift */,
+				E8E08C5A1ADD625800D414A3 /* PDFImages.swift */,
+				E8E08C5B1ADD625800D414A3 /* Presentation.swift */,
+				E8E08C5C1ADD625800D414A3 /* Slide.swift */,
+				E85112601AD6D6070004365A /* ViewController.swift */,
+			);
+			name = iOS;
+			path = Source/iOS;
+			sourceTree = "<group>";
+		};
+		E85112611AD6D6070004365A /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				E85112621AD6D6070004365A /* AppDelegate.swift */,
+				E85112631AD6D6070004365A /* Main.storyboard */,
+				E85112651AD6D6070004365A /* DeckRocket-Bridging-Header.h */,
+				E851126C1AD6D6070004365A /* DJProgressHUD */,
+				E85112751AD6D6070004365A /* HUDView.swift */,
+				E85112761AD6D6070004365A /* Images.xcassets */,
+				E85112771AD6D6070004365A /* Info.plist */,
+				E85112781AD6D6070004365A /* main.swift */,
+				E85112791AD6D6070004365A /* MenuView.swift */,
+				E851127A1AD6D6070004365A /* MultipeerClient.swift */,
+			);
+			name = Mac;
+			path = Source/Mac;
+			sourceTree = "<group>";
+		};
+		E851126C1AD6D6070004365A /* DJProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				E851126D1AD6D6070004365A /* DJActivityIndicator.h */,
+				E851126E1AD6D6070004365A /* DJActivityIndicator.m */,
+				E851126F1AD6D6070004365A /* DJBezierPath.h */,
+				E85112701AD6D6070004365A /* DJBezierPath.m */,
+				E85112711AD6D6070004365A /* DJProgressHUD.h */,
+				E85112721AD6D6070004365A /* DJProgressHUD.m */,
+				E85112731AD6D6070004365A /* DJProgressIndicator.h */,
+				E85112741AD6D6070004365A /* DJProgressIndicator.m */,
+			);
+			path = DJProgressHUD;
+			sourceTree = "<group>";
+		};
+		E89980891AD6D54600441BCC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E89980881AD6D54600441BCC /* DeckRocket.app */,
+				E85112A41AD6D84A0004365A /* DeckRocket.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E85112A31AD6D84A0004365A /* Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E85112BD1AD6D84A0004365A /* Build configuration list for PBXNativeTarget "Mac" */;
+			buildPhases = (
+				E85112A01AD6D84A0004365A /* Sources */,
+				E85112A21AD6D84A0004365A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mac;
+			productName = Mac;
+			productReference = E85112A41AD6D84A0004365A /* DeckRocket.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E89980871AD6D54600441BCC /* iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E89980A91AD6D54600441BCC /* Build configuration list for PBXNativeTarget "iOS" */;
+			buildPhases = (
+				E89980841AD6D54600441BCC /* Sources */,
+				E89980861AD6D54600441BCC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOS;
+			productName = iOS;
+			productReference = E89980881AD6D54600441BCC /* DeckRocket.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E82788C81AD6D3EF00325FE1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				TargetAttributes = {
+					E85112A31AD6D84A0004365A = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					E89980871AD6D54600441BCC = {
+						CreatedOnToolsVersion = 6.3;
+					};
+				};
+			};
+			buildConfigurationList = E82788CB1AD6D3EF00325FE1 /* Build configuration list for PBXProject "DeckRocket" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E82788C71AD6D3EF00325FE1;
+			productRefGroup = E89980891AD6D54600441BCC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E89980871AD6D54600441BCC /* iOS */,
+				E85112A31AD6D84A0004365A /* Mac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E85112A21AD6D84A0004365A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E85112C31AD6D8850004365A /* Images.xcassets in Resources */,
+				E85112D21AD6D8F40004365A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E89980861AD6D54600441BCC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E85112971AD6D6520004365A /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E85112A01AD6D84A0004365A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E85112CA1AD6D8D40004365A /* DJActivityIndicator.m in Sources */,
+				E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */,
+				E85112CB1AD6D8D40004365A /* DJBezierPath.m in Sources */,
+				E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */,
+				E85112C41AD6D8BF0004365A /* AppDelegate.swift in Sources */,
+				E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */,
+				E85112CF1AD6D8DB0004365A /* main.swift in Sources */,
+				E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */,
+				E85112CE1AD6D8DB0004365A /* HUDView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E89980841AD6D54600441BCC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8E08C5D1ADD625800D414A3 /* PDFImages.swift in Sources */,
+				E8E08C5E1ADD625800D414A3 /* Presentation.swift in Sources */,
+				E85112841AD6D6070004365A /* ViewController.swift in Sources */,
+				E85112801AD6D6070004365A /* CollectionViewLayout.swift in Sources */,
+				E8E08C611ADD627A00D414A3 /* FileType.swift in Sources */,
+				E851127E1AD6D6070004365A /* AppDelegate.swift in Sources */,
+				E85112831AD6D6070004365A /* MultipeerClient.swift in Sources */,
+				E851127F1AD6D6070004365A /* Cell.swift in Sources */,
+				E8E08C5F1ADD625800D414A3 /* Slide.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E85112631AD6D6070004365A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E85112641AD6D6070004365A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E82788CC1AD6D3EF00325FE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		E82788CD1AD6D3EF00325FE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		E85112BE1AD6D84A0004365A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = DeckRocket;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E85112BF1AD6D84A0004365A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = DeckRocket;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		E89980A51AD6D54600441BCC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = DeckRocket;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E89980A61AD6D54600441BCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = DeckRocket;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E82788CB1AD6D3EF00325FE1 /* Build configuration list for PBXProject "DeckRocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E82788CC1AD6D3EF00325FE1 /* Debug */,
+				E82788CD1AD6D3EF00325FE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E85112BD1AD6D84A0004365A /* Build configuration list for PBXNativeTarget "Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E85112BE1AD6D84A0004365A /* Debug */,
+				E85112BF1AD6D84A0004365A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E89980A91AD6D54600441BCC /* Build configuration list for PBXNativeTarget "iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E89980A51AD6D54600441BCC /* Debug */,
+				E89980A61AD6D54600441BCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E82788C81AD6D3EF00325FE1 /* Project object */;
+}
