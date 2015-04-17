@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import Cartography
 
-var gNotesHidden = true
+private var gNotesHidden = true
 
 final class Cell: UICollectionViewCell {
+
+    // MARK: Properties
+
     var notesHidden: Bool {
         get {
             return gNotesHidden
@@ -25,6 +29,8 @@ final class Cell: UICollectionViewCell {
     let nextSlideView = UIImageView()
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
 
+    // MARK: Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupImageView()
@@ -34,99 +40,68 @@ final class Cell: UICollectionViewCell {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: "toggleNotes:"))
     }
 
-    func resetHidden() {
-        effectView.hidden = notesHidden
-        notesView.hidden = notesHidden
-        nextSlideView.hidden = notesHidden
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        resetHidden()
-    }
-
-    func toggleNotes(sender: UITapGestureRecognizer) {
-        notesHidden = !notesHidden
-    }
-
     required convenience init(coder aDecoder: NSCoder) {
         self.init(frame: CGRectZero)
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        imageView.frame = bounds
-    }
+    // MARK: UI
 
     private func setupImageView() {
         imageView.contentMode = .ScaleAspectFit
         contentView.addSubview(imageView)
-
-        effectView.setTranslatesAutoresizingMaskIntoConstraints(false)
         imageView.addSubview(effectView)
 
-        let horizontal2 = NSLayoutConstraint.constraintsWithVisualFormat("|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
-        let vertical2 = NSLayoutConstraint.constraintsWithVisualFormat("V:|[effectView]|", options: nil, metrics: nil, views: ["effectView": effectView])
-        imageView.addConstraints(horizontal2)
-        imageView.addConstraints(vertical2)
+        layout(imageView, effectView, contentView) {
+            $0.edges == $2.edges
+            $1.edges == $2.edges
+        }
     }
 
     private func setupNotesView() {
-        notesView.setTranslatesAutoresizingMaskIntoConstraints(false)
         notesView.font = UIFont.systemFontOfSize(30)
         notesView.backgroundColor = UIColor.clearColor()
         notesView.textColor = UIColor.whiteColor()
         notesView.userInteractionEnabled = false
         contentView.addSubview(notesView)
 
-        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|[notesView]|", options: nil, metrics: nil, views: ["notesView": notesView])
-        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[notesView]|", options: nil, metrics: nil, views: ["notesView": notesView])
-        addConstraints(horizontal)
-        addConstraints(vertical)
+        layout(notesView, contentView) {
+            $0.left == $1.left
+            $0.right == $1.right
+            $0.bottom == $1.bottom
+            $0.top == $1.top + 20
+        }
     }
 
     private func setupNextSlideView() {
-        nextSlideView.setTranslatesAutoresizingMaskIntoConstraints(false)
         nextSlideView.contentMode = .ScaleAspectFit
         nextSlideView.userInteractionEnabled = false
         contentView.addSubview(nextSlideView)
 
-        // Constraints
-        let ratio = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Width,
-            relatedBy: .Equal,
-            toItem: nextSlideView,
-            attribute: .Height,
-            multiplier: 16/9,
-            constant: 0)
-        let height = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Height,
-            relatedBy: .LessThanOrEqual,
-            toItem: self,
-            attribute: .Height,
-            multiplier: 0.5,
-            constant: 0)
-        let left = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Left,
-            relatedBy: .GreaterThanOrEqual,
-            toItem: self,
-            attribute: .Left,
-            multiplier: 1,
-            constant: 10)
-        let right = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Right,
-            relatedBy: .Equal,
-            toItem: self,
-            attribute: .Right,
-            multiplier: 1,
-            constant: -10)
-        let bottom = NSLayoutConstraint(item: nextSlideView,
-            attribute: .Bottom,
-            relatedBy: .Equal,
-            toItem: self,
-            attribute: .Bottom,
-            multiplier: 1,
-            constant: -10)
-        addConstraints([ratio, height, left, right, bottom])
+        layout(nextSlideView, contentView) {
+            $0.width  == $0.height * 16/9
+            $0.height <= $1.height / 2
+            $0.left   >= $1.left   + 10
+            $0.right  == $1.right  - 10
+            $0.bottom == $1.bottom - 10
+        }
+    }
+
+    // MARK: Actions
+
+    private func resetHidden() {
+        effectView.hidden = notesHidden
+        notesView.hidden = notesHidden
+        nextSlideView.hidden = notesHidden
+    }
+
+    func toggleNotes(sender: UITapGestureRecognizer) {
+        notesHidden = !notesHidden
+    }
+
+    // MARK: Overrides
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        resetHidden()
     }
 }
