@@ -8,19 +8,7 @@
 
 import UIKit
 import MultipeerConnectivity
-
-let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
-
-private func userDefaultsPathIfFileExists(key: String) -> String? {
-    let userDefaultsString = NSUserDefaults.standardUserDefaults().objectForKey(key) as? NSString as? String
-    return flatMap(userDefaultsString) { name in
-        let path = documentsPath.stringByAppendingPathComponent(name)
-        if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            return path
-        }
-        return nil
-    }
-}
+import Cartography
 
 final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
@@ -43,7 +31,11 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // MARK: View Lifecycle
 
     init() {
-        super.init(collectionViewLayout: CollectionViewLayout())
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .Horizontal
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        super.init(collectionViewLayout: layout)
     }
 
     convenience required init(coder aDecoder: NSCoder) {
@@ -55,7 +47,10 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
         setupUI()
         setupConnectivityObserver()
-        updatePresentation()
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        if let slidesData = NSData(contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")) {
+            slides = flatMap(Slide.slidesfromData(slidesData)) { compact($0) }
+        }
     }
 
     // MARK: Connectivity Updates
@@ -65,35 +60,20 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
             let client = self.multipeerClient
             let borderColor: CGColorRef
             switch state {
-                case .NotConnected:
-                    borderColor = UIColor.redColor().CGColor
-                    if client.session?.connectedPeers.count == 0 {
-                        client.browser?.invitePeer(peerID, toSession: client.session, withContext: nil, timeout: 30)
-                    }
-                case .Connecting:
-                    borderColor = UIColor.orangeColor().CGColor
-                case .Connected:
-                    borderColor = UIColor.greenColor().CGColor
+            case .NotConnected:
+                borderColor = UIColor.redColor().CGColor
+                if client.session?.connectedPeers.count == 0 {
+                    client.browser?.invitePeer(peerID, toSession: client.session, withContext: nil, timeout: 30)
+                }
+            case .Connecting:
+                borderColor = UIColor.orangeColor().CGColor
+            case .Connected:
+                borderColor = UIColor.greenColor().CGColor
             }
             dispatch_async(dispatch_get_main_queue()) {
                 collectionView?.layer.borderColor = borderColor
             }
         }
-    }
-
-    // MARK: Presentation Updates
-
-    func updatePresentation() {
-        if let pdfPath = userDefaultsPathIfFileExists("pdfName") {
-            let markdown = flatMap(userDefaultsPathIfFileExists("mdName")) { mdPath in
-                String(contentsOfFile: mdPath, encoding: NSUTF8StringEncoding)
-            }
-            slides = Presentation(pdfPath: pdfPath, markdown: markdown).slides
-            collectionView?.contentOffset.x = 0
-            collectionView?.reloadData()
-        }
-        // Trigger state change block
-        multipeerClient.onStateChange??(state: multipeerClient.state, peerID: MCPeerID())
     }
 
     // MARK: UI
@@ -109,29 +89,29 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.layer.borderColor = UIColor.redColor().CGColor
         collectionView?.layer.borderWidth = 2
+        setCollectionViewItemSize(view.bounds.size)
     }
 
     private func setupInfoLabel() {
         infoLabel.userInteractionEnabled = false
-        infoLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         infoLabel.numberOfLines = 0
         infoLabel.text = "Thanks for installing DeckRocket!\n\n" +
-                         "To get started, follow these steps:\n\n" +
-                         "1. Open a presentation in Deckset on your Mac and export it to PDF.\n" +
-                         "2. Launch DeckRocket on your Mac.\n" +
-                         "3. Drag your PDF onto the 🚀 icon in your Mac's menu bar.\n" +
-                         "4. (Optional) Repeat step 3 with your presentation's markdown file for access to presenter notes in the remote app.\n\n" +
-                         "From there, swipe on your phone to control your Deckset slides, " +
-                         "tap the screen to toggle between current slide and notes view, and finally: " +
-                         "keep an eye on the color of the border! Red means the connection was lost. Green means everything should work!"
+            "To get started, follow these simple steps:\n\n" +
+            "1. Open a presentation in Deckset on your Mac.\n" +
+            "2. Launch DeckRocket on your Mac.\n" +
+            "3. Click the DeckRocket menu bar icon and select \"Send Slides\".\n\n" +
+            "From there, swipe on your phone to control your Deckset slides, " +
+            "tap the screen to toggle between current slide and notes view, and finally: " +
+        "keep an eye on the color of the border! Red means the connection was lost. Green means everything should work!"
         infoLabel.textColor = UIColor.whiteColor()
         view.addSubview(infoLabel)
 
-        // Constraints
-        let horizontal = NSLayoutConstraint.constraintsWithVisualFormat("|-20-[infoLabel]-20-|", options: nil, metrics: nil, views: ["infoLabel": infoLabel])
-        let vertical = NSLayoutConstraint.constraintsWithVisualFormat("V:|[infoLabel]|", options: nil, metrics: nil, views: ["infoLabel": infoLabel])
-        view.addConstraints(horizontal)
-        view.addConstraints(vertical)
+        layout(infoLabel, view) {
+            $0.left   == $1.left  + 20
+            $0.right  == $1.right - 20
+            $0.top    == $1.top
+            $0.bottom == $1.bottom
+        }
     }
 
     // MARK: Collection View
@@ -151,10 +131,10 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // MARK: UIScrollViewDelegate
 
     private func currentSlide() -> UInt {
-        if let collectionView = collectionView {
-            return UInt(round(collectionView.contentOffset.x / collectionView.frame.size.width))
-        }
-        return 0
+        return map(collectionView) { cv in
+            let cvLayout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+            return UInt(round(cv.contentOffset.x / cvLayout.itemSize.width))
+            } ?? 0
     }
 
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -163,20 +143,17 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     // MARK: Rotation
 
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        // Update Layout
-        let layout = collectionView?.collectionViewLayout as? CollectionViewLayout
-        layout?.invalidateLayout()
-        layout?.itemSize = CGSize(width: view.bounds.size.height, height: view.bounds.size.width)
+    private func setCollectionViewItemSize(size: CGSize) {
+        let cvLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+        cvLayout?.itemSize = size
+    }
 
-        // Update Offset
-        let targetOffset = CGFloat(currentSlide()) * (layout?.itemSize.width ?? 0)
-
-        // We do this half-way through the animation
-        let delay = (duration / 2) * NSTimeInterval(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue()) {
-            self.collectionView?.contentOffset.x = targetOffset
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        let current = currentSlide()
+        UIView.animateWithDuration(coordinator.transitionDuration()) {
+            self.collectionView?.contentOffset.x = CGFloat(current) * size.width
         }
+        setCollectionViewItemSize(size)
     }
 }

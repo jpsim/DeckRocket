@@ -1,0 +1,3 @@
+[submodule "Carthage/Checkouts/Cartography"]
+	path = Carthage/Checkouts/Cartography
+	url = https://github.com/robb/Cartography.git

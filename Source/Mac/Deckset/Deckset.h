@@ -6,7 +6,7 @@
 #import <ScriptingBridge/ScriptingBridge.h>
 
 
-@class DecksetApplication, DecksetDocument, DecksetWindow;
+@class DecksetApplication, DecksetSlide, DecksetDocument, DecksetWindow;
 
 
 
@@ -30,8 +30,20 @@
 
 @end
 
+// A slide.
+@interface DecksetSlide : SBObject
+
+@property (copy) NSString *notes;  // The notes of the text.
+@property (copy) NSData *pdfData;  // The slide as PDF.
+
+- (void) close;  // Close a document.
+
+@end
+
 // A document.
 @interface DecksetDocument : SBObject
+
+- (SBElementArray *) slides;
 
 @property (copy, readonly) NSString *name;  // Its name.
 @property (readonly) BOOL modified;  // Has it been modified since the last save?

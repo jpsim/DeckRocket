@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		E810B4661ADD65AB00550385 /* DecksetDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112691AD6D6070004365A /* DecksetDocument.swift */; };
 		E810B4671ADD65AB00550385 /* DecksetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851126B1AD6D6070004365A /* DecksetWindow.swift */; };
+		E8167C081ADD9BB400621C9C /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E8167C031ADD9BB400621C9C /* DDHotKeyCenter.m */; };
+		E8167C091ADD9BB400621C9C /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E8167C051ADD9BB400621C9C /* DDHotKeyTextField.m */; };
+		E8167C0A1ADD9BB400621C9C /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E8167C071ADD9BB400621C9C /* DDHotKeyUtilities.m */; };
+		E836F2C31ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */; };
+		E836F2C41ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */; };
+		E836F2C51ADD983300060D6B /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C21ADD983300060D6B /* Slide.swift */; };
+		E836F2C61ADD983300060D6B /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C21ADD983300060D6B /* Slide.swift */; };
+		E836F2C81ADD986000060D6B /* DecksetSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C71ADD986000060D6B /* DecksetSlide.swift */; };
 		E851127E1AD6D6070004365A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125A1AD6D6070004365A /* AppDelegate.swift */; };
 		E851127F1AD6D6070004365A /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125B1AD6D6070004365A /* Cell.swift */; };
 		E85112801AD6D6070004365A /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851125C1AD6D6070004365A /* CollectionViewLayout.swift */; };
@@ -27,13 +35,72 @@
 		E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112791AD6D6070004365A /* MenuView.swift */; };
 		E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851127A1AD6D6070004365A /* MultipeerClient.swift */; };
 		E85112D21AD6D8F40004365A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E85112631AD6D6070004365A /* Main.storyboard */; };
-		E8E08C5D1ADD625800D414A3 /* PDFImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C5A1ADD625800D414A3 /* PDFImages.swift */; };
-		E8E08C5E1ADD625800D414A3 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C5B1ADD625800D414A3 /* Presentation.swift */; };
-		E8E08C5F1ADD625800D414A3 /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C5C1ADD625800D414A3 /* Slide.swift */; };
-		E8E08C611ADD627A00D414A3 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E08C601ADD627A00D414A3 /* FileType.swift */; };
+		E8F094AA1AE0888D00DCC2F3 /* Cartography.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F094A31AE0888300DCC2F3 /* Cartography.framework */; };
+		E8F094AB1AE0888D00DCC2F3 /* Cartography.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E8F094A31AE0888300DCC2F3 /* Cartography.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E8F094A21AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 54C96A11195063CD000CDD27;
+			remoteInfo = "Cartography-iOS";
+		};
+		E8F094A41AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 54C96A1C195063CD000CDD27;
+			remoteInfo = "Cartography-iOS-Tests";
+		};
+		E8F094A61AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 54F6A838195C20C100313D24;
+			remoteInfo = "Cartography-Mac";
+		};
+		E8F094A81AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 54F6A842195C20C200313D24;
+			remoteInfo = "Cartography-Mac-Tests";
+		};
+		E8F094AC1AE0888D00DCC2F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 54C96A10195063CD000CDD27;
+			remoteInfo = "Cartography-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E8F094AF1AE0888D00DCC2F3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E8F094AB1AE0888D00DCC2F3 /* Cartography.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		E8167C021ADD9BB400621C9C /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyCenter.h; sourceTree = "<group>"; };
+		E8167C031ADD9BB400621C9C /* DDHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyCenter.m; sourceTree = "<group>"; };
+		E8167C041ADD9BB400621C9C /* DDHotKeyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyTextField.h; sourceTree = "<group>"; };
+		E8167C051ADD9BB400621C9C /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyTextField.m; sourceTree = "<group>"; };
+		E8167C061ADD9BB400621C9C /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
+		E8167C071ADD9BB400621C9C /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
+		E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SequenceType+DeckRocket.swift"; sourceTree = "<group>"; };
+		E836F2C21ADD983300060D6B /* Slide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
+		E836F2C71ADD986000060D6B /* DecksetSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecksetSlide.swift; sourceTree = "<group>"; };
 		E851125A1AD6D6070004365A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E851125B1AD6D6070004365A /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		E851125C1AD6D6070004365A /* CollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
@@ -64,20 +131,53 @@
 		E851127A1AD6D6070004365A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
 		E85112A41AD6D84A0004365A /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E89980881AD6D54600441BCC /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8E08C5A1ADD625800D414A3 /* PDFImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFImages.swift; sourceTree = "<group>"; };
-		E8E08C5B1ADD625800D414A3 /* Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
-		E8E08C5C1ADD625800D414A3 /* Slide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
-		E8E08C601ADD627A00D414A3 /* FileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
+		E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cartography.xcodeproj; path = Carthage/Checkouts/Cartography/Cartography.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		E8F094AE1AE0888D00DCC2F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8F094AA1AE0888D00DCC2F3 /* Cartography.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
+		E8167C011ADD9BB400621C9C /* DDHotKey */ = {
+			isa = PBXGroup;
+			children = (
+				E8167C021ADD9BB400621C9C /* DDHotKeyCenter.h */,
+				E8167C031ADD9BB400621C9C /* DDHotKeyCenter.m */,
+				E8167C041ADD9BB400621C9C /* DDHotKeyTextField.h */,
+				E8167C051ADD9BB400621C9C /* DDHotKeyTextField.m */,
+				E8167C061ADD9BB400621C9C /* DDHotKeyUtilities.h */,
+				E8167C071ADD9BB400621C9C /* DDHotKeyUtilities.m */,
+			);
+			path = DDHotKey;
+			sourceTree = "<group>";
+		};
 		E82788C71AD6D3EF00325FE1 = {
 			isa = PBXGroup;
 			children = (
+				E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */,
 				E85112591AD6D6070004365A /* iOS */,
 				E85112611AD6D6070004365A /* Mac */,
+				E836F2C01ADD983300060D6B /* Shared */,
 				E89980891AD6D54600441BCC /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		E836F2C01ADD983300060D6B /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */,
+				E836F2C21ADD983300060D6B /* Slide.swift */,
+			);
+			name = Shared;
+			path = Source/Shared;
 			sourceTree = "<group>";
 		};
 		E85112591AD6D6070004365A /* iOS */ = {
@@ -86,13 +186,9 @@
 				E851125A1AD6D6070004365A /* AppDelegate.swift */,
 				E851125B1AD6D6070004365A /* Cell.swift */,
 				E851125C1AD6D6070004365A /* CollectionViewLayout.swift */,
-				E8E08C601ADD627A00D414A3 /* FileType.swift */,
 				E851125D1AD6D6070004365A /* Images.xcassets */,
 				E851125E1AD6D6070004365A /* Info.plist */,
 				E851125F1AD6D6070004365A /* MultipeerClient.swift */,
-				E8E08C5A1ADD625800D414A3 /* PDFImages.swift */,
-				E8E08C5B1ADD625800D414A3 /* Presentation.swift */,
-				E8E08C5C1ADD625800D414A3 /* Slide.swift */,
 				E85112601AD6D6070004365A /* ViewController.swift */,
 			);
 			name = iOS;
@@ -103,13 +199,14 @@
 			isa = PBXGroup;
 			children = (
 				E85112621AD6D6070004365A /* AppDelegate.swift */,
-				E85112631AD6D6070004365A /* Main.storyboard */,
+				E8167C011ADD9BB400621C9C /* DDHotKey */,
 				E85112651AD6D6070004365A /* DeckRocket-Bridging-Header.h */,
 				E85112661AD6D6070004365A /* Deckset */,
 				E851126C1AD6D6070004365A /* DJProgressHUD */,
 				E85112751AD6D6070004365A /* HUDView.swift */,
 				E85112761AD6D6070004365A /* Images.xcassets */,
 				E85112771AD6D6070004365A /* Info.plist */,
+				E85112631AD6D6070004365A /* Main.storyboard */,
 				E85112781AD6D6070004365A /* main.swift */,
 				E85112791AD6D6070004365A /* MenuView.swift */,
 				E851127A1AD6D6070004365A /* MultipeerClient.swift */,
@@ -124,6 +221,7 @@
 				E85112671AD6D6070004365A /* Deckset.h */,
 				E85112681AD6D6070004365A /* DecksetApp.swift */,
 				E85112691AD6D6070004365A /* DecksetDocument.swift */,
+				E836F2C71ADD986000060D6B /* DecksetSlide.swift */,
 				E851126B1AD6D6070004365A /* DecksetWindow.swift */,
 			);
 			path = Deckset;
@@ -153,6 +251,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E8F0949C1AE0888300DCC2F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E8F094A31AE0888300DCC2F3 /* Cartography.framework */,
+				E8F094A51AE0888300DCC2F3 /* Cartography-iOS-Tests.xctest */,
+				E8F094A71AE0888300DCC2F3 /* Cartography.framework */,
+				E8F094A91AE0888300DCC2F3 /* Cartography-Mac-Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -178,10 +287,13 @@
 			buildPhases = (
 				E89980841AD6D54600441BCC /* Sources */,
 				E89980861AD6D54600441BCC /* Resources */,
+				E8F094AE1AE0888D00DCC2F3 /* Frameworks */,
+				E8F094AF1AE0888D00DCC2F3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E8F094AD1AE0888D00DCC2F3 /* PBXTargetDependency */,
 			);
 			name = iOS;
 			productName = iOS;
@@ -215,6 +327,12 @@
 			mainGroup = E82788C71AD6D3EF00325FE1;
 			productRefGroup = E89980891AD6D54600441BCC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E8F0949C1AE0888300DCC2F3 /* Products */;
+					ProjectRef = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E89980871AD6D54600441BCC /* iOS */,
@@ -222,6 +340,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E8F094A31AE0888300DCC2F3 /* Cartography.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Cartography.framework;
+			remoteRef = E8F094A21AE0888300DCC2F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E8F094A51AE0888300DCC2F3 /* Cartography-iOS-Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Cartography-iOS-Tests.xctest";
+			remoteRef = E8F094A41AE0888300DCC2F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E8F094A71AE0888300DCC2F3 /* Cartography.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Cartography.framework;
+			remoteRef = E8F094A61AE0888300DCC2F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E8F094A91AE0888300DCC2F3 /* Cartography-Mac-Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Cartography-Mac-Tests.xctest";
+			remoteRef = E8F094A81AE0888300DCC2F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E85112A21AD6D84A0004365A /* Resources */ = {
@@ -248,6 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8167C091ADD9BB400621C9C /* DDHotKeyTextField.m in Sources */,
 				E85112CA1AD6D8D40004365A /* DJActivityIndicator.m in Sources */,
 				E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */,
 				E85112CB1AD6D8D40004365A /* DJBezierPath.m in Sources */,
@@ -255,10 +405,15 @@
 				E810B4661ADD65AB00550385 /* DecksetDocument.swift in Sources */,
 				E85112C41AD6D8BF0004365A /* AppDelegate.swift in Sources */,
 				E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */,
+				E8167C0A1ADD9BB400621C9C /* DDHotKeyUtilities.m in Sources */,
 				E85112CF1AD6D8DB0004365A /* main.swift in Sources */,
+				E8167C081ADD9BB400621C9C /* DDHotKeyCenter.m in Sources */,
 				E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */,
+				E836F2C81ADD986000060D6B /* DecksetSlide.swift in Sources */,
 				E810B4671ADD65AB00550385 /* DecksetWindow.swift in Sources */,
 				E85112CE1AD6D8DB0004365A /* HUDView.swift in Sources */,
+				E836F2C61ADD983300060D6B /* Slide.swift in Sources */,
+				E836F2C41ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */,
 				E85112C61AD6D8CC0004365A /* DecksetApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,19 +422,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8E08C5D1ADD625800D414A3 /* PDFImages.swift in Sources */,
-				E8E08C5E1ADD625800D414A3 /* Presentation.swift in Sources */,
 				E85112841AD6D6070004365A /* ViewController.swift in Sources */,
+				E836F2C31ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */,
 				E85112801AD6D6070004365A /* CollectionViewLayout.swift in Sources */,
-				E8E08C611ADD627A00D414A3 /* FileType.swift in Sources */,
 				E851127E1AD6D6070004365A /* AppDelegate.swift in Sources */,
+				E836F2C51ADD983300060D6B /* Slide.swift in Sources */,
 				E85112831AD6D6070004365A /* MultipeerClient.swift in Sources */,
 				E851127F1AD6D6070004365A /* Cell.swift in Sources */,
-				E8E08C5F1ADD625800D414A3 /* Slide.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E8F094AD1AE0888D00DCC2F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Cartography-iOS";
+			targetProxy = E8F094AC1AE0888D00DCC2F3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E85112631AD6D6070004365A /* Main.storyboard */ = {
