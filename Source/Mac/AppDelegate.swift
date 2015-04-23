@@ -64,7 +64,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func sendSlides() {
-        if let scriptingSlides = DecksetApp(beta: true)?.documents.first?.slides {
+        if let scriptingSlides = DecksetApp()?.documents.first?.slides {
             multipeerClient.sendSlides(scriptingSlides)
         }
     }

@@ -78,7 +78,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         if let index = NSString(data: data, encoding: NSUTF8StringEncoding)?.integerValue {
-            DecksetApp(beta: true)?.documents.first?.setSlideIndex(index)
+            DecksetApp()?.documents.first?.setSlideIndex(index)
         }
     }
 
