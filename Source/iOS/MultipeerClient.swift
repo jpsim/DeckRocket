@@ -33,7 +33,10 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     // MARK: Send
 
     func send(data: NSData) {
-        session?.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable, error: nil) // Safe to force unwrap
+        do {
+            try session?.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable)
+        } catch _ {
+        } // Safe to force unwrap
     }
 
     func sendString(string: NSString) {
@@ -44,44 +47,43 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
 
     // MARK: MCNearbyServiceBrowserDelegate
 
-    func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
+    func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         if session == nil {
             session = MCSession(peer: localPeerID)
             session?.delegate = self
         }
-        browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 30)
+        browser.invitePeer(peerID, toSession: session!, withContext: nil, timeout: 30)
     }
 
-    func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
+    func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
 
     }
 
     // MARK: MCSessionDelegate
 
-    func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
+    func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
         self.state = state
         onStateChange??(state: state, peerID: peerID)
     }
 
-    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         data.writeToFile(documentsPath.stringByAppendingPathComponent("slides"), atomically: false)
         if let rootVC = UIApplication.sharedApplication().delegate?.window??.rootViewController as? ViewController,
-            data = data,
             slides = Slide.slidesfromData(data) {
             rootVC.slides = compact(slides)
         }
     }
 
-    func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
+    func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
 
     }
 
-    func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
+    func session(session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
 
     }
 
-    func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
+    func session(session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, atURL localURL: NSURL, withError error: NSError) {
 
     }
 }

@@ -8,9 +8,6 @@
 
 import Cocoa
 
-// FIXME: Use system-defined constant once accessible from Swift.
-let NSVariableStatusItemLength: CGFloat = -1
-
 final class MenuView: NSView, NSMenuDelegate {
     private var highlight = false
 

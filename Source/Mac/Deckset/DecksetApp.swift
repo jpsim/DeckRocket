@@ -15,14 +15,14 @@ struct DecksetApp {
 
     /// Documents.
     var documents: [DecksetDocument] {
-        return map((sbApp.documents as AnyObject).valueForKey("get") as! [AnyObject]) {
+        return ((sbApp.documents as AnyObject).valueForKey("get") as! [AnyObject]).map {
             DecksetDocument(sbDocument: $0)
         }
     }
 
     /// Windows.
     var windows: [DecksetWindow] {
-        return map((sbApp.windows as AnyObject).valueForKey("get") as! [AnyObject]) {
+        return ((sbApp.windows as AnyObject).valueForKey("get") as! [AnyObject]).map {
             DecksetWindow(sbWindow: $0)
         }
     }
@@ -57,7 +57,7 @@ struct DecksetApp {
     /**
     Create a `DecksetApp` scripting object.
     
-    :param: beta Whether or not to target the Deckset beta.
+    - parameter beta: Whether or not to target the Deckset beta.
     */
     init?(beta: Bool = false) {
         let bundleID = "com.unsignedinteger.Deckset" + (beta ? "-private-beta" : "")
@@ -67,14 +67,13 @@ struct DecksetApp {
     /**
     Create a `DecksetApp` scripting object.
 
-    :param: bundleID Bundle identifier of the deckset app to script.
+    - parameter bundleID: Bundle identifier of the deckset app to script.
     */
     private init?(bundleID: String) {
-        if let app: AnyObject = SBApplication.applicationWithBundleIdentifier(bundleID) {
-            sbApp = app
-            return
+        guard let app = SBApplication(bundleIdentifier: bundleID) else {
+            return nil
         }
-        return nil
+        sbApp = app
     }
 
     // MARK: Functions
