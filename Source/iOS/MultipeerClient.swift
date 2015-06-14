@@ -33,10 +33,10 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     // MARK: Send
 
     func send(data: NSData) {
+        guard let session = session else { return }
         do {
-            try session?.sendData(data, toPeers: session!.connectedPeers, withMode: .Reliable)
-        } catch _ {
-        } // Safe to force unwrap
+            try session.sendData(data, toPeers: session.connectedPeers, withMode: .Reliable)
+        } catch {}
     }
 
     func sendString(string: NSString) {
