@@ -27,7 +27,7 @@ struct DecksetSlide {
     /**
     Create a `DecksetSlide` based on its backing scripting object.
 
-    :param: sbSlide backing `DecksetSlide` scripting object.
+    - parameter sbSlide: backing `DecksetSlide` scripting object.
     */
     init(sbSlide: AnyObject) {
         self.sbSlide = sbSlide
