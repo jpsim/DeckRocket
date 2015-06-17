@@ -8,10 +8,7 @@
 
 import Foundation
 
-#if os(iOS)
-    import UIKit
-    typealias Image = UIImage
-#else
+#if os(OSX)
     import AppKit
     typealias Image = NSImage
 
@@ -26,6 +23,9 @@ import Foundation
             return newImage
         }
     }
+#else
+    import UIKit
+    typealias Image = UIImage
 #endif
 
 struct Slide {
