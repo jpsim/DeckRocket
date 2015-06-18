@@ -14,7 +14,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     private(set) var session: MCSession?
     private(set) var state = MCSessionState.NotConnected
     var onStateChange: stateChange?
-    var callback: slidesCallback
+    var onSlidesReceived: slidesCallback
     
     // MARK: Init
     
@@ -61,7 +61,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
         data.writeToFile(documentsPath.stringByAppendingPathComponent("slides"), atomically: false)
-        if let callback = self.callback,
+        if let callback = self.onSlidesReceived,
             data = data,
             slides = Slide.slidesfromData(data) {
                 let compactedSlides = compact(slides)

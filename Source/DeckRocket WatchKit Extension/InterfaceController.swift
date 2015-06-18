@@ -62,7 +62,7 @@ class InterfaceController: WKInterfaceController {
     
     private func setupConnectivityObserver() {
         self.slidesCountLabel.setText("Waiting for slides 🚀")
-        multipeerClient.callback = { slides in
+        multipeerClient.onSlidesReceived = { slides in
             dispatch_async(dispatch_get_main_queue()) {
                 self.slidesCount = Int(count(slides))
                 self.slider.setNumberOfSteps(self.slidesCount)
