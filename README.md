@@ -34,6 +34,20 @@ The magic of Multipeer Connectivity should allow this to work even if devices
 have no Internet connectivity and aren't even on the same WiFi network. But they
 must both have either Bluetooth or WiFi turned on.
 
+## ᴡᴀᴛᴄʜ Support
+
+![](DeckRocketWatch.gif)
+^([Esteban Torres - @esttorhe](https://twitter.com/esttorhe))
+
+DeckRocket 🚀 now works on ⌚ 
+
+### Usage
+
+It's pretty much the same as above except that you'll need to open the ᴡᴀᴛᴄʜ app and follow the «onscreen instructions».
+
+Once the «Send Slides» operation finishes a watch slider will appear telling you the number of slides and the current slide you are on and you are free to move forward or backwards with the slider.
+
+
 ## License
 
 This project is MIT licensed and was developed independently from Deckset and

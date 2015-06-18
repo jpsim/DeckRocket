@@ -10,7 +10,7 @@ import UIKit
 import MultipeerConnectivity
 import Cartography
 
-final class ViewController: UICollectionViewController, UIScrollViewDelegate {
+final class ViewController: UICollectionViewController {
 
     // MARK: Properties
 
@@ -47,23 +47,29 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
         setupUI()
         setupConnectivityObserver()
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         if let slidesData = NSData(contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")) {
-            slides = flatMap(Slide.slidesfromData(slidesData)) { compact($0) }
+            slides = Slide.slidesfromData(slidesData).flatMap { compact($0) }
         }
     }
 
     // MARK: Connectivity Updates
 
     private func setupConnectivityObserver() {
+        multipeerClient.onSlidesReceived = { slides in
+            if let rootVC = UIApplication.sharedApplication().delegate?.window??.rootViewController as? ViewController {
+                rootVC.slides = slides
+            }
+        }
+        
         multipeerClient.onStateChange = { state, peerID in
             let client = self.multipeerClient
             let borderColor: CGColorRef
             switch state {
             case .NotConnected:
                 borderColor = UIColor.redColor().CGColor
-                if client.session?.connectedPeers.count == 0 {
-                    client.browser?.invitePeer(peerID, toSession: client.session, withContext: nil, timeout: 30)
+                if let session = client.session where session.connectedPeers.count == 0 {
+                    client.browser?.invitePeer(peerID, toSession: session, withContext: nil, timeout: 30)
                 }
             case .Connecting:
                 borderColor = UIColor.orangeColor().CGColor
@@ -131,10 +137,10 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // MARK: UIScrollViewDelegate
 
     private func currentSlide() -> UInt {
-        return map(collectionView) { cv in
+        return collectionView.map { cv in
             let cvLayout = cv.collectionViewLayout as! UICollectionViewFlowLayout
             return UInt(round(cv.contentOffset.x / cvLayout.itemSize.width))
-            } ?? 0
+        } ?? 0
     }
 
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {

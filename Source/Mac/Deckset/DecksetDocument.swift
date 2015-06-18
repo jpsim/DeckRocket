@@ -15,7 +15,7 @@ struct DecksetDocument {
 
     /// Slides in the current document.
     var slides: [DecksetSlide] {
-        return map(sbDocument.valueForKey("slides") as! [AnyObject]) {
+        return (sbDocument.valueForKey("slides") as! [AnyObject]).map {
             DecksetSlide(sbSlide: $0)
         }
     }
@@ -55,7 +55,7 @@ struct DecksetDocument {
     /**
     Create a `DecksetDocument` based on its backing scripting object.
     
-    :param: sbDocument backing `DecksetDocument` scripting object.
+    - parameter sbDocument: backing `DecksetDocument` scripting object.
     */
     init(sbDocument: AnyObject) {
         self.sbDocument = sbDocument
