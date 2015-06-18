@@ -56,6 +56,12 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
     // MARK: Connectivity Updates
 
     private func setupConnectivityObserver() {
+        multipeerClient.onSlidesReceived = { slides in
+            if let rootVC = UIApplication.sharedApplication().delegate?.window??.rootViewController as? ViewController {
+                rootVC.slides = slides
+            }
+        }
+        
         multipeerClient.onStateChange = { state, peerID in
             let client = self.multipeerClient
             let borderColor: CGColorRef
