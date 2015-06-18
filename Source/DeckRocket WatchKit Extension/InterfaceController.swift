@@ -62,9 +62,9 @@ class InterfaceController: WKInterfaceController {
     
     private func setupConnectivityObserver() {
         self.slidesCountLabel.setText("Waiting for slides 🚀")
-        multipeerClient.callback = { slides in
+        multipeerClient.onSlidesReceived = { slides in
             dispatch_async(dispatch_get_main_queue()) {
-                self.slidesCount = Int(count(slides))
+                self.slidesCount = Int(slides.count)
                 self.slider.setNumberOfSteps(self.slidesCount)
                 self.slider.setValue(1)
                 self.slidesCountLabel.setText("Slide: 1/\(self.slidesCount)")
@@ -77,9 +77,9 @@ class InterfaceController: WKInterfaceController {
             switch state {
             case .NotConnected:
                 borderColor = UIColor.redColor()
-                if client.session?.connectedPeers.count == 0 {
-                    client.browser?.invitePeer(peerID, toSession: client.session, withContext: nil, timeout: 30)
-                }
+                guard let browser = client.browser, session = client.session
+                    where session.connectedPeers.count == 0 else { break }
+                browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 30)
             case .Connecting:
                 borderColor = UIColor.orangeColor()
             case .Connected:
