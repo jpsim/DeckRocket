@@ -100,7 +100,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
 
     // MARK: KVO
 
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [NSObject : AnyObject]?, context: UnsafeMutablePointer<()>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         guard context == &progressContext else {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
             return
