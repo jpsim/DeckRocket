@@ -21,7 +21,7 @@ final class ViewController: UICollectionViewController {
                 self.collectionView?.contentOffset.x = 0
                 self.collectionView?.reloadData()
                 // Trigger state change block
-                self.multipeerClient.onStateChange??(state: self.multipeerClient.state, peerID: MCPeerID())
+                self.multipeerClient.onStateChange??(state: self.multipeerClient.state, peerID: MCPeerID(displayName: "placeholder"))
             }
         }
     }
