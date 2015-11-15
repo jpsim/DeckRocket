@@ -36,32 +36,32 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
     // MARK: Send File
 
     func sendSlides(scriptingSlides: [DecksetSlide]) {
-        if let peer = session?.connectedPeers.first as MCPeerID? {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                dispatch_async(dispatch_get_main_queue()) {
-                    HUDView.showWithActivity("Exporting slides...")
-                }
-                let slidesData = NSKeyedArchiver.archivedDataWithRootObject(scriptingSlides.map {
-                    Slide(pdfData: $0.pdfData, notes: $0.notes)!.dictionaryRepresentation!
-                })
-                dispatch_async(dispatch_get_main_queue()) {
-                    HUDView.showWithActivity("Sending slides...")
-                }
-                do {
-                    try self.session?.sendData(slidesData, toPeers: [peer], withMode: .Reliable)
-                    dispatch_async(dispatch_get_main_queue()) {
-                        HUDView.show("Success!")
-                    }
-                } catch let error as NSError {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        HUDView.show("Error!\n\(error.localizedDescription)")
-                    }
-                } catch {
-                    fatalError("")
-                }
-            }
-        } else {
+        guard let peer = session?.connectedPeers.first as MCPeerID? else {
             HUDView.show("Error!\nRemote not connected")
+            return
+        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            dispatch_async(dispatch_get_main_queue()) {
+                HUDView.showWithActivity("Exporting slides...")
+            }
+            let slidesData = NSKeyedArchiver.archivedDataWithRootObject(scriptingSlides.map {
+                Slide(pdfData: $0.pdfData, notes: $0.notes)!.dictionaryRepresentation!
+                })
+            dispatch_async(dispatch_get_main_queue()) {
+                HUDView.showWithActivity("Sending slides...")
+            }
+            do {
+                try self.session?.sendData(slidesData, toPeers: [peer], withMode: .Reliable)
+                dispatch_async(dispatch_get_main_queue()) {
+                    HUDView.show("Success!")
+                }
+            } catch let error as NSError {
+                dispatch_async(dispatch_get_main_queue()) {
+                    HUDView.show("Error!\n\(error.localizedDescription)")
+                }
+            } catch {
+                fatalError("")
+            }
         }
     }
 

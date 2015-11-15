@@ -71,7 +71,7 @@ final class ViewController: UICollectionViewController {
                 borderColor = UIColor.greenColor().CGColor
             }
             dispatch_async(dispatch_get_main_queue()) {
-                collectionView?.layer.borderColor = borderColor
+                self.collectionView?.layer.borderColor = borderColor
             }
         }
     }
@@ -106,7 +106,7 @@ final class ViewController: UICollectionViewController {
         infoLabel.textColor = UIColor.whiteColor()
         view.addSubview(infoLabel)
 
-        layout(infoLabel, view) {
+        constrain(infoLabel, view) {
             $0.left   == $1.left  + 20
             $0.right  == $1.right - 20
             $0.top    == $1.top

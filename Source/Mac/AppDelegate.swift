@@ -12,6 +12,7 @@ import Cocoa
 import Foundation
 import MultipeerConnectivity
 
+@NSApplicationMain
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: Properties

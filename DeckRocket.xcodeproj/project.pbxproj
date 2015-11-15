@@ -31,7 +31,6 @@
 		E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112721AD6D6070004365A /* DJProgressHUD.m */; };
 		E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112741AD6D6070004365A /* DJProgressIndicator.m */; };
 		E85112CE1AD6D8DB0004365A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112751AD6D6070004365A /* HUDView.swift */; };
-		E85112CF1AD6D8DB0004365A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112781AD6D6070004365A /* main.swift */; };
 		E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112791AD6D6070004365A /* MenuView.swift */; };
 		E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851127A1AD6D6070004365A /* MultipeerClient.swift */; };
 		E85112D21AD6D8F40004365A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E85112631AD6D6070004365A /* Main.storyboard */; };
@@ -126,7 +125,6 @@
 		E85112751AD6D6070004365A /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		E85112761AD6D6070004365A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E85112771AD6D6070004365A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E85112781AD6D6070004365A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		E85112791AD6D6070004365A /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E851127A1AD6D6070004365A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
 		E85112A41AD6D84A0004365A /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,7 +205,6 @@
 				E85112761AD6D6070004365A /* Images.xcassets */,
 				E85112771AD6D6070004365A /* Info.plist */,
 				E85112631AD6D6070004365A /* Main.storyboard */,
-				E85112781AD6D6070004365A /* main.swift */,
 				E85112791AD6D6070004365A /* MenuView.swift */,
 				E851127A1AD6D6070004365A /* MultipeerClient.swift */,
 			);
@@ -407,7 +404,6 @@
 				E85112C41AD6D8BF0004365A /* AppDelegate.swift in Sources */,
 				E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */,
 				E8167C0A1ADD9BB400621C9C /* DDHotKeyUtilities.m in Sources */,
-				E85112CF1AD6D8DB0004365A /* main.swift in Sources */,
 				E8167C081ADD9BB400621C9C /* DDHotKeyCenter.m in Sources */,
 				E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */,
 				E836F2C81ADD986000060D6B /* DecksetSlide.swift in Sources */,
