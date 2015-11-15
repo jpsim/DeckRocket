@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		E835A0CE1BF8464E00CC9107 /* SwiftLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E835A0CF1BF8464E00CC9107 /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
+			buildPhases = (
+				E835A0D21BF8465500CC9107 /* Run SwiftLint */,
+			);
+			dependencies = (
+			);
+			name = SwiftLint;
+			productName = SwiftLint;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		E810B4661ADD65AB00550385 /* DecksetDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112691AD6D6070004365A /* DecksetDocument.swift */; };
 		E810B4671ADD65AB00550385 /* DecksetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851126B1AD6D6070004365A /* DecksetWindow.swift */; };
@@ -302,6 +316,9 @@
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				TargetAttributes = {
+					E835A0CE1BF8464E00CC9107 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
 					E85112A31AD6D84A0004365A = {
 						CreatedOnToolsVersion = 6.3;
 					};
@@ -331,6 +348,7 @@
 			targets = (
 				E89980871AD6D54600441BCC /* iOS */,
 				E85112A31AD6D84A0004365A /* Mac */,
+				E835A0CE1BF8464E00CC9107 /* SwiftLint */,
 			);
 		};
 /* End PBXProject section */
@@ -385,6 +403,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E835A0D21BF8465500CC9107 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint lint --path Source\nelse\n  echo \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E85112A01AD6D84A0004365A /* Sources */ = {
@@ -456,6 +491,20 @@
 		E82788CD1AD6D3EF00325FE1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+			};
+			name = Release;
+		};
+		E835A0D01BF8464E00CC9107 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E835A0D11BF8464E00CC9107 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -654,6 +703,15 @@
 			buildConfigurations = (
 				E82788CC1AD6D3EF00325FE1 /* Debug */,
 				E82788CD1AD6D3EF00325FE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E835A0CF1BF8464E00CC9107 /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E835A0D01BF8464E00CC9107 /* Debug */,
+				E835A0D11BF8464E00CC9107 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

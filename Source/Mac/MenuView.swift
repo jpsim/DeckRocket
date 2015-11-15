@@ -11,7 +11,8 @@ import Cocoa
 final class MenuView: NSView, NSMenuDelegate {
     private var highlight = false
 
-    private let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
+    private let statusItem = NSStatusBar.systemStatusBar()
+        .statusItemWithLength(NSVariableStatusItemLength)
 
     // MARK: Initializers
 
@@ -58,6 +59,7 @@ final class MenuView: NSView, NSMenuDelegate {
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
         statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
-        "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(14)])
+        "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1),
+            withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(14)])
     }
 }

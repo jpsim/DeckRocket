@@ -27,7 +27,8 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
     // MARK: Lifecycle
 
     override init() {
-        advertiser = MCNearbyServiceAdvertiser(peer: localPeerID, discoveryInfo: nil, serviceType: "deckrocket")
+        advertiser = MCNearbyServiceAdvertiser(peer: localPeerID, discoveryInfo: nil,
+                                               serviceType: "deckrocket")
         super.init()
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
@@ -67,8 +68,11 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
 
     // MARK: MCNearbyServiceAdvertiserDelegate
 
-    func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: NSData?, invitationHandler: (Bool, MCSession) -> Void)  {
-        session = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .Required)
+    func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer
+                    peerID: MCPeerID, withContext context: NSData?,
+                    invitationHandler: (Bool, MCSession) -> Void) {
+        session = MCSession(peer: localPeerID, securityIdentity: nil,
+                            encryptionPreference: .Required)
         guard let session = session else { return }
         session.delegate = self
         invitationHandler(true, session)
@@ -86,28 +90,31 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
         }
     }
 
-    func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
-
+    func session(session: MCSession, didReceiveStream stream: NSInputStream,
+                 withName streamName: String, fromPeer peerID: MCPeerID) {
     }
 
-    func session(session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
-
+    func session(session: MCSession, didStartReceivingResourceWithName resourceName: String,
+                 fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
     }
 
-    func session(session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, atURL localURL: NSURL, withError error: NSError?) {
-
+    func session(session: MCSession, didFinishReceivingResourceWithName resourceName: String,
+                 fromPeer peerID: MCPeerID, atURL localURL: NSURL, withError error: NSError?) {
     }
 
     // MARK: KVO
 
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?,
+                                         change: [String : AnyObject]?,
+                                         context: UnsafeMutablePointer<Void>) {
         guard context == &progressContext else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change,
+                context: context)
             return
         }
         guard let progress = change?[NSKeyValueChangeNewKey] as? CGFloat
-            where abs(lastDisplayTime.timeIntervalSinceNow) > 1/60 // Update HUD at no more than 60fps
-            else {
+            where abs(lastDisplayTime.timeIntervalSinceNow) > 1/60 else {
+            // Update HUD at no more than 60fps
             return
         }
         dispatch_sync(dispatch_get_main_queue()) {

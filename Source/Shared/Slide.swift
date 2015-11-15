@@ -21,7 +21,8 @@ import Foundation
             let targetRect = NSRect(origin: NSZeroPoint, size: targetSize)
             let newImage = NSImage(size: targetSize)
             newImage.lockFocus()
-            drawInRect(targetRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1)
+            drawInRect(targetRect, fromRect: NSZeroRect, operation: .CompositeSourceOver,
+                       fraction: 1)
             newImage.unlockFocus()
             return newImage
         }
@@ -45,7 +46,8 @@ struct Slide {
     }
 
     static func slidesfromData(data: NSData) -> [Slide?]? {
-        return (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSDictionary]).flatMap { data in
+        let dict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSDictionary]
+        return dict.flatMap { data in
             data.map {
                 guard let imageData = $0["image"] as? NSData, image = Image(data: imageData) else {
                     return nil
@@ -65,8 +67,8 @@ struct Slide {
 
     var dictionaryRepresentation: NSDictionary? {
         return image.TIFFRepresentation.flatMap {
-            return NSBitmapImageRep(data: $0)?
-                .representationUsingType(.NSJPEGFileType, properties: [NSImageCompressionFactor: 0.5])
+            return NSBitmapImageRep(data: $0)?.representationUsingType(.NSJPEGFileType,
+                    properties: [NSImageCompressionFactor: 0.5])
         }.flatMap {
             return ["image": $0, "notes": notes ?? ""]
         }
