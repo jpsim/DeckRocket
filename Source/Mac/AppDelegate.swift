@@ -12,6 +12,7 @@ import Cocoa
 import Foundation
 import MultipeerConnectivity
 
+@NSApplicationMain
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: Properties
@@ -45,7 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func registerHotkey() {
-        let flags = NSEventModifierFlags.CommandKeyMask | NSEventModifierFlags.AlternateKeyMask | NSEventModifierFlags.ControlKeyMask
+        let flags: NSEventModifierFlags = [.CommandKeyMask, .AlternateKeyMask, .ControlKeyMask]
         DDHotKeyCenter.sharedHotKeyCenter().registerHotKeyWithKeyCode(UInt16(kVK_ANSI_P),
             modifierFlags: flags.rawValue,
             target: self,

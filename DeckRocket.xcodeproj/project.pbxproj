@@ -6,14 +6,26 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		E835A0CE1BF8464E00CC9107 /* SwiftLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E835A0CF1BF8464E00CC9107 /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
+			buildPhases = (
+				E835A0D21BF8465500CC9107 /* Run SwiftLint */,
+			);
+			dependencies = (
+			);
+			name = SwiftLint;
+			productName = SwiftLint;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		E810B4661ADD65AB00550385 /* DecksetDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112691AD6D6070004365A /* DecksetDocument.swift */; };
 		E810B4671ADD65AB00550385 /* DecksetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851126B1AD6D6070004365A /* DecksetWindow.swift */; };
 		E8167C081ADD9BB400621C9C /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E8167C031ADD9BB400621C9C /* DDHotKeyCenter.m */; };
 		E8167C091ADD9BB400621C9C /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E8167C051ADD9BB400621C9C /* DDHotKeyTextField.m */; };
 		E8167C0A1ADD9BB400621C9C /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E8167C071ADD9BB400621C9C /* DDHotKeyUtilities.m */; };
-		E836F2C31ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */; };
-		E836F2C41ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */; };
 		E836F2C51ADD983300060D6B /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C21ADD983300060D6B /* Slide.swift */; };
 		E836F2C61ADD983300060D6B /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C21ADD983300060D6B /* Slide.swift */; };
 		E836F2C81ADD986000060D6B /* DecksetSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C71ADD986000060D6B /* DecksetSlide.swift */; };
@@ -31,7 +43,6 @@
 		E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112721AD6D6070004365A /* DJProgressHUD.m */; };
 		E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E85112741AD6D6070004365A /* DJProgressIndicator.m */; };
 		E85112CE1AD6D8DB0004365A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112751AD6D6070004365A /* HUDView.swift */; };
-		E85112CF1AD6D8DB0004365A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112781AD6D6070004365A /* main.swift */; };
 		E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112791AD6D6070004365A /* MenuView.swift */; };
 		E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851127A1AD6D6070004365A /* MultipeerClient.swift */; };
 		E85112D21AD6D8F40004365A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E85112631AD6D6070004365A /* Main.storyboard */; };
@@ -98,7 +109,6 @@
 		E8167C051ADD9BB400621C9C /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyTextField.m; sourceTree = "<group>"; };
 		E8167C061ADD9BB400621C9C /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
 		E8167C071ADD9BB400621C9C /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
-		E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SequenceType+DeckRocket.swift"; sourceTree = "<group>"; };
 		E836F2C21ADD983300060D6B /* Slide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
 		E836F2C71ADD986000060D6B /* DecksetSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecksetSlide.swift; sourceTree = "<group>"; };
 		E851125A1AD6D6070004365A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,7 +136,6 @@
 		E85112751AD6D6070004365A /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		E85112761AD6D6070004365A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E85112771AD6D6070004365A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E85112781AD6D6070004365A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		E85112791AD6D6070004365A /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E851127A1AD6D6070004365A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
 		E85112A41AD6D84A0004365A /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,7 +182,6 @@
 		E836F2C01ADD983300060D6B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				E836F2C11ADD983300060D6B /* SequenceType+DeckRocket.swift */,
 				E836F2C21ADD983300060D6B /* Slide.swift */,
 			);
 			name = Shared;
@@ -207,7 +215,6 @@
 				E85112761AD6D6070004365A /* Images.xcassets */,
 				E85112771AD6D6070004365A /* Info.plist */,
 				E85112631AD6D6070004365A /* Main.storyboard */,
-				E85112781AD6D6070004365A /* main.swift */,
 				E85112791AD6D6070004365A /* MenuView.swift */,
 				E851127A1AD6D6070004365A /* MultipeerClient.swift */,
 			);
@@ -306,8 +313,12 @@
 		E82788C81AD6D3EF00325FE1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				TargetAttributes = {
+					E835A0CE1BF8464E00CC9107 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
 					E85112A31AD6D84A0004365A = {
 						CreatedOnToolsVersion = 6.3;
 					};
@@ -337,6 +348,7 @@
 			targets = (
 				E89980871AD6D54600441BCC /* iOS */,
 				E85112A31AD6D84A0004365A /* Mac */,
+				E835A0CE1BF8464E00CC9107 /* SwiftLint */,
 			);
 		};
 /* End PBXProject section */
@@ -392,6 +404,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E835A0D21BF8465500CC9107 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint lint --path Source\nelse\n  echo \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E85112A01AD6D84A0004365A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -406,14 +435,12 @@
 				E85112C41AD6D8BF0004365A /* AppDelegate.swift in Sources */,
 				E85112CD1AD6D8D40004365A /* DJProgressIndicator.m in Sources */,
 				E8167C0A1ADD9BB400621C9C /* DDHotKeyUtilities.m in Sources */,
-				E85112CF1AD6D8DB0004365A /* main.swift in Sources */,
 				E8167C081ADD9BB400621C9C /* DDHotKeyCenter.m in Sources */,
 				E85112CC1AD6D8D40004365A /* DJProgressHUD.m in Sources */,
 				E836F2C81ADD986000060D6B /* DecksetSlide.swift in Sources */,
 				E810B4671ADD65AB00550385 /* DecksetWindow.swift in Sources */,
 				E85112CE1AD6D8DB0004365A /* HUDView.swift in Sources */,
 				E836F2C61ADD983300060D6B /* Slide.swift in Sources */,
-				E836F2C41ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */,
 				E85112C61AD6D8CC0004365A /* DecksetApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,7 +450,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E85112841AD6D6070004365A /* ViewController.swift in Sources */,
-				E836F2C31ADD983300060D6B /* SequenceType+DeckRocket.swift in Sources */,
 				E85112801AD6D6070004365A /* CollectionViewLayout.swift in Sources */,
 				E851127E1AD6D6070004365A /* AppDelegate.swift in Sources */,
 				E836F2C51ADD983300060D6B /* Slide.swift in Sources */,
@@ -457,6 +483,7 @@
 		E82788CC1AD6D3EF00325FE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -464,6 +491,20 @@
 		E82788CD1AD6D3EF00325FE1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+			};
+			name = Release;
+		};
+		E835A0D01BF8464E00CC9107 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E835A0D11BF8464E00CC9107 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -510,6 +551,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
@@ -553,6 +595,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
@@ -602,6 +645,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -644,6 +688,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -658,6 +703,15 @@
 			buildConfigurations = (
 				E82788CC1AD6D3EF00325FE1 /* Debug */,
 				E82788CD1AD6D3EF00325FE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E835A0CF1BF8464E00CC9107 /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E835A0D01BF8464E00CC9107 /* Debug */,
+				E835A0D11BF8464E00CC9107 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

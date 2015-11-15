@@ -10,7 +10,7 @@ import UIKit
 import MultipeerConnectivity
 import Cartography
 
-final class ViewController: UICollectionViewController, UIScrollViewDelegate {
+final class ViewController: UICollectionViewController {
 
     // MARK: Properties
 
@@ -21,7 +21,8 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
                 self.collectionView?.contentOffset.x = 0
                 self.collectionView?.reloadData()
                 // Trigger state change block
-                self.multipeerClient.onStateChange??(state: self.multipeerClient.state, peerID: MCPeerID())
+                self.multipeerClient.onStateChange??(state: self.multipeerClient.state,
+                    peerID: MCPeerID(displayName: "placeholder"))
             }
         }
     }
@@ -47,9 +48,12 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
         setupUI()
         setupConnectivityObserver()
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
-        if let slidesData = NSData(contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")) {
-            slides = flatMap(Slide.slidesfromData(slidesData)) { compact($0) }
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
+            .UserDomainMask, true)[0] as NSString
+        if let slidesData = NSData(
+            contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")),
+            optionalSlides = Slide.slidesfromData(slidesData) {
+            slides = optionalSlides.flatMap { $0 }
         }
     }
 
@@ -62,8 +66,9 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
             switch state {
             case .NotConnected:
                 borderColor = UIColor.redColor().CGColor
-                if client.session?.connectedPeers.count == 0 {
-                    client.browser?.invitePeer(peerID, toSession: client.session, withContext: nil, timeout: 30)
+                if let session = client.session where session.connectedPeers.count == 0 {
+                    client.browser?.invitePeer(peerID, toSession: session, withContext: nil,
+                        timeout: 30)
                 }
             case .Connecting:
                 borderColor = UIColor.orangeColor().CGColor
@@ -71,7 +76,7 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
                 borderColor = UIColor.greenColor().CGColor
             }
             dispatch_async(dispatch_get_main_queue()) {
-                collectionView?.layer.borderColor = borderColor
+                self.collectionView?.layer.borderColor = borderColor
             }
         }
     }
@@ -102,11 +107,12 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
             "3. Click the DeckRocket menu bar icon and select \"Send Slides\".\n\n" +
             "From there, swipe on your phone to control your Deckset slides, " +
             "tap the screen to toggle between current slide and notes view, and finally: " +
-        "keep an eye on the color of the border! Red means the connection was lost. Green means everything should work!"
+            "keep an eye on the color of the border! Red means the connection was lost. " +
+            "Green means everything should work!"
         infoLabel.textColor = UIColor.whiteColor()
         view.addSubview(infoLabel)
 
-        layout(infoLabel, view) {
+        constrain(infoLabel, view) {
             $0.left   == $1.left  + 20
             $0.right  == $1.right - 20
             $0.top    == $1.top
@@ -116,25 +122,38 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
 
     // MARK: Collection View
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView,
+                                 numberOfItemsInSection section: Int) -> Int {
         return slides?.count ?? 0
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! Cell
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath
+                                 indexPath: NSIndexPath) -> UICollectionViewCell {
+        // swiftlint:disable force_cast
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell",
+            forIndexPath: indexPath) as! Cell
+        // swiftlint:enable force_cast
         cell.imageView.image = slides?[indexPath.item].image
         cell.notesView.text = slides?[indexPath.item].notes
-        cell.nextSlideView.image = indexPath.item + 1 < slides?.count ? slides?[indexPath.item + 1].image : nil
+        if indexPath.item + 1 < slides?.count {
+            cell.nextSlideView.image = slides?[indexPath.item + 1].image
+        } else {
+            cell.nextSlideView.image = nil
+        }
         return cell
     }
 
     // MARK: UIScrollViewDelegate
 
     private func currentSlide() -> UInt {
-        return map(collectionView) { cv in
+        // swiftlint:disable variable_name
+        return collectionView.map { cv in
+            // swiftlint:enable variable_name
+            // swiftlint:disable force_cast
             let cvLayout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+            // swiftlint:enable force_cast
             return UInt(round(cv.contentOffset.x / cvLayout.itemSize.width))
-            } ?? 0
+        } ?? 0
     }
 
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -148,7 +167,8 @@ final class ViewController: UICollectionViewController, UIScrollViewDelegate {
         cvLayout?.itemSize = size
     }
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator
+                                           coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         let current = currentSlide()
         UIView.animateWithDuration(coordinator.transitionDuration()) {

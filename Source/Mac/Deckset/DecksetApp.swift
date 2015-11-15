@@ -15,36 +15,46 @@ struct DecksetApp {
 
     /// Documents.
     var documents: [DecksetDocument] {
-        return map((sbApp.documents as AnyObject).valueForKey("get") as! [AnyObject]) {
-            DecksetDocument(sbDocument: $0)
-        }
+        // swiftlint:disable force_cast
+        return ((sbApp.documents as AnyObject).valueForKey("get") as! [AnyObject])
+            .map(DecksetDocument.init)
+        // swiftlint:enable force_cast
     }
 
     /// Windows.
     var windows: [DecksetWindow] {
-        return map((sbApp.windows as AnyObject).valueForKey("get") as! [AnyObject]) {
-            DecksetWindow(sbWindow: $0)
-        }
+        // swiftlint:disable force_cast
+        return ((sbApp.windows as AnyObject).valueForKey("get") as! [AnyObject])
+            .map(DecksetWindow.init)
+        // swiftlint:enable force_cast
     }
 
     /// The name of the application.
     var name: String {
+        // swiftlint:disable force_cast
         return sbApp.valueForKey("name") as! String
+        // swiftlint:enable force_cast
     }
 
     /// Is this the active application?
     var frontmost: Bool {
+        // swiftlint:disable force_cast
         return sbApp.valueForKey("frontmost") as! Bool
+        // swiftlint:enable force_cast
     }
 
     /// The version number of the application.
     var version: String {
+        // swiftlint:disable force_cast
         return sbApp.valueForKey("version") as! String
+        // swiftlint:enable force_cast
     }
 
     /// Show the preview window?
     var preview: Bool {
+        // swiftlint:disable force_cast
         return sbApp.valueForKey("preview") as! Bool
+        // swiftlint:enable force_cast
     }
 
     /// Show or hide the preview window.
@@ -56,8 +66,8 @@ struct DecksetApp {
 
     /**
     Create a `DecksetApp` scripting object.
-    
-    :param: beta Whether or not to target the Deckset beta.
+
+    - parameter beta: Whether or not to target the Deckset beta.
     */
     init?(beta: Bool = false) {
         let bundleID = "com.unsignedinteger.Deckset" + (beta ? "-private-beta" : "")
@@ -67,21 +77,20 @@ struct DecksetApp {
     /**
     Create a `DecksetApp` scripting object.
 
-    :param: bundleID Bundle identifier of the deckset app to script.
+    - parameter bundleID: Bundle identifier of the deckset app to script.
     */
     private init?(bundleID: String) {
-        if let app: AnyObject = SBApplication.applicationWithBundleIdentifier(bundleID) {
-            sbApp = app
-            return
+        guard let app = SBApplication(bundleIdentifier: bundleID) else {
+            return nil
         }
-        return nil
+        sbApp = app
     }
 
     // MARK: Functions
 
     /// Open a document.
-    func open(x: AnyObject) -> AnyObject {
-        return sbApp.open(x)
+    func open(document: AnyObject) -> AnyObject {
+        return sbApp.open(document)
     }
 
     /// Quit the application.

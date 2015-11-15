@@ -21,7 +21,7 @@ final class Cell: UICollectionViewCell {
         }
         set {
             gNotesHidden = newValue
-            self.resetHidden()
+            resetHidden()
         }
     }
     let imageView = UIImageView()
@@ -51,7 +51,7 @@ final class Cell: UICollectionViewCell {
         contentView.addSubview(imageView)
         imageView.addSubview(effectView)
 
-        layout(imageView, effectView, contentView) {
+        constrain(imageView, effectView, contentView) {
             $0.edges == $2.edges
             $1.edges == $2.edges
         }
@@ -64,7 +64,7 @@ final class Cell: UICollectionViewCell {
         notesView.userInteractionEnabled = false
         contentView.addSubview(notesView)
 
-        layout(notesView, contentView) {
+        constrain(notesView, contentView) {
             $0.left == $1.left
             $0.right == $1.right
             $0.bottom == $1.bottom
@@ -77,7 +77,7 @@ final class Cell: UICollectionViewCell {
         nextSlideView.userInteractionEnabled = false
         contentView.addSubview(nextSlideView)
 
-        layout(nextSlideView, contentView) {
+        constrain(nextSlideView, contentView) {
             $0.width  == $0.height * 16/9
             $0.height <= $1.height / 2
             $0.left   >= $1.left   + 10

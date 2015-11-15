@@ -21,7 +21,8 @@ import Foundation
             let targetRect = NSRect(origin: NSZeroPoint, size: targetSize)
             let newImage = NSImage(size: targetSize)
             newImage.lockFocus()
-            drawInRect(targetRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1)
+            drawInRect(targetRect, fromRect: NSZeroRect, operation: .CompositeSourceOver,
+                       fraction: 1)
             newImage.unlockFocus()
             return newImage
         }
@@ -38,43 +39,37 @@ struct Slide {
     }
 
     init?(dictionary: NSDictionary) {
-        let image = flatMap(dictionary["image"] as? NSData) { Image(data: $0) }
-        let notes = dictionary["notes"] as? String
-        if let image = image {
-            self.init(image: image, notes: notes)
-            return
+        guard let image = (dictionary["image"] as? NSData).flatMap({ Image(data: $0) }) else {
+            return nil
         }
-        return nil
+        self.init(image: image, notes: dictionary["notes"] as? String)
     }
 
     static func slidesfromData(data: NSData) -> [Slide?]? {
-        return flatMap(NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSDictionary]) { data in
-            map(data) {
-                if let imageData = $0["image"] as? NSData, image = Image(data: imageData) {
-                    let notes = $0["notes"] as? String
-                    return Slide(image: image, notes: notes)
+        let dict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSDictionary]
+        return dict.flatMap { data in
+            data.map {
+                guard let imageData = $0["image"] as? NSData, image = Image(data: imageData) else {
+                    return nil
                 }
-                return nil
+                return Slide(image: image, notes: $0["notes"] as? String)
             }
         }
     }
 
     #if !os(iOS)
     init?(pdfData: NSData, notes: String?) {
-        if let pdfImageRep = NSPDFImageRep(data: pdfData) {
-            let image = NSImage()
-            image.addRepresentation(pdfImageRep)
-            self.init(image: image.imageByScalingWithFactor(0.5), notes: notes)
-            return
-        }
-        return nil
+        guard let pdfImageRep = NSPDFImageRep(data: pdfData) else { return nil }
+        let image = NSImage()
+        image.addRepresentation(pdfImageRep)
+        self.init(image: image.imageByScalingWithFactor(0.5), notes: notes)
     }
 
     var dictionaryRepresentation: NSDictionary? {
-        return flatMap(flatMap(image.TIFFRepresentation) {
-            return NSBitmapImageRep(data: $0)?
-                .representationUsingType(.NSJPEGFileType, properties: [NSImageCompressionFactor: 0.5])
-        }) {
+        return image.TIFFRepresentation.flatMap {
+            return NSBitmapImageRep(data: $0)?.representationUsingType(.NSJPEGFileType,
+                    properties: [NSImageCompressionFactor: 0.5])
+        }.flatMap {
             return ["image": $0, "notes": notes ?? ""]
         }
     }
