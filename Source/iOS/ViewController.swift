@@ -48,8 +48,9 @@ final class ViewController: UICollectionViewController {
         setupUI()
         setupConnectivityObserver()
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        if let slidesData = NSData(contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")) {
-            slides = Slide.slidesfromData(slidesData).flatMap { compact($0) }
+        if let slidesData = NSData(contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")),
+            optionalSlides = Slide.slidesfromData(slidesData){
+            slides = optionalSlides.flatMap { $0 }
         }
     }
 

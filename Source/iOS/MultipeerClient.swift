@@ -71,7 +71,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
         data.writeToFile(documentsPath.stringByAppendingPathComponent("slides"), atomically: false)
         if let rootVC = UIApplication.sharedApplication().delegate?.window??.rootViewController as? ViewController,
             slides = Slide.slidesfromData(data) {
-            rootVC.slides = compact(slides)
+            rootVC.slides = slides.flatMap { $0 }
         }
     }
 

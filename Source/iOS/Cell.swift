@@ -21,7 +21,7 @@ final class Cell: UICollectionViewCell {
         }
         set {
             gNotesHidden = newValue
-            self.resetHidden()
+            resetHidden()
         }
     }
     let imageView = UIImageView()
