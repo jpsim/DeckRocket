@@ -41,7 +41,7 @@ final class Cell: UICollectionViewCell {
     }
 
     required convenience init(coder aDecoder: NSCoder) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
 
     // MARK: UI

@@ -15,46 +15,34 @@ struct DecksetApp {
 
     /// Documents.
     var documents: [DecksetDocument] {
-        // swiftlint:disable force_cast
         return ((sbApp.documents as AnyObject).valueForKey("get") as! [AnyObject])
             .map(DecksetDocument.init)
-        // swiftlint:enable force_cast
     }
 
     /// Windows.
     var windows: [DecksetWindow] {
-        // swiftlint:disable force_cast
         return ((sbApp.windows as AnyObject).valueForKey("get") as! [AnyObject])
             .map(DecksetWindow.init)
-        // swiftlint:enable force_cast
     }
 
     /// The name of the application.
     var name: String {
-        // swiftlint:disable force_cast
         return sbApp.valueForKey("name") as! String
-        // swiftlint:enable force_cast
     }
 
     /// Is this the active application?
     var frontmost: Bool {
-        // swiftlint:disable force_cast
         return sbApp.valueForKey("frontmost") as! Bool
-        // swiftlint:enable force_cast
     }
 
     /// The version number of the application.
     var version: String {
-        // swiftlint:disable force_cast
         return sbApp.valueForKey("version") as! String
-        // swiftlint:enable force_cast
     }
 
     /// Show the preview window?
     var preview: Bool {
-        // swiftlint:disable force_cast
         return sbApp.valueForKey("preview") as! Bool
-        // swiftlint:enable force_cast
     }
 
     /// Show or hide the preview window.

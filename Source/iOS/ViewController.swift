@@ -129,10 +129,8 @@ final class ViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath
                                  indexPath: NSIndexPath) -> UICollectionViewCell {
-        // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell",
-            forIndexPath: indexPath) as! Cell
-        // swiftlint:enable force_cast
+            forIndexPath: indexPath) as! Cell // swiftlint:disable:this force_cast
         cell.imageView.image = slides?[indexPath.item].image
         cell.notesView.text = slides?[indexPath.item].notes
         if indexPath.item + 1 < slides?.count {
@@ -146,14 +144,11 @@ final class ViewController: UICollectionViewController {
     // MARK: UIScrollViewDelegate
 
     private func currentSlide() -> UInt {
-        // swiftlint:disable variable_name
-        return collectionView.map { cv in
-            // swiftlint:enable variable_name
-            // swiftlint:disable force_cast
-            let cvLayout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-            // swiftlint:enable force_cast
-            return UInt(round(cv.contentOffset.x / cvLayout.itemSize.width))
-        } ?? 0
+        guard let collectionView = collectionView,
+            layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return 0
+        }
+        return UInt(round(collectionView.contentOffset.x / layout.itemSize.width))
     }
 
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -163,8 +158,7 @@ final class ViewController: UICollectionViewController {
     // MARK: Rotation
 
     private func setCollectionViewItemSize(size: CGSize) {
-        let cvLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-        cvLayout?.itemSize = size
+        (collectionView?.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize = size
     }
 
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator
