@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 JP Simard. All rights reserved.
 //
 
-import UIKit
-import MultipeerConnectivity
 import Cartography
+import MultipeerConnectivity
+import UIKit
+import WatchConnectivity
 
-final class ViewController: UICollectionViewController {
+final class ViewController: UICollectionViewController, WCSessionDelegate {
 
     // MARK: Properties
 
@@ -24,10 +25,12 @@ final class ViewController: UICollectionViewController {
                 self.multipeerClient.onStateChange??(state: self.multipeerClient.state,
                     peerID: MCPeerID(displayName: "placeholder"))
             }
+            sendSlidesToWatch(watchConnectivitySession)
         }
     }
     private let multipeerClient = MultipeerClient()
     private let infoLabel = UILabel()
+    private let watchConnectivitySession = WCSession.defaultSession()
 
     // MARK: View Lifecycle
 
@@ -37,6 +40,7 @@ final class ViewController: UICollectionViewController {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         super.init(collectionViewLayout: layout)
+        watchConnectivitySession.delegate = self
     }
 
     convenience required init(coder aDecoder: NSCoder) {
@@ -55,6 +59,11 @@ final class ViewController: UICollectionViewController {
             optionalSlides = Slide.slidesfromData(slidesData) {
             slides = optionalSlides.flatMap { $0 }
         }
+        watchConnectivitySession.delegate = self
+        watchConnectivitySession.activateSession()
+        if watchConnectivitySession.reachable {
+            sendSlidesToWatch(watchConnectivitySession)
+        }
     }
 
     // MARK: Connectivity Updates
@@ -62,23 +71,49 @@ final class ViewController: UICollectionViewController {
     private func setupConnectivityObserver() {
         multipeerClient.onStateChange = { state, peerID in
             let client = self.multipeerClient
-            let borderColor: CGColorRef
+            let borderColor: UIColor
             switch state {
             case .NotConnected:
-                borderColor = UIColor.redColor().CGColor
+                borderColor = .redColor()
                 if let session = client.session where session.connectedPeers.count == 0 {
                     client.browser?.invitePeer(peerID, toSession: session, withContext: nil,
                         timeout: 30)
                 }
             case .Connecting:
-                borderColor = UIColor.orangeColor().CGColor
+                borderColor = .orangeColor()
             case .Connected:
-                borderColor = UIColor.greenColor().CGColor
+                borderColor = .greenColor()
             }
             dispatch_async(dispatch_get_main_queue()) {
-                self.collectionView?.layer.borderColor = borderColor
+                self.collectionView?.layer.borderColor = borderColor.CGColor
             }
         }
+    }
+
+    func sessionReachabilityDidChange(session: WCSession) {
+        sendSlidesToWatch(session)
+    }
+
+    private func sendSlidesToWatch(session: WCSession) {
+        guard session.reachable, let slides = slides else { return }
+
+        let scaledSlides = slides.flatMap({ $0.dictionaryRepresentation })
+        let data = NSKeyedArchiver.archivedDataWithRootObject(scaledSlides)
+        session.sendMessageData(data, replyHandler: nil, errorHandler: nil)
+    }
+
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject],
+        replyHandler: ([String : AnyObject]) -> Void) {
+            replyHandler(message)
+            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                if let row = message["row"] as? CGFloat,
+                    collectionView = self.collectionView,
+                    layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                        collectionView.contentOffset.x =
+                            layout.itemSize.width * row
+                        self.multipeerClient.sendString("\(row)")
+                }
+            }
     }
 
     // MARK: UI
