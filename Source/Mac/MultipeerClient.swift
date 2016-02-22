@@ -47,7 +47,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
             }
             let slidesData = NSKeyedArchiver.archivedDataWithRootObject(scriptingSlides.map {
                 Slide(pdfData: $0.pdfData, notes: $0.notes)!.dictionaryRepresentation!
-                })
+            })
             dispatch_async(dispatch_get_main_queue()) {
                 HUDView.showWithActivity("Sending slides...")
             }
