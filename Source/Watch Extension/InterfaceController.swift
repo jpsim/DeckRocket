@@ -10,11 +10,11 @@ import Foundation
 import WatchConnectivity
 import WatchKit
 
-class TableRowController: NSObject {
+final class TableRowController: NSObject {
     @IBOutlet var image: WKInterfaceImage!
 }
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate {
+final class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var table: WKInterfaceTable!
     private let session = WCSession.defaultSession()
 
@@ -33,6 +33,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         let slides = Slide.slidesfromData(messageData)!
         table.setNumberOfRows(slides.count, withRowType: "\(TableRowController.self)")
         for (index, slide) in slides.enumerate() {
+            // swiftlint:disable:next force_cast
             let row = table.rowControllerAtIndex(index) as! TableRowController
             row.image.setImage(slide!.image)
         }
