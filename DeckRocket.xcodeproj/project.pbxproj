@@ -53,6 +53,8 @@
 		E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851127A1AD6D6070004365A /* MultipeerClient.swift */; };
 		E85112D21AD6D8F40004365A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E85112631AD6D6070004365A /* Main.storyboard */; };
 		E8518A831C7C3248009E44E4 /* Cartography.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8518A821C7C3248009E44E4 /* Cartography.framework */; };
+		E8E450AE1C7C34FE00A9B1DD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E450AC1C7C34FE00A9B1DD /* Realm.framework */; };
+		E8E450AF1C7C34FE00A9B1DD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */; };
 		E8F23C371C7BB0DF0044F49F /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C21ADD983300060D6B /* Slide.swift */; };
 /* End PBXBuildFile section */
 
@@ -155,6 +157,8 @@
 		E85112A41AD6D84A0004365A /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8518A821C7C3248009E44E4 /* Cartography.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cartography.framework; path = ../../Carthage/Build/iOS/Cartography.framework; sourceTree = "<group>"; };
 		E89980881AD6D54600441BCC /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8E450AC1C7C34FE00A9B1DD /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../../Carthage/Build/watchOS/Realm.framework; sourceTree = "<group>"; };
+		E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../../Carthage/Build/watchOS/RealmSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8E450AE1C7C34FE00A9B1DD /* Realm.framework in Frameworks */,
+				E8E450AF1C7C34FE00A9B1DD /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +221,8 @@
 		E82F6E0B1C7B92A8000E2CF0 /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				E8E450AC1C7C34FE00A9B1DD /* Realm.framework */,
+				E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */,
 				E82F6E0C1C7B92A8000E2CF0 /* InterfaceController.swift */,
 				E82F6E101C7B92A8000E2CF0 /* Assets.xcassets */,
 				E82F6E121C7B92A8000E2CF0 /* Info.plist */,
@@ -332,6 +340,7 @@
 				E82F6E031C7B92A8000E2CF0 /* Sources */,
 				E82F6E041C7B92A8000E2CF0 /* Frameworks */,
 				E82F6E051C7B92A8000E2CF0 /* Resources */,
+				E8E450B11C7C351E00A9B1DD /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -486,6 +495,22 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
+			);
+			name = "Copy Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		E8E450B11C7C351E00A9B1DD /* Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/watchOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/watchOS/RealmSwift.framework",
 			);
 			name = "Copy Frameworks";
 			outputPaths = (
@@ -704,6 +729,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -752,6 +781,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
