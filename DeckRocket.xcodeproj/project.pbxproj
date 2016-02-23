@@ -52,8 +52,9 @@
 		E85112D01AD6D8DB0004365A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85112791AD6D6070004365A /* MenuView.swift */; };
 		E85112D11AD6D8DB0004365A /* MultipeerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E851127A1AD6D6070004365A /* MultipeerClient.swift */; };
 		E85112D21AD6D8F40004365A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E85112631AD6D6070004365A /* Main.storyboard */; };
-		E8F094AA1AE0888D00DCC2F3 /* Cartography.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F094A31AE0888300DCC2F3 /* Cartography.framework */; };
-		E8F094AB1AE0888D00DCC2F3 /* Cartography.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E8F094A31AE0888300DCC2F3 /* Cartography.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E8518A831C7C3248009E44E4 /* Cartography.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8518A821C7C3248009E44E4 /* Cartography.framework */; };
+		E8E450AE1C7C34FE00A9B1DD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E450AC1C7C34FE00A9B1DD /* Realm.framework */; };
+		E8E450AF1C7C34FE00A9B1DD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */; };
 		E8F23C371C7BB0DF0044F49F /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836F2C21ADD983300060D6B /* Slide.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,41 +72,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = E82F6DFA1C7B92A8000E2CF0;
 			remoteInfo = Watch;
-		};
-		E8F094A21AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 54C96A11195063CD000CDD27;
-			remoteInfo = "Cartography-iOS";
-		};
-		E8F094A41AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 54C96A1C195063CD000CDD27;
-			remoteInfo = "Cartography-iOS-Tests";
-		};
-		E8F094A61AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 54F6A838195C20C100313D24;
-			remoteInfo = "Cartography-Mac";
-		};
-		E8F094A81AE0888300DCC2F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 54F6A842195C20C200313D24;
-			remoteInfo = "Cartography-Mac-Tests";
-		};
-		E8F094AC1AE0888D00DCC2F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 54C96A10195063CD000CDD27;
-			remoteInfo = "Cartography-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -138,7 +104,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E8F094AB1AE0888D00DCC2F3 /* Cartography.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,8 +155,13 @@
 		E85112791AD6D6070004365A /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E851127A1AD6D6070004365A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
 		E85112A41AD6D84A0004365A /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8518A821C7C3248009E44E4 /* Cartography.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cartography.framework; path = ../../Carthage/Build/iOS/Cartography.framework; sourceTree = "<group>"; };
+		E86ECB651C7C445300D41579 /* Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Watch.entitlements; sourceTree = SOURCE_ROOT; };
+		E86ECB661C7C445E00D41579 /* Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Watch Extension.entitlements"; sourceTree = SOURCE_ROOT; };
+		E86ECB671C7C446500D41579 /* DeckRocket.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DeckRocket.entitlements; sourceTree = SOURCE_ROOT; };
 		E89980881AD6D54600441BCC /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cartography.xcodeproj; path = Carthage/Checkouts/Cartography/Cartography.xcodeproj; sourceTree = "<group>"; };
+		E8E450AC1C7C34FE00A9B1DD /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../../Carthage/Build/watchOS/Realm.framework; sourceTree = "<group>"; };
+		E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../../Carthage/Build/watchOS/RealmSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +169,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8E450AE1C7C34FE00A9B1DD /* Realm.framework in Frameworks */,
+				E8E450AF1C7C34FE00A9B1DD /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8F094AA1AE0888D00DCC2F3 /* Cartography.framework in Frameworks */,
+				E8518A831C7C3248009E44E4 /* Cartography.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,7 +201,6 @@
 		E82788C71AD6D3EF00325FE1 = {
 			isa = PBXGroup;
 			children = (
-				E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */,
 				E85112591AD6D6070004365A /* iOS */,
 				E85112611AD6D6070004365A /* Mac */,
 				E836F2C01ADD983300060D6B /* Shared */,
@@ -242,6 +213,7 @@
 		E82F6DFC1C7B92A8000E2CF0 /* Watch */ = {
 			isa = PBXGroup;
 			children = (
+				E86ECB651C7C445300D41579 /* Watch.entitlements */,
 				E82F6DFD1C7B92A8000E2CF0 /* Interface.storyboard */,
 				E82F6E001C7B92A8000E2CF0 /* Assets.xcassets */,
 				E82F6E021C7B92A8000E2CF0 /* Info.plist */,
@@ -253,6 +225,9 @@
 		E82F6E0B1C7B92A8000E2CF0 /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				E86ECB661C7C445E00D41579 /* Watch Extension.entitlements */,
+				E8E450AC1C7C34FE00A9B1DD /* Realm.framework */,
+				E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */,
 				E82F6E0C1C7B92A8000E2CF0 /* InterfaceController.swift */,
 				E82F6E101C7B92A8000E2CF0 /* Assets.xcassets */,
 				E82F6E121C7B92A8000E2CF0 /* Info.plist */,
@@ -273,6 +248,8 @@
 		E85112591AD6D6070004365A /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E86ECB671C7C446500D41579 /* DeckRocket.entitlements */,
+				E8518A821C7C3248009E44E4 /* Cartography.framework */,
 				E851125A1AD6D6070004365A /* AppDelegate.swift */,
 				E851125B1AD6D6070004365A /* Cell.swift */,
 				E851125C1AD6D6070004365A /* CollectionViewLayout.swift */,
@@ -342,17 +319,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E8F0949C1AE0888300DCC2F3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E8F094A31AE0888300DCC2F3 /* Cartography.framework */,
-				E8F094A51AE0888300DCC2F3 /* Cartography-iOS-Tests.xctest */,
-				E8F094A71AE0888300DCC2F3 /* Cartography.framework */,
-				E8F094A91AE0888300DCC2F3 /* Cartography-Mac-Tests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -380,6 +346,7 @@
 				E82F6E031C7B92A8000E2CF0 /* Sources */,
 				E82F6E041C7B92A8000E2CF0 /* Frameworks */,
 				E82F6E051C7B92A8000E2CF0 /* Resources */,
+				E8E450B11C7C351E00A9B1DD /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -415,11 +382,11 @@
 				E8F094AE1AE0888D00DCC2F3 /* Frameworks */,
 				E8F094AF1AE0888D00DCC2F3 /* Embed Frameworks */,
 				E82F6E201C7B92A8000E2CF0 /* Embed Watch Content */,
+				E8518A841C7C3268009E44E4 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E8F094AD1AE0888D00DCC2F3 /* PBXTargetDependency */,
 				E82F6E141C7B92A8000E2CF0 /* PBXTargetDependency */,
 			);
 			name = iOS;
@@ -438,9 +405,21 @@
 				TargetAttributes = {
 					E82F6DFA1C7B92A8000E2CF0 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = QX5CR2FTN2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					E82F6E061C7B92A8000E2CF0 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = QX5CR2FTN2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					E835A0CE1BF8464E00CC9107 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -450,6 +429,15 @@
 					};
 					E89980871AD6D54600441BCC = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = QX5CR2FTN2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -464,12 +452,6 @@
 			mainGroup = E82788C71AD6D3EF00325FE1;
 			productRefGroup = E89980891AD6D54600441BCC /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E8F0949C1AE0888300DCC2F3 /* Products */;
-					ProjectRef = E8F0949B1AE0888300DCC2F3 /* Cartography.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				E89980871AD6D54600441BCC /* iOS */,
@@ -480,37 +462,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		E8F094A31AE0888300DCC2F3 /* Cartography.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Cartography.framework;
-			remoteRef = E8F094A21AE0888300DCC2F3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E8F094A51AE0888300DCC2F3 /* Cartography-iOS-Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Cartography-iOS-Tests.xctest";
-			remoteRef = E8F094A41AE0888300DCC2F3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E8F094A71AE0888300DCC2F3 /* Cartography.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Cartography.framework;
-			remoteRef = E8F094A61AE0888300DCC2F3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E8F094A91AE0888300DCC2F3 /* Cartography-Mac-Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Cartography-Mac-Tests.xctest";
-			remoteRef = E8F094A81AE0888300DCC2F3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E82F6DF91C7B92A8000E2CF0 /* Resources */ = {
@@ -563,6 +514,37 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		E8518A841C7C3268009E44E4 /* Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
+			);
+			name = "Copy Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		E8E450B11C7C351E00A9B1DD /* Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/watchOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/watchOS/RealmSwift.framework",
+			);
+			name = "Copy Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -625,11 +607,6 @@
 			target = E82F6DFA1C7B92A8000E2CF0 /* Watch */;
 			targetProxy = E82F6E131C7B92A8000E2CF0 /* PBXContainerItemProxy */;
 		};
-		E8F094AD1AE0888D00DCC2F3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Cartography-iOS";
-			targetProxy = E8F094AC1AE0888D00DCC2F3 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -684,6 +661,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Watch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -705,8 +685,9 @@
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -733,6 +714,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Watch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -749,8 +733,9 @@
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -776,9 +761,16 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -796,8 +788,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -823,10 +816,17 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -838,8 +838,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -905,7 +906,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
@@ -949,7 +950,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
@@ -975,10 +976,16 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = DeckRocket.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -999,8 +1006,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = DeckRocket;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1025,11 +1033,17 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = DeckRocket.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1042,8 +1056,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = DeckRocket;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -1,1 +1,2 @@
 github "robb/Cartography" "0.6.0"
+github "realm/realm-cocoa" "v0.98.2"
