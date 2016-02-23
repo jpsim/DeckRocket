@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.jpsim.DeckRocket</string>
+	<string>io.realm.DeckRocket</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>

@@ -156,6 +156,9 @@
 		E851127A1AD6D6070004365A /* MultipeerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerClient.swift; sourceTree = "<group>"; };
 		E85112A41AD6D84A0004365A /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8518A821C7C3248009E44E4 /* Cartography.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cartography.framework; path = ../../Carthage/Build/iOS/Cartography.framework; sourceTree = "<group>"; };
+		E86ECB651C7C445300D41579 /* Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Watch.entitlements; sourceTree = SOURCE_ROOT; };
+		E86ECB661C7C445E00D41579 /* Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Watch Extension.entitlements"; sourceTree = SOURCE_ROOT; };
+		E86ECB671C7C446500D41579 /* DeckRocket.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DeckRocket.entitlements; sourceTree = SOURCE_ROOT; };
 		E89980881AD6D54600441BCC /* DeckRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeckRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8E450AC1C7C34FE00A9B1DD /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../../Carthage/Build/watchOS/Realm.framework; sourceTree = "<group>"; };
 		E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../../Carthage/Build/watchOS/RealmSwift.framework; sourceTree = "<group>"; };
@@ -210,6 +213,7 @@
 		E82F6DFC1C7B92A8000E2CF0 /* Watch */ = {
 			isa = PBXGroup;
 			children = (
+				E86ECB651C7C445300D41579 /* Watch.entitlements */,
 				E82F6DFD1C7B92A8000E2CF0 /* Interface.storyboard */,
 				E82F6E001C7B92A8000E2CF0 /* Assets.xcassets */,
 				E82F6E021C7B92A8000E2CF0 /* Info.plist */,
@@ -221,6 +225,7 @@
 		E82F6E0B1C7B92A8000E2CF0 /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				E86ECB661C7C445E00D41579 /* Watch Extension.entitlements */,
 				E8E450AC1C7C34FE00A9B1DD /* Realm.framework */,
 				E8E450AD1C7C34FE00A9B1DD /* RealmSwift.framework */,
 				E82F6E0C1C7B92A8000E2CF0 /* InterfaceController.swift */,
@@ -243,6 +248,7 @@
 		E85112591AD6D6070004365A /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E86ECB671C7C446500D41579 /* DeckRocket.entitlements */,
 				E8518A821C7C3248009E44E4 /* Cartography.framework */,
 				E851125A1AD6D6070004365A /* AppDelegate.swift */,
 				E851125B1AD6D6070004365A /* Cell.swift */,
@@ -399,9 +405,21 @@
 				TargetAttributes = {
 					E82F6DFA1C7B92A8000E2CF0 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = QX5CR2FTN2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					E82F6E061C7B92A8000E2CF0 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = QX5CR2FTN2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					E835A0CE1BF8464E00CC9107 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -411,6 +429,15 @@
 					};
 					E89980871AD6D54600441BCC = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = QX5CR2FTN2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -634,6 +661,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Watch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -655,8 +685,9 @@
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -683,6 +714,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Watch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -699,8 +733,9 @@
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -726,6 +761,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -750,8 +788,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -777,6 +816,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -796,8 +838,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jpsim.DeckRocket.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.realm.DeckRocket.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -863,7 +906,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
@@ -907,7 +950,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = DeckRocket;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Mac/DeckRocket-Bridging-Header.h";
@@ -933,6 +976,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = DeckRocket.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -961,8 +1006,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = DeckRocket;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -987,6 +1033,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = DeckRocket.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1008,8 +1056,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jpsim.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.realm.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = DeckRocket;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
