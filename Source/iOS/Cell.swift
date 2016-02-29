@@ -11,6 +11,8 @@ import Cartography
 
 private var gNotesHidden = true
 
+private let gDefaultNotesFont = UIFont.systemFontOfSize(30)
+
 final class Cell: UICollectionViewCell {
 
     // MARK: Properties
@@ -58,7 +60,7 @@ final class Cell: UICollectionViewCell {
     }
 
     private func setupNotesView() {
-        notesView.font = UIFont.systemFontOfSize(30)
+        notesView.font = gDefaultNotesFont
         notesView.backgroundColor = UIColor.clearColor()
         notesView.textColor = UIColor.whiteColor()
         notesView.userInteractionEnabled = false
@@ -103,5 +105,6 @@ final class Cell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         resetHidden()
+        notesView.font = gDefaultNotesFont
     }
 }
