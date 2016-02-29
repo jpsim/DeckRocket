@@ -168,6 +168,8 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
             forIndexPath: indexPath) as! Cell // swiftlint:disable:this force_cast
         cell.imageView.image = slides?[indexPath.item].image
         cell.notesView.text = slides?[indexPath.item].notes
+        cell.notesView.downsizeFontIfNeeded()
+
         if indexPath.item + 1 < slides?.count {
             cell.nextSlideView.image = slides?[indexPath.item + 1].image
         } else {
@@ -205,4 +207,19 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
         }
         setCollectionViewItemSize(size)
     }
+}
+
+extension UITextView {
+
+    private func downsizeFontIfNeeded() {
+        if (text.isEmpty || CGSizeEqualToSize(bounds.size, CGSize.zero)) {
+            return
+        }
+
+        while (sizeThatFits(CGSize(width: frame.size.width, height: CGFloat(FLT_MAX))).height
+            > frame.size.height) {
+            font = font!.fontWithSize(font!.pointSize - 1)
+        }
+    }
+
 }
