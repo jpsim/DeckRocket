@@ -33,9 +33,9 @@ final class MenuView: NSView, NSMenuDelegate {
         menu?.autoenablesItems = false
         menu?.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
         menu?.itemAtIndex(0)?.enabled = false
-        menu?.addItemWithTitle("Send Slides", action: "sendSlides", keyEquivalent: "")
+        menu?.addItemWithTitle("Send Slides", action: #selector(AppDelegate.sendSlides), keyEquivalent: "")
         menu?.itemAtIndex(1)?.enabled = false
-        menu?.addItemWithTitle("Quit DeckRocket", action: "quit", keyEquivalent: "")
+        menu?.addItemWithTitle("Quit DeckRocket", action: #selector(AppDelegate.quit), keyEquivalent: "")
         menu?.delegate = self
     }
 

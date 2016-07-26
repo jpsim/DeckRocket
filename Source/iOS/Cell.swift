@@ -39,11 +39,11 @@ final class Cell: UICollectionViewCell {
         setupNextSlideView()
         setupNotesView()
         resetHidden()
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: "toggleNotes:"))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleNotes)))
     }
 
     required convenience init(coder aDecoder: NSCoder) {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
 
     // MARK: UI
@@ -61,8 +61,8 @@ final class Cell: UICollectionViewCell {
 
     private func setupNotesView() {
         notesView.font = gDefaultNotesFont
-        notesView.backgroundColor = UIColor.clearColor()
-        notesView.textColor = UIColor.whiteColor()
+        notesView.backgroundColor = .clearColor()
+        notesView.textColor = .whiteColor()
         notesView.userInteractionEnabled = false
         contentView.addSubview(notesView)
 

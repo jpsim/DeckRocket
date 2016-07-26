@@ -50,7 +50,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         DDHotKeyCenter.sharedHotKeyCenter().registerHotKeyWithKeyCode(UInt16(kVK_ANSI_P),
             modifierFlags: flags.rawValue,
             target: self,
-            action: "hotkeyWithEvent:",
+            action: #selector(hotkeyWithEvent),
             object: nil)
     }
 

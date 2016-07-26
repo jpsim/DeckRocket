@@ -109,8 +109,7 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
                 if let row = message["row"] as? CGFloat,
                     collectionView = self.collectionView,
                     layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                        collectionView.contentOffset.x =
-                            layout.itemSize.width * row
+                        collectionView.contentOffset.x = layout.itemSize.width * row
                         self.multipeerClient.sendString("\(row)")
                 }
             }
@@ -144,7 +143,7 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
             "tap the screen to toggle between current slide and notes view, and finally: " +
             "keep an eye on the color of the border! Red means the connection was lost. " +
             "Green means everything should work!"
-        infoLabel.textColor = UIColor.whiteColor()
+        infoLabel.textColor = .whiteColor()
         view.addSubview(infoLabel)
 
         constrain(infoLabel, view) {
@@ -212,12 +211,11 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
 extension UITextView {
 
     private func downsizeFontIfNeeded() {
-        if (text.isEmpty || CGSizeEqualToSize(bounds.size, CGSize.zero)) {
+        if (text.isEmpty || CGSizeEqualToSize(bounds.size, .zero)) {
             return
         }
 
-        while (sizeThatFits(CGSize(width: frame.size.width, height: CGFloat(FLT_MAX))).height
-            > frame.size.height) {
+        while (sizeThatFits(CGSize(width: frame.size.width, height: CGFloat(FLT_MAX))).height > frame.size.height) {
             font = font!.fontWithSize(font!.pointSize - 1)
         }
     }

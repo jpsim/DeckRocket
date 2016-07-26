@@ -11,7 +11,7 @@ import Cocoa
 private let hudWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 300, height: 300),
     styleMask: NSBorderlessWindowMask,
     backing: .Buffered,
-    `defer`: false)
+    defer: false)
 
 final class HUDView: NSView {
 

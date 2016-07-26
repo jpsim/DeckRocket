@@ -56,12 +56,10 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
                 dispatch_async(dispatch_get_main_queue()) {
                     HUDView.show("Success!")
                 }
-            } catch let error as NSError {
-                dispatch_async(dispatch_get_main_queue()) {
-                    HUDView.show("Error!\n\(error.localizedDescription)")
-                }
             } catch {
-                fatalError("")
+                dispatch_async(dispatch_get_main_queue()) {
+                    HUDView.show("Error!\n\(error)")
+                }
             }
         }
     }
