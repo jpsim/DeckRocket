@@ -9,12 +9,13 @@
 ## Requirements
 
 DeckRocket is built in Swift and relies on Multipeer Connectivity on both OS X
-and iOS. Xcode 6.3, OS X 10.10 and iOS 8 are all required to build, install and
-use DeckRocket.
+and iOS. Xcode 7.3.1, OS X 10.10 (and up) and iOS 8 (and up) are all required to
+build, install and use DeckRocket.
 
 ## Usage
 
 1. Make sure you meet the requirements listed above.
+2. Run `git submodule update --init`
 2. Build and run both the "Mac" and "iOS" schemes in the `DeckRocket.xcodeproj`
    Xcode project. You should see a :rocket: icon in your menu bar.
 3. Open a presentation in Deckset on your Mac.
