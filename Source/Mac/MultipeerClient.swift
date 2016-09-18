@@ -68,7 +68,7 @@ final class MultipeerClient: NSObject, MCNearbyServiceAdvertiserDelegate, MCSess
 
     func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer
                     peerID: MCPeerID, withContext context: NSData?,
-                    invitationHandler: (Bool, MCSession) -> Void) {
+                    invitationHandler: (Bool, MCSession?) -> Void) {
         session = MCSession(peer: localPeerID, securityIdentity: nil,
                             encryptionPreference: .Required)
         guard let session = session else { return }

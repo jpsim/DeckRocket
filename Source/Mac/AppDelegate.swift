@@ -46,7 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func registerHotkey() {
-        let flags: NSEventModifierFlags = [.CommandKeyMask, .AlternateKeyMask, .ControlKeyMask]
+        let flags: NSEventModifierFlags = [.Command, .Option, .Control]
         DDHotKeyCenter.sharedHotKeyCenter().registerHotKeyWithKeyCode(UInt16(kVK_ANSI_P),
             modifierFlags: flags.rawValue,
             target: self,
