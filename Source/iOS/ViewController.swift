@@ -90,6 +90,19 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
         }
     }
 
+    @available(iOS 9.3, *)
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        // already handled by 'onStateChange'
+    }
+
+    func sessionDidBecomeInactive(session: WCSession) {
+        // already handled by 'onStateChange'
+    }
+
+    func sessionDidDeactivate(session: WCSession) {
+        // already handled by 'onStateChange'
+    }
+
     func sessionReachabilityDidChange(session: WCSession) {
         sendSlidesToWatch(session)
     }

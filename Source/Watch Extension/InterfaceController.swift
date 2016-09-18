@@ -29,6 +29,11 @@ final class InterfaceController: WKInterfaceController, WCSessionDelegate {
         session.sendMessage(["row": rowIndex], replyHandler: { _ in }, errorHandler: nil)
     }
 
+    @available(watchOSApplicationExtension 2.2, *)
+    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+        // nothing to do
+    }
+
     func session(session: WCSession, didReceiveMessageData messageData: NSData) {
         let slides = Slide.slidesfromData(messageData)!
         table.setNumberOfRows(slides.count, withRowType: "\(TableRowController.self)")

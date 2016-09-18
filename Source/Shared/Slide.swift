@@ -19,7 +19,7 @@ import Foundation
             let targetRect = NSRect(origin: NSZeroPoint, size: targetSize)
             let newImage = NSImage(size: targetSize)
             newImage.lockFocus()
-            drawInRect(targetRect, fromRect: NSZeroRect, operation: .CompositeSourceOver,
+            drawInRect(targetRect, fromRect: NSZeroRect, operation: .SourceOver,
                        fraction: 1)
             newImage.unlockFocus()
             return newImage
@@ -38,14 +38,14 @@ import Foundation
             let context = UIGraphicsGetCurrentContext()
 
             // Set the quality level to use when rescaling
-            CGContextSetInterpolationQuality(context, .High)
+            CGContextSetInterpolationQuality(context!, .High)
             let flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, newSize.height)
 
-            CGContextConcatCTM(context, flipVertical)
+            CGContextConcatCTM(context!, flipVertical)
             // Draw into the context; this scales the image
-            CGContextDrawImage(context, newRect, imageRef)
+            CGContextDrawImage(context!, newRect, imageRef!)
 
-            let newImageRef = CGBitmapContextCreateImage(context)!
+            let newImageRef = CGBitmapContextCreateImage(context!)!
             let newImage = UIImage(CGImage: newImageRef)
 
             // Get the resized image from the context and a UIImage
@@ -93,7 +93,7 @@ struct Slide {
 
     var dictionaryRepresentation: NSDictionary? {
         return image.TIFFRepresentation.flatMap {
-            return NSBitmapImageRep(data: $0)?.representationUsingType(.NSJPEGFileType,
+            return NSBitmapImageRep(data: $0)?.representationUsingType(.JPEG,
                     properties: [NSImageCompressionFactor: 0.5])
         }.flatMap {
             return ["image": $0, "notes": notes ?? ""]
