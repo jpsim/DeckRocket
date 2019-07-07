@@ -17,26 +17,26 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
 
     var slides: [Slide]? {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.infoLabel.hidden = self.slides != nil
+            DispatchQueue.main.async {
+                self.infoLabel.isHidden = self.slides != nil
                 self.collectionView?.contentOffset.x = 0
                 self.collectionView?.reloadData()
                 // Trigger state change block
-                self.multipeerClient.onStateChange??(state: self.multipeerClient.state,
-                    peerID: MCPeerID(displayName: "placeholder"))
+                self.multipeerClient.onStateChange??(self.multipeerClient.state,
+                                                     MCPeerID(displayName: "placeholder"))
             }
-            sendSlidesToWatch(watchConnectivitySession)
+            sendSlidesToWatch(session: watchConnectivitySession)
         }
     }
     private let multipeerClient = MultipeerClient()
     private let infoLabel = UILabel()
-    private let watchConnectivitySession = WCSession.defaultSession()
+    private let watchConnectivitySession = WCSession.default
 
     // MARK: View Lifecycle
 
     init() {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         super.init(collectionViewLayout: layout)
@@ -52,17 +52,17 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
 
         setupUI()
         setupConnectivityObserver()
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
-            .UserDomainMask, true)[0] as NSString
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                                .userDomainMask, true)[0] as NSString
         if let slidesData = NSData(
-            contentsOfFile: documentsPath.stringByAppendingPathComponent("slides")),
-            optionalSlides = Slide.slidesfromData(slidesData) {
-            slides = optionalSlides.flatMap { $0 }
+            contentsOfFile: documentsPath.appendingPathComponent("slides")),
+            let optionalSlides = Slide.slidesfromData(data: slidesData) {
+            slides = optionalSlides.compactMap { $0 }
         }
         watchConnectivitySession.delegate = self
-        watchConnectivitySession.activateSession()
-        if watchConnectivitySession.reachable {
-            sendSlidesToWatch(watchConnectivitySession)
+        watchConnectivitySession.activate()
+        if watchConnectivitySession.isReachable {
+            sendSlidesToWatch(session: watchConnectivitySession)
         }
     }
 
@@ -73,59 +73,60 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
             let client = self.multipeerClient
             let borderColor: UIColor
             switch state {
-            case .NotConnected:
-                borderColor = .redColor()
-                if let session = client.session where session.connectedPeers.count == 0 {
-                    client.browser?.invitePeer(peerID, toSession: session, withContext: nil,
+            case .notConnected:
+                borderColor = .red
+                if let session = client.session, session.connectedPeers.count == 0 {
+                    client.browser?.invitePeer(peerID, to: session, withContext: nil,
                         timeout: 30)
                 }
-            case .Connecting:
-                borderColor = .orangeColor()
-            case .Connected:
-                borderColor = .greenColor()
+            case .connecting:
+                borderColor = .orange
+            case .connected:
+                borderColor = .green
+            @unknown default:
+                borderColor = .red
             }
-            dispatch_async(dispatch_get_main_queue()) {
-                self.collectionView?.layer.borderColor = borderColor.CGColor
+            DispatchQueue.main.async {
+                self.collectionView?.layer.borderColor = borderColor.cgColor
             }
         }
     }
 
     @available(iOS 9.3, *)
-    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         // already handled by 'onStateChange'
     }
 
-    func sessionDidBecomeInactive(session: WCSession) {
+    func sessionDidBecomeInactive(_ session: WCSession) {
         // already handled by 'onStateChange'
     }
 
-    func sessionDidDeactivate(session: WCSession) {
+    func sessionDidDeactivate(_ session: WCSession) {
         // already handled by 'onStateChange'
     }
 
-    func sessionReachabilityDidChange(session: WCSession) {
-        sendSlidesToWatch(session)
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        sendSlidesToWatch(session: session)
     }
 
     private func sendSlidesToWatch(session: WCSession) {
-        guard session.reachable, let slides = slides else { return }
+        guard session.isReachable, let slides = slides else { return }
 
-        let scaledSlides = slides.flatMap({ $0.dictionaryRepresentation })
-        let data = NSKeyedArchiver.archivedDataWithRootObject(scaledSlides)
+        let scaledSlides = slides.compactMap({ $0.dictionaryRepresentation })
+        let data = NSKeyedArchiver.archivedData(withRootObject: scaledSlides)
         session.sendMessageData(data, replyHandler: nil, errorHandler: nil)
     }
 
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject],
-        replyHandler: ([String : AnyObject]) -> Void) {
-            replyHandler(message)
-            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-                if let row = message["row"] as? CGFloat,
-                    collectionView = self.collectionView,
-                    layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                        collectionView.contentOffset.x = layout.itemSize.width * row
-                        self.multipeerClient.sendString("\(row)")
-                }
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        replyHandler(message)
+        DispatchQueue.main.async { [unowned self] in
+            if let row = message["row"] as? CGFloat,
+                let collectionView = self.collectionView,
+                let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                    collectionView.contentOffset.x = layout.itemSize.width * row
+                self.multipeerClient.sendString(string: "\(row)" as NSString)
             }
+        }
     }
 
     // MARK: UI
@@ -136,16 +137,16 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
     }
 
     private func setupCollectionView() {
-        collectionView?.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
-        collectionView?.pagingEnabled = true
+        collectionView?.register(Cell.self, forCellWithReuseIdentifier: "cell")
+        collectionView?.isPagingEnabled = true
         collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.layer.borderColor = UIColor.redColor().CGColor
+        collectionView?.layer.borderColor = UIColor.red.cgColor
         collectionView?.layer.borderWidth = 2
-        setCollectionViewItemSize(view.bounds.size)
+        setCollectionViewItemSize(size: view.bounds.size)
     }
 
     private func setupInfoLabel() {
-        infoLabel.userInteractionEnabled = false
+        infoLabel.isUserInteractionEnabled = false
         infoLabel.numberOfLines = 0
         infoLabel.text = "Thanks for installing DeckRocket!\n\n" +
             "To get started, follow these simple steps:\n\n" +
@@ -156,7 +157,7 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
             "tap the screen to toggle between current slide and notes view, and finally: " +
             "keep an eye on the color of the border! Red means the connection was lost. " +
             "Green means everything should work!"
-        infoLabel.textColor = .whiteColor()
+        infoLabel.textColor = .white
         view.addSubview(infoLabel)
 
         constrain(infoLabel, view) {
@@ -169,20 +170,20 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
 
     // MARK: Collection View
 
-    override func collectionView(collectionView: UICollectionView,
+    override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
         return slides?.count ?? 0
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath
-                                 indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell",
-            forIndexPath: indexPath) as! Cell // swiftlint:disable:this force_cast
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
+        -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell",
+                                                      for: indexPath) as! Cell // swiftlint:disable:this force_cast
         cell.imageView.image = slides?[indexPath.item].image
         cell.notesView.text = slides?[indexPath.item].notes
         cell.notesView.downsizeFontIfNeeded()
 
-        if indexPath.item + 1 < slides?.count {
+        if indexPath.item + 1 < (slides?.count ?? 0) {
             cell.nextSlideView.image = slides?[indexPath.item + 1].image
         } else {
             cell.nextSlideView.image = nil
@@ -194,14 +195,14 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
 
     private func currentSlide() -> UInt {
         guard let collectionView = collectionView,
-            layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
                 return 0
         }
         return UInt(round(collectionView.contentOffset.x / layout.itemSize.width))
     }
 
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        multipeerClient.sendString("\(currentSlide())")
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        multipeerClient.sendString(string: "\(currentSlide())" as NSString)
     }
 
     // MARK: Rotation
@@ -210,26 +211,24 @@ final class ViewController: UICollectionViewController, WCSessionDelegate {
         (collectionView?.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize = size
     }
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator
-                                           coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         let current = currentSlide()
-        UIView.animateWithDuration(coordinator.transitionDuration()) {
+        UIView.animate(withDuration: coordinator.transitionDuration) {
             self.collectionView?.contentOffset.x = CGFloat(current) * size.width
         }
-        setCollectionViewItemSize(size)
+        setCollectionViewItemSize(size: size)
     }
 }
 
-extension UITextView {
-
-    private func downsizeFontIfNeeded() {
-        if (text.isEmpty || CGSizeEqualToSize(bounds.size, .zero)) {
+private extension UITextView {
+    func downsizeFontIfNeeded() {
+        if (text.isEmpty || bounds.size.equalTo(.zero)) {
             return
         }
 
-        while (sizeThatFits(CGSize(width: frame.size.width, height: CGFloat(FLT_MAX))).height > frame.size.height) {
-            font = font!.fontWithSize(font!.pointSize - 1)
+        while (sizeThatFits(CGSize(width: frame.size.width, height: .infinity)).height > frame.size.height) {
+            font = font!.withSize(font!.pointSize - 1)
         }
     }
 

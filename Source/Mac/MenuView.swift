@@ -11,8 +11,8 @@ import Cocoa
 final class MenuView: NSView, NSMenuDelegate {
     private var highlight = false
 
-    private let statusItem = NSStatusBar.systemStatusBar()
-        .statusItemWithLength(NSVariableStatusItemLength)
+    private let statusItem = NSStatusBar.system
+        .statusItem(withLength: NSStatusItem.variableLength)
 
     // MARK: Initializers
 
@@ -31,35 +31,35 @@ final class MenuView: NSView, NSMenuDelegate {
     private func setupMenu() {
         menu = NSMenu()
         menu?.autoenablesItems = false
-        menu?.addItemWithTitle("Not Connected", action: nil, keyEquivalent: "")
-        menu?.itemAtIndex(0)?.enabled = false
-        menu?.addItemWithTitle("Send Slides", action: #selector(AppDelegate.sendSlides), keyEquivalent: "")
-        menu?.itemAtIndex(1)?.enabled = false
-        menu?.addItemWithTitle("Quit DeckRocket", action: #selector(AppDelegate.quit), keyEquivalent: "")
+        menu?.addItem(withTitle: "Not Connected", action: nil, keyEquivalent: "")
+        menu?.item(at: 0)?.isEnabled = false
+        menu?.addItem(withTitle: "Send Slides", action: #selector(AppDelegate.sendSlides), keyEquivalent: "")
+        menu?.item(at: 1)?.isEnabled = false
+        menu?.addItem(withTitle: "Quit DeckRocket", action: #selector(AppDelegate.quit), keyEquivalent: "")
         menu?.delegate = self
     }
 
-    override func mouseDown(theEvent: NSEvent) {
-        super.mouseDown(theEvent)
+    override func mouseDown(with theEvent: NSEvent) {
+        super.mouseDown(with: theEvent)
         if let menu = menu {
-            statusItem.popUpStatusItemMenu(menu)
+            statusItem.popUpMenu(menu)
         }
     }
 
-    func menuWillOpen(menu: NSMenu) {
+    func menuWillOpen(_ menu: NSMenu) {
         highlight = true
         needsDisplay = true
     }
 
-    func menuDidClose(menu: NSMenu) {
+    func menuDidClose(_ menu: NSMenu) {
         highlight = false
         needsDisplay = true
     }
 
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
-        statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
-        "🚀".drawInRect(CGRectOffset(dirtyRect, 4, -1),
-            withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(14)])
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+        statusItem.drawStatusBarBackground(in: dirtyRect, withHighlight: highlight)
+        "🚀".draw(in: dirtyRect.offsetBy(dx: 4, dy: -1),
+                    withAttributes: [NSAttributedString.Key.font: NSFont.menuBarFont(ofSize: 14)])
     }
 }
