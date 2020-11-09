@@ -15,34 +15,32 @@ struct DecksetApp {
 
     /// Documents.
     var documents: [DecksetDocument] {
-        return ((sbApp.documents as AnyObject).valueForKey("get") as! [AnyObject])
-            .map(DecksetDocument.init)
+        return sbApp.documents().get()?.map { DecksetDocument(sbDocument: $0 as AnyObject) } ?? []
     }
 
     /// Windows.
     var windows: [DecksetWindow] {
-        return ((sbApp.windows as AnyObject).valueForKey("get") as! [AnyObject])
-            .map(DecksetWindow.init)
+        return sbApp.windows().get()?.map { DecksetWindow(sbWindow: $0 as! NSObject) } ?? []
     }
 
     /// The name of the application.
     var name: String {
-        return sbApp.valueForKey("name") as! String
+        return sbApp.value(forKey: "name") as! String
     }
 
     /// Is this the active application?
     var frontmost: Bool {
-        return sbApp.valueForKey("frontmost") as! Bool
+        return sbApp.value(forKey: "frontmost") as! Bool
     }
 
     /// The version number of the application.
     var version: String {
-        return sbApp.valueForKey("version") as! String
+        return sbApp.value(forKey: "version") as! String
     }
 
     /// Show the preview window?
     var preview: Bool {
-        return sbApp.valueForKey("preview") as! Bool
+        return sbApp.value(forKey: "preview") as! Bool
     }
 
     /// Show or hide the preview window.
@@ -57,8 +55,10 @@ struct DecksetApp {
 
     - parameter beta: Whether or not to target the Deckset beta.
     */
-    init?(beta: Bool = false) {
-        let bundleID = "com.unsignedinteger.Deckset" + (beta ? "-private-beta" : "")
+    init?(beta: Bool = false, paddle: Bool = true) {
+        let bundleID = "com.unsignedinteger.Deckset" +
+            (beta ? "-private-beta" : "") +
+            (paddle ? "-Paddle" : "")
         self.init(bundleID: bundleID)
     }
 
@@ -77,7 +77,7 @@ struct DecksetApp {
     // MARK: Functions
 
     /// Open a document.
-    func open(document: AnyObject) -> AnyObject {
+    func open(document: AnyObject) -> Any! {
         return sbApp.open(document)
     }
 

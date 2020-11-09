@@ -9,16 +9,16 @@
 import Foundation
 import MultipeerConnectivity
 
-typealias stateChange = ((state: MCSessionState, peerID: MCPeerID) -> ())?
+typealias stateChange = ((_ state: MCSessionState, _ peerID: MCPeerID) -> ())?
 
 final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
 
     // MARK: Properties
 
-    private let localPeerID = MCPeerID(displayName: UIDevice.currentDevice().name)
+    private let localPeerID = MCPeerID(displayName: UIDevice.current.name)
     let browser: MCNearbyServiceBrowser?
     private(set) var session: MCSession?
-    private(set) var state = MCSessionState.NotConnected
+    private(set) var state = MCSessionState.notConnected
     var onStateChange: stateChange?
 
     // MARK: Init
@@ -33,60 +33,59 @@ final class MultipeerClient: NSObject, MCNearbyServiceBrowserDelegate, MCSession
     // MARK: Send
 
     func send(data: NSData) {
-        guard let session = session else { return }
-        do {
-            try session.sendData(data, toPeers: session.connectedPeers, withMode: .Reliable)
-        } catch {}
+        if let session = session {
+            try? session.send(data as Data, toPeers: session.connectedPeers, with: .reliable)
+        }
     }
 
     func sendString(string: NSString) {
-        if let stringData = string.dataUsingEncoding(NSUTF8StringEncoding) {
-            send(stringData)
+        if let stringData = string.data(using: String.Encoding.utf8.rawValue) {
+            send(data: stringData as NSData)
         }
     }
 
     // MARK: MCNearbyServiceBrowserDelegate
 
-    func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo
+    func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo
                  info: [String : String]?) {
         if session == nil {
             session = MCSession(peer: localPeerID)
             session?.delegate = self
         }
-        browser.invitePeer(peerID, toSession: session!, withContext: nil, timeout: 30)
+        browser.invitePeer(peerID, to: session!, withContext: nil, timeout: 30)
     }
 
-    func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
 
     }
 
     // MARK: MCSessionDelegate
 
-    func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         self.state = state
-        onStateChange??(state: state, peerID: peerID)
+        onStateChange??(state, peerID)
     }
 
-    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
-            .UserDomainMask, true)[0] as NSString
-        data.writeToFile(documentsPath.stringByAppendingPathComponent("slides"), atomically: false)
-        let appDel = UIApplication.sharedApplication().delegate
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                                .userDomainMask, true)[0] as String
+        try? data.write(to: URL(fileURLWithPath: documentsPath).appendingPathComponent("slides"))
+        let appDel = UIApplication.shared.delegate
         if let rootVC = appDel?.window??.rootViewController as? ViewController,
-            slides = Slide.slidesfromData(data) {
-            rootVC.slides = slides.flatMap { $0 }
+            let slides = Slide.slidesfromData(data: data as NSData) {
+            rootVC.slides = slides.compactMap { $0 }
         }
     }
 
-    func session(session: MCSession, didReceiveStream stream: NSInputStream,
+    func session(_ session: MCSession, didReceive stream: InputStream,
                  withName streamName: String, fromPeer peerID: MCPeerID) {
     }
 
-    func session(session: MCSession, didStartReceivingResourceWithName resourceName: String,
-                 fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String,
+                 fromPeer peerID: MCPeerID, with progress: Progress) {
     }
 
-    func session(session: MCSession, didFinishReceivingResourceWithName resourceName: String,
-                 fromPeer peerID: MCPeerID, atURL localURL: NSURL, withError error: NSError?) {
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String,
+                 fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
     }
 }

@@ -22,51 +22,54 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: App
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ notification: Notification) {
         registerHotkey()
         multipeerClient.onStateChange = { state in
             let stateString: String
             let sendSlidesEnabled: Bool
             switch state {
-                case .NotConnected:
+            case .notConnected:
                     stateString = "Not Connected"
                     sendSlidesEnabled = false
-                case .Connecting:
+            case .connecting:
                     stateString = "Connecting..."
                     sendSlidesEnabled = false
-                case .Connected:
+            case .connected:
                     stateString = "Connected"
                     sendSlidesEnabled = true
+            @unknown default:
+                stateString = "Unknown connection state: \(state)"
+                sendSlidesEnabled = false
             }
-            dispatch_async(dispatch_get_main_queue()) {
-                self.menuView.menu?.itemAtIndex(0)?.title = stateString
-                self.menuView.menu?.itemAtIndex(1)?.enabled = sendSlidesEnabled
+            DispatchQueue.main.async {
+                self.menuView.menu?.item(at: 0)?.title = stateString
+                self.menuView.menu?.item(at: 1)?.isEnabled = sendSlidesEnabled
             }
         }
     }
 
     func registerHotkey() {
-        let flags: NSEventModifierFlags = [.Command, .Option, .Control]
-        DDHotKeyCenter.sharedHotKeyCenter().registerHotKeyWithKeyCode(UInt16(kVK_ANSI_P),
+        let flags: NSEvent.ModifierFlags = [.command, .option, .control]
+        DDHotKeyCenter.shared().registerHotKey(withKeyCode: UInt16(kVK_ANSI_P),
             modifierFlags: flags.rawValue,
             target: self,
             action: #selector(hotkeyWithEvent),
             object: nil)
     }
 
-    func hotkeyWithEvent(hkEvent: NSEvent) {
+    @objc func hotkeyWithEvent(hkEvent: NSEvent) {
         sendSlides()
     }
 
     // MARK: Menu Items
 
-    func quit() {
-        NSApplication.sharedApplication().terminate(self)
+    @objc func quit() {
+        NSApplication.shared.terminate(self)
     }
 
-    func sendSlides() {
+    @objc func sendSlides() {
         if let scriptingSlides = DecksetApp()?.documents.first?.slides {
-            multipeerClient.sendSlides(scriptingSlides)
+            multipeerClient.sendSlides(scriptingSlides: scriptingSlides)
         }
     }
 }

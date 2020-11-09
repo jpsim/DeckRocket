@@ -15,32 +15,32 @@ struct DecksetDocument {
 
     /// Slides in the current document.
     var slides: [DecksetSlide] {
-        return (sbDocument.valueForKey("slides") as! [AnyObject]).map(DecksetSlide.init)
+        return (sbDocument.value(forKey: "slides") as! [AnyObject]).map(DecksetSlide.init)
     }
 
     /// Its name.
     var name: String {
-        return sbDocument.valueForKey("name") as! String
+        return sbDocument.value(forKey: "name") as! String
     }
 
     /// Has it been modified since the last save?
     var modified: Bool {
-        return sbDocument.valueForKey("modified") as! Bool
+        return sbDocument.value(forKey: "modified") as! Bool
     }
 
     /// Its location on disk, if it has one.
     var file: NSURL {
-        return sbDocument.valueForKey("file") as! NSURL
+        return sbDocument.value(forKey: "file") as! NSURL
     }
 
     /// Position in the source file.
     var position: Int {
-        return sbDocument.valueForKey("position") as! Int
+        return sbDocument.value(forKey: "position") as! Int
     }
 
     /// Index of the selected slide.
     var slideIndex: Int {
-        return sbDocument.valueForKey("slideIndex") as! Int
+        return sbDocument.value(forKey: "slideIndex") as! Int
     }
 
     /// Set index of the selected slide.
@@ -63,6 +63,7 @@ struct DecksetDocument {
 
     /// Close a document.
     func close() {
-        sbDocument.close()
+        // TODO: Implement this
+        // sbDocument.close()
     }
 }

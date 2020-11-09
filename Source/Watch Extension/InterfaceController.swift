@@ -16,30 +16,30 @@ final class TableRowController: NSObject {
 
 final class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var table: WKInterfaceTable!
-    private let session = WCSession.defaultSession()
+    private let session = WCSession.default
 
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         session.delegate = self
-        session.activateSession()
+        session.activate()
     }
 
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
-        super.table(table, didSelectRowAtIndex: rowIndex)
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
+        super.table(table, didSelectRowAt: rowIndex)
         session.sendMessage(["row": rowIndex], replyHandler: { _ in }, errorHandler: nil)
     }
 
     @available(watchOSApplicationExtension 2.2, *)
-    func session(session: WCSession, activationDidCompleteWithState activationState: WCSessionActivationState, error: NSError?) {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         // nothing to do
     }
 
-    func session(session: WCSession, didReceiveMessageData messageData: NSData) {
-        let slides = Slide.slidesfromData(messageData)!
+    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+        let slides = Slide.slidesfromData(data: messageData as NSData)!
         table.setNumberOfRows(slides.count, withRowType: "\(TableRowController.self)")
-        for (index, slide) in slides.enumerate() {
+        for (index, slide) in slides.enumerated() {
             // swiftlint:disable:next force_cast
-            let row = table.rowControllerAtIndex(index) as! TableRowController
+            let row = table.rowController(at: index) as! TableRowController
             row.image.setImage(slide!.image)
         }
     }

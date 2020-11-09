@@ -8,6 +8,12 @@
 
 @class DecksetApplication, DecksetSlide, DecksetDocument, DecksetWindow;
 
+@protocol DecksetGenericMethods
+
+- (void) close;  // Close a document.
+
+@end
+
 
 
 /*
@@ -17,8 +23,8 @@
 // The application's top-level scripting object.
 @interface DecksetApplication : SBApplication
 
-- (SBElementArray *) documents;
-- (SBElementArray *) windows;
+- (SBElementArray<DecksetDocument *> *) documents;
+- (SBElementArray<DecksetWindow *> *) windows;
 
 @property (copy, readonly) NSString *name;  // The name of the application.
 @property (readonly) BOOL frontmost;  // Is this the active application?
@@ -31,32 +37,32 @@
 @end
 
 // A slide.
-@interface DecksetSlide : SBObject
+@interface DecksetSlide : SBObject <DecksetGenericMethods>
 
 @property (copy) NSString *notes;  // The notes of the text.
 @property (copy) NSData *pdfData;  // The slide as PDF.
 
-- (void) close;  // Close a document.
 
 @end
 
-// A document.
-@interface DecksetDocument : SBObject
+// A Deckset Presentation
+@interface DecksetDocument : SBObject <DecksetGenericMethods>
 
-- (SBElementArray *) slides;
+- (SBElementArray<DecksetSlide *> *) slides;
 
 @property (copy, readonly) NSString *name;  // Its name.
 @property (readonly) BOOL modified;  // Has it been modified since the last save?
 @property (copy, readonly) NSURL *file;  // Its location on disk, if it has one.
-@property NSInteger position;  // Position in the source file
 @property NSInteger slideIndex;  // Index of the selected slide
 
-- (void) close;  // Close a document.
+- (void) present;  // Start the presentation.
+- (void) exportTo:(NSURL *)to as:(NSString *)as printAllSteps:(BOOL)printAllSteps includePresenterNotes:(BOOL)includePresenterNotes;  // Export the presentation.
+- (void) rehearse;  // Rehearse the presentation.
 
 @end
 
 // A window.
-@interface DecksetWindow : SBObject
+@interface DecksetWindow : SBObject <DecksetGenericMethods>
 
 @property (copy, readonly) NSString *name;  // The title of the window.
 - (NSInteger) id;  // The unique identifier of the window.
@@ -71,7 +77,6 @@
 @property BOOL zoomed;  // Is the window zoomed right now?
 @property (copy, readonly) DecksetDocument *document;  // The document whose contents are displayed in the window.
 
-- (void) close;  // Close a document.
 
 @end
 
