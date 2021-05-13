@@ -19,8 +19,8 @@ import Foundation
             let targetRect = NSRect(origin: NSZeroPoint, size: targetSize)
             let newImage = NSImage(size: targetSize)
             newImage.lockFocus()
-            drawInRect(targetRect, fromRect: NSZeroRect, operation: .SourceOver,
-                       fraction: 1)
+            draw(in: targetRect, from: NSZeroRect, operation: .sourceOver,
+                 fraction: 1)
             newImage.unlockFocus()
             return newImage
         }
@@ -30,27 +30,24 @@ import Foundation
     typealias Image = UIImage
 
     extension UIImage {
-        func resizeImage(newSize: CGSize) -> (UIImage) {
-            let newRect = CGRectIntegral(CGRect(origin: CGPoint.zero, size: newSize))
-            let imageRef = CGImage
+        func resizeImage(newSize: CGSize) -> UIImage {
+            let size = self.size
+            let widthRatio  = newSize.width  / size.width
+            let heightRatio = newSize.height / size.height
+            let contextSize: CGSize
+            if widthRatio > heightRatio {
+                contextSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+            } else {
+                contextSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+            }
 
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-            let context = UIGraphicsGetCurrentContext()
-
-            // Set the quality level to use when rescaling
-            CGContextSetInterpolationQuality(context!, .High)
-            let flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, newSize.height)
-
-            CGContextConcatCTM(context!, flipVertical)
-            // Draw into the context; this scales the image
-            CGContextDrawImage(context!, newRect, imageRef!)
-
-            let newImageRef = CGBitmapContextCreateImage(context!)!
-            let newImage = UIImage(CGImage: newImageRef)
-
-            // Get the resized image from the context and a UIImage
+            let rect = CGRect(origin: .zero, size: contextSize)
+            UIGraphicsBeginImageContextWithOptions(contextSize, false, 1.0)
+            self.draw(in: rect)
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            return newImage
+
+            return newImage!
         }
     }
 #endif
@@ -65,17 +62,17 @@ struct Slide {
     }
 
     init?(dictionary: NSDictionary) {
-        guard let image = (dictionary["image"] as? NSData).flatMap({ Image(data: $0) }) else {
+        guard let image = (dictionary["image"] as? NSData).flatMap({ Image(data: $0 as Data) }) else {
             return nil
         }
         self.init(image: image, notes: dictionary["notes"] as? String)
     }
 
     static func slidesfromData(data: NSData) -> [Slide?]? {
-        let dict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSDictionary]
+        let dict = NSKeyedUnarchiver.unarchiveObject(with: data as Data) as? [NSDictionary]
         return dict.flatMap { data in
             data.map {
-                guard let imageData = $0["image"] as? NSData, image = Image(data: imageData) else {
+                guard let imageData = $0["image"] as? Data, let image = Image(data: imageData) else {
                     return nil
                 }
                 return Slide(image: image, notes: $0["notes"] as? String)
@@ -85,16 +82,16 @@ struct Slide {
 
     #if os(OSX)
     init?(pdfData: NSData, notes: String?) {
-        guard let pdfImageRep = NSPDFImageRep(data: pdfData) else { return nil }
+        guard let pdfImageRep = NSPDFImageRep(data: pdfData as Data) else { return nil }
         let image = NSImage()
         image.addRepresentation(pdfImageRep)
-        self.init(image: image.imageByScalingWithFactor(0.5), notes: notes)
+        self.init(image: image.imageByScalingWithFactor(factor: 0.5), notes: notes)
     }
 
     var dictionaryRepresentation: NSDictionary? {
-        return image.TIFFRepresentation.flatMap {
-            return NSBitmapImageRep(data: $0)?.representationUsingType(.JPEG,
-                    properties: [NSImageCompressionFactor: 0.5])
+        return image.tiffRepresentation.flatMap {
+            return NSBitmapImageRep(data: $0)?.representation(using: .jpeg,
+                    properties: [NSBitmapImageRep.PropertyKey.compressionFactor: 0.5])
         }.flatMap {
             return ["image": $0, "notes": notes ?? ""]
         }
@@ -102,7 +99,7 @@ struct Slide {
     #else
     var dictionaryRepresentation: NSDictionary? {
         let newSize = CGSize(width: 16 * 2, height: 9 * 2)
-        return UIImageJPEGRepresentation(image.resizeImage(newSize), 0.5).flatMap {
+        return image.resizeImage(newSize: newSize).jpegData(compressionQuality: 0.5).flatMap {
             return ["image": $0, "notes": ""]
         }
     }

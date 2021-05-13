@@ -10,21 +10,21 @@ struct DecksetWindow {
 
     // MARK: Properties
 
-    private let sbWindow: AnyObject
+    private let sbWindow: NSObject
 
     /// The window's `DecksetDocument`.
     var document: DecksetDocument {
-        return DecksetDocument(sbDocument: sbWindow.valueForKey("document")!)
+        return DecksetDocument(sbDocument: sbWindow.value(forKey: "document")! as AnyObject)
     }
 
     /// The title of the window.
     var name: String {
-        return sbWindow.valueForKey("name") as! String
+        return sbWindow.value(forKey: "name") as! String
     }
 
     /// The unique identifier of the window.
     var id: Int {
-        return sbWindow.valueForKey("id") as! Int
+        return sbWindow.value(forKey: "id") as! Int
     }
 
     /// Set the unique identifier of the window.
@@ -34,7 +34,7 @@ struct DecksetWindow {
 
     /// The index of the window, ordered front to back.
     var index: Int {
-        return sbWindow.valueForKey("index") as! Int
+        return sbWindow.value(forKey: "index") as! Int
     }
 
     /// Set the index of the window, ordered front to back.
@@ -44,7 +44,7 @@ struct DecksetWindow {
 
     /// The bounding rectangle of the window.
     var bounds: NSRect {
-        return sbWindow.valueForKey("bounds") as! NSRect
+        return sbWindow.value(forKey: "bounds") as! NSRect
     }
 
     /// Set the bounding rectangle of the window.
@@ -54,17 +54,17 @@ struct DecksetWindow {
 
     /// Does the window have a close button?
     var closeable: Bool {
-        return sbWindow.valueForKey("closeable") as! Bool
+        return sbWindow.value(forKey: "closeable") as! Bool
     }
 
     /// Does the window have a minimize button?
     var miniaturizable: Bool {
-        return sbWindow.valueForKey("miniaturizable") as! Bool
+        return sbWindow.value(forKey: "miniaturizable") as! Bool
     }
 
     /// Is the window minimized right now?
     var miniaturized: Bool {
-        return sbWindow.valueForKey("miniaturized") as! Bool
+        return sbWindow.value(forKey: "miniaturized") as! Bool
     }
 
     /// Minimize or unminimize the window.
@@ -74,12 +74,12 @@ struct DecksetWindow {
 
     /// Can the window be resized?
     var resizable: Bool {
-        return sbWindow.valueForKey("resizable") as! Bool
+        return sbWindow.value(forKey: "resizable") as! Bool
     }
 
     /// Is the window visible right now?
     var visible: Bool {
-        return sbWindow.valueForKey("visible") as! Bool
+        return sbWindow.value(forKey: "visible") as! Bool
     }
 
     /// Show or hide the window.
@@ -89,12 +89,12 @@ struct DecksetWindow {
 
     /// Does the window have a zoom button?
     var zoomable: Bool {
-        return sbWindow.valueForKey("zoomable") as! Bool
+        return sbWindow.value(forKey: "zoomable") as! Bool
     }
 
     /// Is the window zoomed right now?
     var zoomed: Bool {
-        return sbWindow.valueForKey("zoomed") as! Bool
+        return sbWindow.value(forKey: "zoomed") as! Bool
     }
 
     /// Zoom or unzoom the window.
@@ -104,7 +104,7 @@ struct DecksetWindow {
 
     // MARK: Initializers
 
-    init(sbWindow: AnyObject) {
+    init(sbWindow: NSObject) {
         self.sbWindow = sbWindow
     }
 
@@ -112,6 +112,7 @@ struct DecksetWindow {
 
     /// Close a document.
     func close() {
-        sbWindow.close()
+        // TODO: Implement this
+        // sbWindow.close()
     }
 }

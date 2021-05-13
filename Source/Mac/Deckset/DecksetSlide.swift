@@ -19,7 +19,7 @@ struct DecksetSlide {
 
     /// The slide as PDF.
     var pdfData: NSData {
-        return sbSlide.pdfData
+        return sbSlide.pdfData!! as NSData
     }
 
     // MARK: Initializers

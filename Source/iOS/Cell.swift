@@ -11,7 +11,7 @@ import Cartography
 
 private var gNotesHidden = true
 
-private let gDefaultNotesFont = UIFont.systemFontOfSize(30)
+private let gDefaultNotesFont = UIFont.systemFont(ofSize: 30)
 
 final class Cell: UICollectionViewCell {
 
@@ -29,7 +29,7 @@ final class Cell: UICollectionViewCell {
     let imageView = UIImageView()
     let notesView = UITextView()
     let nextSlideView = UIImageView()
-    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
     // MARK: Initializers
 
@@ -49,7 +49,7 @@ final class Cell: UICollectionViewCell {
     // MARK: UI
 
     private func setupImageView() {
-        imageView.contentMode = .ScaleAspectFit
+        imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
         imageView.addSubview(effectView)
 
@@ -61,9 +61,9 @@ final class Cell: UICollectionViewCell {
 
     private func setupNotesView() {
         notesView.font = gDefaultNotesFont
-        notesView.backgroundColor = .clearColor()
-        notesView.textColor = .whiteColor()
-        notesView.userInteractionEnabled = false
+        notesView.backgroundColor = .clear
+        notesView.textColor = .white
+        notesView.isUserInteractionEnabled = false
         contentView.addSubview(notesView)
 
         constrain(notesView, contentView) {
@@ -75,8 +75,8 @@ final class Cell: UICollectionViewCell {
     }
 
     private func setupNextSlideView() {
-        nextSlideView.contentMode = .ScaleAspectFit
-        nextSlideView.userInteractionEnabled = false
+        nextSlideView.contentMode = .scaleAspectFit
+        nextSlideView.isUserInteractionEnabled = false
         contentView.addSubview(nextSlideView)
 
         constrain(nextSlideView, contentView) {
@@ -91,12 +91,12 @@ final class Cell: UICollectionViewCell {
     // MARK: Actions
 
     private func resetHidden() {
-        effectView.hidden = notesHidden
-        notesView.hidden = notesHidden
-        nextSlideView.hidden = notesHidden
+        effectView.isHidden = notesHidden
+        notesView.isHidden = notesHidden
+        nextSlideView.isHidden = notesHidden
     }
 
-    func toggleNotes(sender: UITapGestureRecognizer) {
+    @objc func toggleNotes(sender: UITapGestureRecognizer) {
         notesHidden = !notesHidden
     }
 
